@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+@import '@grupo-laplace/tokens/tokens.css';
+@import '@grupo-laplace/ui/styles.css';
+
+/* Escanea todo src/ aunque el build use otra raíz (p. ej. src/artifact) y el código del UI Kit */
+@source '..';
+@source '../../../../packages/ui/src';

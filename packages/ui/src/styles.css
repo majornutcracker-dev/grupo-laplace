@@ -1,0 +1,80 @@
+/* Estilos base y clases de componentes del UI Kit de Grupo Laplace.
+   Se importa después de Tailwind y de @grupo-laplace/tokens/tokens.css:
+     @import 'tailwindcss';
+     @import '@grupo-laplace/tokens/tokens.css';
+     @import '@grupo-laplace/ui/styles.css';
+   El consumidor debe registrar el código del paquete con @source para que Tailwind genere sus utilidades. */
+
+/* Clase dark opcional (no se usa en la web pública, el sistema se diseña en claro + secciones invertidas) */
+@custom-variant inverse (&:where(.on-dark, .on-dark *));
+
+@layer base {
+  html {
+    color: var(--color-text-primary);
+    background: var(--color-surface-default);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+  body {
+    min-height: 100dvh;
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  ::selection { background: var(--color-celeste-200); color: var(--color-navy-900); }
+
+  :focus-visible {
+    outline: var(--state-focus-ring-width) solid var(--color-border-focus);
+    outline-offset: var(--state-focus-ring-offset);
+    border-radius: var(--radius-xs);
+  }
+  .on-dark :focus-visible { outline-color: var(--color-border-focus-on-dark); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Tipografía semántica: una clase por nivel de la jerarquía */
+  .type-display { font: var(--text-display--font-weight) var(--text-display)/var(--text-display--line-height) var(--font-display); letter-spacing: var(--text-display--letter-spacing); }
+  .type-h1 { font: var(--text-h1--font-weight) var(--text-h1)/var(--text-h1--line-height) var(--font-display); letter-spacing: var(--text-h1--letter-spacing); }
+  .type-h2 { font: var(--text-h2--font-weight) var(--text-h2)/var(--text-h2--line-height) var(--font-display); letter-spacing: var(--text-h2--letter-spacing); }
+  .type-h3 { font: var(--text-h3--font-weight) var(--text-h3)/var(--text-h3--line-height) var(--font-display); letter-spacing: var(--text-h3--letter-spacing); }
+  .type-h4 { font: var(--text-h4--font-weight) var(--text-h4)/var(--text-h4--line-height) var(--font-display); letter-spacing: var(--text-h4--letter-spacing); }
+  .type-subtitle { font: var(--text-subtitle--font-weight) var(--text-subtitle)/var(--text-subtitle--line-height) var(--font-body); }
+  .type-body-lg { font: var(--text-body-lg--font-weight) var(--text-body-lg)/var(--text-body-lg--line-height) var(--font-body); }
+  .type-body { font: var(--text-body--font-weight) var(--text-body)/var(--text-body--line-height) var(--font-body); }
+  .type-body-sm { font: var(--text-body-sm--font-weight) var(--text-body-sm)/var(--text-body-sm--line-height) var(--font-body); }
+  .type-label { font: var(--text-label--font-weight) var(--text-label)/var(--text-label--line-height) var(--font-body); }
+  .type-overline { font: var(--text-overline--font-weight) var(--text-overline)/var(--text-overline--line-height) var(--font-display); letter-spacing: var(--text-overline--letter-spacing); text-transform: uppercase; }
+  .type-button { font: var(--text-button--font-weight) var(--text-button)/var(--text-button--line-height) var(--font-body); }
+  .type-caption { font: var(--text-caption--font-weight) var(--text-caption)/var(--text-caption--line-height) var(--font-body); letter-spacing: var(--text-caption--letter-spacing); }
+  .type-academic { font: var(--text-academic--font-weight) var(--text-academic)/var(--text-academic--line-height) var(--font-body); font-variant-numeric: tabular-nums; }
+  .type-accent-number { font-family: var(--font-accent); font-weight: 600; line-height: 1; letter-spacing: -0.01em; }
+
+  .container-page {
+    width: 100%;
+    max-width: var(--container-default);
+    margin-inline: auto;
+    padding-inline: var(--space-gutter);
+  }
+  .section-y { padding-block: var(--space-section-y); }
+
+  /* Animación de entrada sutil (se desactiva con prefers-reduced-motion) */
+  .reveal { opacity: 0; transform: translateY(12px); transition: opacity var(--duration-slow) var(--ease-standard), transform var(--duration-slow) var(--ease-standard); }
+  .reveal.is-visible { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+}
