@@ -4,13 +4,15 @@ import { Menu, X } from 'lucide-react'
 import { cn } from '@grupo-laplace/ui'
 import { nav } from '../data/content'
 import { AlpasLogo } from './AlpasLogo'
+import { MobileServicesMenu, ServicesMenu } from './ServicesMenu'
 import { WhatsAppButton } from './WhatsAppButton'
 
-const linkClass = ({ isActive }: { isActive: boolean }) =>
+const itemClass = (active: boolean) =>
   cn(
     'type-label relative rounded-pill px-4 py-2 transition-colors duration-150',
-    isActive ? 'bg-surface-muted text-primary-5' : 'text-neutral-base hover:bg-surface-muted hover:text-primary-5',
+    active ? 'bg-surface-muted text-primary-5' : 'text-neutral-base hover:bg-surface-muted hover:text-primary-5',
   )
+const linkClass = ({ isActive }: { isActive: boolean }) => itemClass(isActive)
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
@@ -48,63 +50,79 @@ export function SiteHeader() {
   }, [open])
 
   return (
-    <header
-      className={cn(
-        'sticky top-0 z-[100] bg-white transition-shadow duration-200',
-        (scrolled || open) && 'shadow-[0_1px_0_var(--color-border-default)]',
-      )}
-    >
-      <a href="#contenido" className="type-label absolute top-2 left-2 z-10 -translate-y-24 rounded-pill bg-primary-5 px-4 py-2 text-white focus:translate-y-0">
+    // Píldora flotante: el contenedor no captura clics, solo la barra y el menú
+    <header className="pointer-events-none sticky top-0 z-[100] h-[var(--header-h)] pt-3">
+      <a href="#contenido" className="type-label pointer-events-auto absolute top-2 left-2 z-10 -translate-y-24 rounded-pill bg-primary-5 px-4 py-2 text-white focus:translate-y-0">
         Saltar al contenido
       </a>
-      <div className="container-wide flex h-20 items-center justify-between gap-6">
-        <Link to="/" aria-label="Grupo ALPAS, ir al inicio" className="shrink-0 rounded-sm">
-          <AlpasLogo className="h-11" />
-        </Link>
-
-        <nav aria-label="Principal" className="hidden lg:block">
-          <ul className="flex items-center gap-1">
-            {nav.map((n) => (
-              <li key={n.to}>
-                <NavLink to={n.to} end={n.to === '/'} className={linkClass}>
-                  {n.label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className="hidden lg:block">
-          <WhatsAppButton size="sm" />
-        </div>
-
-        <button
-          ref={toggleRef}
-          type="button"
-          className="grid size-12 place-items-center rounded-pill text-primary-5 hover:bg-surface-muted lg:hidden"
-          aria-expanded={open}
-          aria-controls="menu-movil"
-          aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
-          onClick={() => setOpen((o) => !o)}
+      <div className="container-wide">
+        <div
+          className={cn(
+            'pointer-events-auto flex h-16 items-center justify-between gap-4 rounded-pill bg-white/95 pr-2 pl-5 ring-1 backdrop-blur-md transition-shadow duration-200 lg:pl-6',
+            scrolled || open ? 'shadow-[0_14px_36px_-18px_rgb(1_29_53/0.45)] ring-border-default' : 'shadow-[0_10px_30px_-20px_rgb(1_29_53/0.5)] ring-white/60',
+          )}
         >
-          {open ? <X className="size-6" aria-hidden /> : <Menu className="size-6" aria-hidden />}
-        </button>
+          <Link to="/" aria-label="Grupo ALPAS, ir al inicio" className="shrink-0 rounded-sm">
+            <AlpasLogo className="h-9" />
+          </Link>
+
+          <nav aria-label="Principal" className="hidden lg:block">
+            <ul className="flex items-center gap-1">
+              {nav.map((n) =>
+                n.to === '/servicios' ? (
+                  <ServicesMenu key={n.to} linkClass={itemClass} />
+                ) : (
+                  <li key={n.to}>
+                    <NavLink to={n.to} end={n.to === '/'} className={linkClass}>
+                      {n.label}
+                    </NavLink>
+                  </li>
+                ),
+              )}
+            </ul>
+          </nav>
+
+          <div className="hidden lg:block">
+            <WhatsAppButton size="sm" pill />
+          </div>
+
+          <button
+            ref={toggleRef}
+            type="button"
+            className="grid size-12 place-items-center rounded-pill text-primary-5 hover:bg-surface-muted lg:hidden"
+            aria-expanded={open}
+            aria-controls="menu-movil"
+            aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+            onClick={() => setOpen((o) => !o)}
+          >
+            {open ? <X className="size-6" aria-hidden /> : <Menu className="size-6" aria-hidden />}
+          </button>
+        </div>
       </div>
 
-      <div id="menu-movil" ref={panelRef} hidden={!open} className="fixed inset-x-0 top-20 bottom-0 overflow-y-auto bg-white lg:hidden">
-        <nav aria-label="Principal móvil" className="container-wide flex min-h-full flex-col pt-4 pb-8">
+      <div
+        id="menu-movil"
+        ref={panelRef}
+        hidden={!open}
+        className="pointer-events-auto fixed inset-x-3 top-[calc(var(--header-h)+0.25rem)] bottom-3 overflow-y-auto rounded-[1.75rem] bg-white shadow-raised ring-1 ring-border-subtle lg:hidden"
+      >
+        <nav aria-label="Principal móvil" className="flex min-h-full flex-col px-5 pt-2 pb-6">
           <ul className="flex flex-col">
-            {nav.map((n) => (
-              <li key={n.to} className="border-b border-border-subtle">
-                <NavLink
-                  to={n.to}
-                  end={n.to === '/'}
-                  className={({ isActive }) => cn('type-h5 flex min-h-16 items-center', isActive ? 'text-text-accent' : 'text-text-heading')}
-                >
-                  {n.label}
-                </NavLink>
-              </li>
-            ))}
+            {nav.map((n) =>
+              n.to === '/servicios' ? (
+                <MobileServicesMenu key={n.to} onNavigate={() => setOpen(false)} />
+              ) : (
+                <li key={n.to} className="border-b border-border-subtle">
+                  <NavLink
+                    to={n.to}
+                    end={n.to === '/'}
+                    className={({ isActive }) => cn('type-h5 flex min-h-16 items-center', isActive ? 'text-text-accent' : 'text-text-heading')}
+                  >
+                    {n.label}
+                  </NavLink>
+                </li>
+              ),
+            )}
           </ul>
           <div className="mt-auto pt-8">
             <WhatsAppButton fullWidth />

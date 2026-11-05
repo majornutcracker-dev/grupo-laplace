@@ -6,6 +6,7 @@ import { Accordion, Breadcrumbs, PhotoFrame, PlusMark, Tag, cn } from '@grupo-la
 import type { Service, Teacher } from '../data/content'
 import { Sparkle } from '../illustrations/Doodles'
 import { TutoringScene } from '../illustrations/Scenes'
+import { serviceScenes } from '../illustrations/serviceScenes'
 import { delay } from '../lib/motion'
 import { WhatsAppButton } from './WhatsAppButton'
 
@@ -26,11 +27,32 @@ export function IconTile({ icon: Icon, tone = 0, className }: { icon: LucideIcon
 }
 
 /* ── Encabezado de sección ─────────────────────────────────────────── */
-export function SectionHeading({ title, description, inverse, id, align = 'left', className }: { title: string; description?: ReactNode; inverse?: boolean; id?: string; align?: 'left' | 'center'; className?: string }) {
+/** Etiqueta en píldora sobre un título (como en la referencia). Úsala solo donde aporte contexto. */
+export function SectionTag({ children, inverse, className }: { children: ReactNode; inverse?: boolean; className?: string }) {
+  return (
+    <p className={cn('type-caption inline-flex rounded-pill px-3.5 py-1', inverse ? 'glass-dark text-white' : 'card rounded-pill text-text-heading', className)}>
+      {children}
+    </p>
+  )
+}
+
+export function SectionHeading({ title, description, eyebrow, inverse, id, align = 'left', className }: { title: string; description?: ReactNode; eyebrow?: string; inverse?: boolean; id?: string; align?: 'left' | 'center'; className?: string }) {
   return (
     <div className={cn('max-w-[40rem]', align === 'center' && 'mx-auto text-center', className)}>
+      {eyebrow && <SectionTag inverse={inverse} className="mb-5">{eyebrow}</SectionTag>}
       <h2 id={id} className={cn('type-h2', inverse && 'text-white')}>{title}</h2>
       {description && <p className={cn('type-body-lg mt-4', inverse ? 'text-text-inverse-muted' : 'text-text-body')}>{description}</p>}
+    </div>
+  )
+}
+
+/** Separador entre secciones: filete fino con el signo + de ALPAS al centro. */
+export function SectionDivider({ className }: { className?: string }) {
+  return (
+    <div aria-hidden className={cn('container-wide flex items-center gap-5', className)}>
+      <span className="h-px flex-1 bg-border-default" />
+      <span className="relative grid size-8 place-items-center"><PlusMark className="absolute inset-0 size-8" /></span>
+      <span className="h-px flex-1 bg-border-default" />
     </div>
   )
 }
@@ -76,34 +98,48 @@ export function PageHero({
   )
 }
 
-/* ── Tiles de servicios (Inicio) ───────────────────────────────────── */
-export function ServiceTiles({ items }: { items: Service[] }) {
+/* ── Cards de servicios: marco + ilustración + texto (catálogo) ───── */
+export function ServiceTiles({ items, columns = 4 }: { items: Service[]; columns?: 2 | 4 }) {
   return (
-    <ul className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+    <ul className={cn('grid gap-5', columns === 4 ? 'sm:grid-cols-2 xl:grid-cols-4' : 'md:grid-cols-2')}>
       {items.map((s, i) => {
+        const Scene = serviceScenes[s.id]
+        const Icon = s.icon
         const inner = (
           <>
-            <div className="flex items-start justify-between gap-3">
-              <IconTile icon={s.icon} tone={i} />
+            <div className="flex items-center justify-between gap-3 px-2.5 pt-1.5 pb-3">
+              <span className="type-caption flex items-center gap-2 text-text-muted">
+                <Icon className="size-4.5 text-text-heading" aria-hidden />
+                {s.audience}
+              </span>
               {s.comingSoon && <Tag color="warning">Próximamente</Tag>}
             </div>
-            <h3 className="type-h4 mt-6 text-[1.5rem]">{s.name}</h3>
-            <p className="type-body-sm mt-2 flex-1 text-text-body">{s.summary}</p>
-            <span className={cn('type-label mt-6 inline-flex items-center gap-1', s.comingSoon ? 'text-text-muted' : 'text-text-heading group-hover:text-text-accent')}>
-              {s.comingSoon ? 'Próximamente' : 'Conocer más'}
-              {!s.comingSoon && <ChevronRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden />}
-            </span>
+            <div aria-hidden className="card-media aspect-[6/5]" data-brand={s.id === 'escolar' ? 'laplace' : undefined}>
+              <Scene />
+            </div>
+            <div className="flex flex-1 flex-col px-2.5 pt-5 pb-3">
+              <h3 className={cn('type-h4', columns === 4 && 'text-[1.5rem]')}>{s.name}</h3>
+              <p className="type-body-sm mt-2 flex-1 text-text-body">{s.summary}</p>
+              {s.comingSoon ? (
+                <p className="type-caption mt-5 text-text-muted">Estamos preparando esta propuesta.</p>
+              ) : (
+                <span className="type-label mt-5 inline-flex items-center gap-1 text-text-heading group-hover:text-text-accent">
+                  Conocer más
+                  <ChevronRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden />
+                </span>
+              )}
+            </div>
           </>
         )
         return (
-          <li key={s.id} className="reveal" style={delay(i * 90)}>
+          <li key={s.id} id={s.id} className="reveal scroll-mt-28" style={delay(i * 90)}>
             {s.to ? (
-              <Link to={s.to} className="lift group flex h-full flex-col rounded-xl border border-border-subtle bg-white p-6 shadow-neutral">
+              <Link to={s.to} className="card card-frame card-link group flex h-full flex-col">
                 {inner}
                 <span className="sr-only"> sobre {s.name}</span>
               </Link>
             ) : (
-              <div className="flex h-full flex-col rounded-xl border border-dashed border-border-strong bg-surface-subtle p-6">{inner}</div>
+              <div className="card card-frame flex h-full flex-col">{inner}</div>
             )}
           </li>
         )
@@ -112,45 +148,55 @@ export function ServiceTiles({ items }: { items: Service[] }) {
   )
 }
 
-/* ── Beneficios: tarjetas con icono de color ───────────────────────── */
+/* ── Beneficios: cards suaves con icono en círculo ─────────────────── */
 export function BenefitCards({ items, inverse }: { items: Array<{ icon: LucideIcon; title: string; text: string }>; inverse?: boolean }) {
   const cols = items.length % 3 === 0 ? 'md:grid-cols-3' : 'sm:grid-cols-2 lg:grid-cols-4'
   return (
-    <ul className={cn('grid gap-5', cols)}>
-      {items.map(({ icon, title, text }, i) => (
+    <ul className={cn('grid gap-4 sm:gap-5', cols)}>
+      {items.map(({ icon: Icon, title, text }, i) => (
         <li
           key={title}
-          className={cn('reveal flex flex-col gap-4 rounded-xl p-6 sm:p-7', inverse ? 'bg-white/6 ring-1 ring-white/10' : 'bg-white shadow-neutral ring-1 ring-border-subtle')}
+          className={cn('reveal flex flex-col p-6 sm:p-7', inverse ? 'glass-dark rounded-xl' : 'card')}
           style={delay(i * 90)}
         >
-          <IconTile icon={icon} tone={inverse ? (i % 2 ? 1 : 2) : i} />
-          <h3 className={cn('type-h5', inverse && 'text-white')}>{title}</h3>
-          <p className={cn('type-body-sm', inverse ? 'text-text-inverse-muted' : 'text-text-body')}>{text}</p>
+          <span
+            aria-hidden
+            className={cn(
+              'grid size-12 place-items-center rounded-pill [&_svg]:size-5.5',
+              inverse ? 'bg-white/12 text-text-accent-on-dark' : cn('bg-white shadow-neutral ring-1 ring-border-subtle', i % 2 ? 'text-green-deep' : 'text-primary-5'),
+            )}
+          >
+            <Icon />
+          </span>
+          <h3 className={cn('type-h5 mt-8', inverse && 'text-white')}>{title}</h3>
+          <p className={cn('type-body-sm mt-2', inverse ? 'text-text-inverse-muted' : 'text-text-body')}>{text}</p>
         </li>
       ))}
     </ul>
   )
 }
 
-/* ── Tarjeta de docente: espacios editables, sin datos inventados ──── */
+/* ── Card de docente: espacios editables, sin datos inventados ───── */
 export function TeacherCard({ teacher, index = 0 }: { teacher: Teacher; index?: number }) {
   const pending = !teacher.name
   return (
-    <article className="reveal flex flex-col" style={delay(index * 90)}>
+    <article className="reveal card card-frame flex flex-col" style={delay(index * 90)}>
       {teacher.photo ? (
-        <PhotoFrame src={teacher.photo} alt={teacher.name ? `Foto de ${teacher.name}` : 'Foto del docente'} ratio="4/5" />
+        <div className="card-media">
+          <PhotoFrame src={teacher.photo} alt={teacher.name ? `Foto de ${teacher.name}` : 'Foto del docente'} ratio="4/5" className="rounded-none" />
+        </div>
       ) : (
-        <div role="img" aria-label="Foto del docente pendiente" className="frame-tab relative aspect-[4/5] overflow-hidden bg-surface-muted">
+        <div role="img" aria-label="Foto del docente pendiente" className="card-media aspect-[4/5] bg-surface-muted">
           {/* Silueta genérica sin rostro: marca el espacio de la foto real */}
-          <svg viewBox="0 0 200 250" aria-hidden className="absolute inset-x-0 bottom-0 w-full">
+          <svg viewBox="0 0 200 250" aria-hidden className="absolute inset-x-0 bottom-0 h-auto w-full">
             <circle cx="100" cy="92" r="42" className="fill-primary-2" opacity="0.55" />
             <path d="M24 250c0-60 34-96 76-96s76 36 76 96Z" className="fill-primary-2" opacity="0.55" />
           </svg>
-          <PlusMark className="absolute top-5 right-5 size-7 opacity-80" />
-          <span className="type-caption absolute top-5 left-5 rounded-pill bg-white px-3 py-1 text-text-muted">Foto pendiente</span>
+          <PlusMark className="absolute top-4 right-4 size-7 opacity-80" />
+          <span className="type-caption absolute top-4 left-4 rounded-pill bg-white px-3 py-1 text-text-muted">Foto pendiente</span>
         </div>
       )}
-      <div className="mt-5">
+      <div className="px-3 pt-5 pb-3">
         {teacher.specialty ? <Tag color="first">{teacher.specialty}</Tag> : <Tag color="disabled">Especialidad pendiente</Tag>}
         <h3 className={cn('type-h5 mt-3', pending && 'text-text-muted')}>{teacher.name ?? 'Nombre del docente'}</h3>
         <p className="type-body-sm mt-1.5 text-text-muted">{teacher.bio ?? 'Breve descripción de su experiencia, por confirmar con Grupo ALPAS.'}</p>
@@ -217,7 +263,7 @@ export function PracticalInfo({ title = 'Modalidad, horarios e inversión', what
       </div>
       <dl className="grid gap-4 sm:grid-cols-3">
         {rows.map(({ icon, label, text }, i) => (
-          <div key={label} className="reveal rounded-xl bg-white p-5 shadow-neutral ring-1 ring-border-subtle" style={delay(i * 90)}>
+          <div key={label} className="reveal card p-5" style={delay(i * 90)}>
             <dt className="flex items-center gap-3 type-label text-text-heading"><IconTile icon={icon} tone={i + 1} className="size-10 rounded-md [&_svg]:size-5" />{label}</dt>
             <dd className="type-body-sm mt-3 text-text-body">{text}</dd>
           </div>
@@ -227,13 +273,16 @@ export function PracticalInfo({ title = 'Modalidad, horarios e inversión', what
   )
 }
 
-/* ── Preguntas frecuentes ──────────────────────────────────────────── */
-export function FaqBlock({ items }: { items: Array<{ question: string; answer: string }> }) {
+/* ── Preguntas frecuentes: bloque centrado con cierre hacia WhatsApp ─ */
+export function FaqBlock({ items, whatsappUrl }: { items: Array<{ question: string; answer: string }>; whatsappUrl?: string | null }) {
   return (
-    <section aria-labelledby="faq-title" className="container-wide section-y grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
-      <SectionHeading id="faq-title" title="Preguntas frecuentes" description="Si tu duda no está aquí, escríbenos." />
-      <Accordion items={items} />
+    <section aria-labelledby="faq-title" className="container-wide section-y">
+      <SectionHeading id="faq-title" align="center" eyebrow="Dudas comunes" title="Preguntas frecuentes" />
+      <Accordion items={items} className="reveal mx-auto mt-12 max-w-[46rem]" />
+      <div className="mt-10 flex flex-col items-center gap-4 text-center">
+        <p className="type-body text-text-body">¿Tu pregunta no está aquí?</p>
+        <WhatsAppButton url={whatsappUrl} variant="primary" size="sm" pill label="Escríbenos por WhatsApp" />
+      </div>
     </section>
   )
 }
-

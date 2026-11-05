@@ -35,6 +35,8 @@ export type Service = {
   id: 'escolar' | 'universitario' | 'orientacion' | 'grabados'
   name: string
   summary: string
+  /** Descripción breve para el menú desplegable de Servicios */
+  menuText: string
   to?: string
   icon: LucideIcon
   audience: string
@@ -48,6 +50,7 @@ export const services: Service[] = [
   {
     id: 'escolar',
     name: 'Escolar',
+    menuText: 'Acompañamiento escolar con Grupo Laplace',
     summary: 'Refuerzo académico y acompañamiento para estudiantes de nivel escolar.',
     to: '/servicios/escolar',
     icon: School,
@@ -57,6 +60,7 @@ export const services: Service[] = [
   {
     id: 'universitario',
     name: 'Universitario',
+    menuText: 'Matemática, cálculo, química y física',
     summary: 'Acompañamiento en cursos de matemática, cálculo, química y física.',
     to: '/servicios/universitario',
     icon: GraduationCap,
@@ -66,6 +70,7 @@ export const services: Service[] = [
   {
     id: 'orientacion',
     name: 'Orientación vocacional',
+    menuText: 'Explora tus opciones profesionales',
     summary: 'Asesoría para descubrir intereses y explorar opciones profesionales.',
     to: '/servicios/orientacion-vocacional',
     icon: Compass,
@@ -75,6 +80,7 @@ export const services: Service[] = [
   {
     id: 'grabados',
     name: 'Cursos grabados',
+    menuText: 'Próxima propuesta de aprendizaje digital',
     summary: 'Una futura propuesta de aprendizaje mediante clases y materiales digitales.',
     icon: PlayCircle,
     audience: 'Próximo lanzamiento',
