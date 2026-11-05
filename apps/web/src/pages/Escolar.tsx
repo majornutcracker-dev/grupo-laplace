@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
-import { Breadcrumbs, PhotoFrame, buttonClasses, cn } from '@grupo-laplace/ui'
-import { CtaBand, PracticalInfo, SectionHeading, TeacherCard } from '../components/Blocks'
+import { Breadcrumbs, buttonClasses, cn } from '@grupo-laplace/ui'
+import { ArtFrame, CtaBand, PracticalInfo, SectionHeading, TeacherCard } from '../components/Blocks'
+import { TutoringScene } from '../illustrations/Scenes'
+import { delay } from '../lib/motion'
 import { WhatsAppButton } from '../components/WhatsAppButton'
 import { laplaceConfig } from '../config/site'
 import { escolar, teachers } from '../data/content'
@@ -51,10 +53,10 @@ export default function Escolar() {
             <p className="type-caption mt-8 text-text-muted">Servicio Escolar presentado por Grupo ALPAS.</p>
           </div>
           <div className="relative mx-auto w-full max-w-[30rem] lg:max-w-none">
-            <div aria-hidden className="absolute -right-4 -bottom-4 size-2/3 rounded-xl bg-surface-accent" />
-            <PhotoFrame className="relative" alt={escolar.photoNote} ratio="4/5" />
-            <DeltaMark className="absolute -top-5 -left-4 size-14" />
-            <DeltaMark tone="secondary" className="absolute right-6 -bottom-6 size-10" />
+            <div aria-hidden className="pop-in absolute -right-4 -bottom-4 size-2/3 rounded-xl bg-surface-accent" style={delay(150)} />
+            <ArtFrame className="pop-in relative aspect-[6/5]"><TutoringScene title="Ilustración: docente de Grupo Laplace explicando matemática a una estudiante" /></ArtFrame>
+            <DeltaMark className="pop-in float-y absolute -top-5 -left-4 size-14" />
+            <DeltaMark tone="secondary" className="float-y absolute right-6 -bottom-6 size-10" />
           </div>
         </div>
       </section>
@@ -74,8 +76,9 @@ export default function Escolar() {
           {escolar.areas.map(({ name, icon: Icon }, i) => (
             <li
               key={name}
+              style={delay(i * 60)}
               className={cn(
-                'flex min-h-28 flex-col justify-between gap-4 rounded-xl p-5',
+                'reveal lift flex min-h-28 flex-col justify-between gap-4 rounded-xl p-5',
                 i % 3 === 0 ? 'bg-brand-primary text-white' : i % 3 === 1 ? 'bg-surface-accent text-text-heading' : 'bg-surface-muted text-text-heading',
               )}
             >
@@ -91,8 +94,8 @@ export default function Escolar() {
         <div className="container-wide section-y">
           <SectionHeading id="benefits-title" inverse title="Por qué estudiar con Grupo Laplace" />
           <ul className="mt-12 grid gap-10 md:grid-cols-3">
-            {escolar.benefits.map((b) => (
-              <li key={b.title}>
+            {escolar.benefits.map((b, i) => (
+              <li key={b.title} className="reveal" style={delay(i * 100)}>
                 <DeltaMark className="size-9" />
                 <h3 className="type-h4 mt-5 text-white">{b.title}</h3>
                 <p className="type-body mt-2 text-white/85">{b.text}</p>
@@ -118,7 +121,7 @@ export default function Escolar() {
       </section>
 
       <div className="pt-[var(--space-section-y)]">
-        <CtaBand title="¿Listo para entender tus cursos?" description="Escríbenos y te contamos cómo acompañamos a tu hijo o hija en el colegio."
+        <CtaBand art={<TutoringScene bg={false} />} title="¿Listo para entender tus cursos?" description="Escríbenos y te contamos cómo acompañamos a tu hijo o hija en el colegio."
           whatsappUrl={wa}
           decoration={
             <>

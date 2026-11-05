@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom'
 import type { LucideIcon } from 'lucide-react'
 import { Facebook, Instagram, Mail, MapPin, MessageCircle, Music2, Phone, Youtube } from 'lucide-react'
 import { Breadcrumbs, Note, PlusMark } from '@grupo-laplace/ui'
+import { ArtFrame } from '../components/Blocks'
 import { WhatsAppButton } from '../components/WhatsAppButton'
+import { ChatScene } from '../illustrations/Scenes'
 import { siteConfig } from '../config/site'
 import { contacto } from '../data/content'
 import { socialLinks, socialNames, whatsappUrl } from '../lib/contact'
@@ -56,7 +58,8 @@ export default function Contacto() {
           </div>
         </div>
 
-        <div className="lg:pt-24">
+        <div className="lg:pt-10">
+          <ArtFrame className="pop-in mb-10 hidden aspect-square max-w-[18rem] lg:block"><ChatScene /></ArtFrame>
           <h2 className="type-h5">Otros canales</h2>
           <ul className="mt-2 divide-y divide-border-default border-y border-border-default">
             <Channel icon={MessageCircle} label="WhatsApp" value={contact.whatsappNumber ? `+${contact.whatsappNumber}` : undefined} href={wa ?? undefined} />

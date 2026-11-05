@@ -6,7 +6,7 @@ import { cn } from '../lib/cn'
 export function PlusMark({ className, tone = 'secondary' }: { className?: string; tone?: 'secondary' | 'primary' | 'accent' | 'inverse' }) {
   const colors = { secondary: 'bg-brand-secondary', primary: 'bg-brand-primary', accent: 'bg-brand-accent', inverse: 'bg-white' }
   return (
-    <span aria-hidden className={cn('relative inline-block size-10', className)}>
+    <span aria-hidden className={cn('inline-block size-10', !/\b(absolute|fixed)\b/.test(className ?? '') && 'relative', className)}>
       <span className={cn('absolute top-1/2 left-0 h-[28%] w-full -translate-y-1/2 rounded-pill', colors[tone])} />
       <span className={cn('absolute top-0 left-1/2 h-full w-[28%] -translate-x-1/2 rounded-pill', colors[tone])} />
     </span>

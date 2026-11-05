@@ -1,6 +1,7 @@
 import { Steps } from '@grupo-laplace/ui'
-import { BenefitColumns, CtaBand, FaqBlock, PageHero, PracticalInfo, SectionHeading } from '../components/Blocks'
+import { BenefitCards, CtaBand, FaqBlock, PageHero, PracticalInfo, SectionHeading } from '../components/Blocks'
 import { home, universitario as u } from '../data/content'
+import { UniversityScene } from '../illustrations/Scenes'
 import { usePageMeta } from '../lib/usePageMeta'
 
 export default function Universitario() {
@@ -11,7 +12,7 @@ export default function Universitario() {
         crumbs={[{ label: 'Inicio', href: '/' }, { label: 'Servicios', href: '/servicios' }, { label: 'Universitario' }]}
         title={u.hero.title}
         description={u.hero.description}
-        photoNote={u.hero.photoNote}
+        art={<UniversityScene />}
       />
 
       <section aria-labelledby="areas-title" className="container-wide section-y grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-20">
@@ -39,7 +40,7 @@ export default function Universitario() {
 
       <section aria-labelledby="benefits-title" className="container-wide section-y">
         <SectionHeading id="benefits-title" title="Lo que ganas con el acompañamiento" />
-        <div className="mt-12"><BenefitColumns items={u.benefits} /></div>
+        <div className="mt-12"><BenefitCards items={u.benefits} /></div>
       </section>
 
       <section aria-label="Modalidad, horarios e inversión" className="bg-surface-accent">

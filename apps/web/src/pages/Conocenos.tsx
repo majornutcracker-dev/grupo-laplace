@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { PhotoFrame, PlusMark, buttonClasses } from '@grupo-laplace/ui'
 import { CtaBand, PageHero, SectionHeading, TeacherCard } from '../components/Blocks'
 import { conocenos as c, teachers } from '../data/content'
+import { StudyGroupScene } from '../illustrations/Scenes'
 import { usePageMeta } from '../lib/usePageMeta'
 
 export default function Conocenos() {
@@ -12,7 +13,7 @@ export default function Conocenos() {
         crumbs={[{ label: 'Inicio', href: '/' }, { label: 'Conócenos' }]}
         title={c.hero.title}
         description={c.hero.description}
-        photoNote={c.hero.photoNote}
+        art={<StudyGroupScene />}
         actions={<Link to="/servicios" className={buttonClasses({ variant: 'primary' })}>Explorar servicios</Link>}
       />
 

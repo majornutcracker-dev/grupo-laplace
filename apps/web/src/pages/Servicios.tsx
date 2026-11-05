@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Clock } from 'lucide-react'
-import { Breadcrumbs, IconBadge, PhotoFrame, PlusMark, Tag, buttonClasses, cn } from '@grupo-laplace/ui'
-import { CtaBand } from '../components/Blocks'
+import { Breadcrumbs, IconBadge, PlusMark, Tag, buttonClasses, cn } from '@grupo-laplace/ui'
+import { ArtFrame, CtaBand } from '../components/Blocks'
+import { GuidanceScene, RecordedScene, TutoringScene, UniversityScene } from '../illustrations/Scenes'
+import { Sparkle } from '../illustrations/Doodles'
+
+const art = { escolar: TutoringScene, universitario: UniversityScene, orientacion: GuidanceScene, grabados: RecordedScene }
 import { home, services, servicesPage } from '../data/content'
 import { usePageMeta } from '../lib/usePageMeta'
 
@@ -24,19 +28,17 @@ export default function Servicios() {
           return (
             <article key={s.id} aria-labelledby={`srv-${s.id}`} className="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
               <div className={cn('relative mx-auto w-full max-w-md lg:max-w-none', reverse && 'lg:order-last')}>
-                {s.comingSoon ? (
-                  <div className="frame-tab grid aspect-[5/4] place-items-center bg-surface-muted">
-                    <div className="flex flex-col items-center gap-4 text-center">
-                      <IconBadge tone="primary" className="size-16 [&_svg]:size-8"><Icon /></IconBadge>
-                      <Tag color="warning" icon={<Clock className="size-3.5" aria-hidden />}>Próximamente</Tag>
-                    </div>
-                  </div>
-                ) : (
-                  <PhotoFrame alt={s.photoNote} src={s.photo} ratio="5/4" />
+                {(() => {
+                  const Scene = art[s.id]
+                  return <ArtFrame className="reveal aspect-[6/5]"><Scene /></ArtFrame>
+                })()}
+                {s.comingSoon && (
+                  <Tag color="warning" icon={<Clock className="size-3.5" aria-hidden />} className="absolute top-5 left-5 shadow-neutral">Próximamente</Tag>
                 )}
-                <PlusMark className={cn('absolute -top-4 size-11', reverse ? '-left-3' : '-right-3')} />
+                <PlusMark className={cn('float-y absolute -top-4 size-11', reverse ? '-left-3' : '-right-3')} />
+                <Sparkle className={cn('float-y absolute -bottom-4 size-8', reverse ? '-right-2' : '-left-2')} />
               </div>
-              <div>
+              <div className="reveal">
                 <div className="flex items-center gap-3">
                   <IconBadge tone={s.comingSoon ? 'secondary' : 'primary'}><Icon /></IconBadge>
                   {s.comingSoon ? <Tag color="warning">Próximo lanzamiento</Tag> : <Tag color="first">{s.audience}</Tag>}

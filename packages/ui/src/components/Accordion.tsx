@@ -7,11 +7,11 @@ export function Accordion({ items, className }: { items: Array<{ question: strin
   const baseId = useId()
   const [open, setOpen] = useState<number | null>(null)
   return (
-    <div className={cn('border-y border-border-default', className)}>
+    <div className={cn('flex flex-col gap-3', className)}>
       {items.map((it, i) => {
         const isOpen = open === i
         return (
-          <div key={it.question} className="border-b border-border-default last:border-b-0">
+          <div key={it.question} className={cn('rounded-xl px-5 transition-colors duration-200 sm:px-6', isOpen ? 'bg-white shadow-raised ring-1 ring-border-subtle' : 'bg-surface-subtle ring-1 ring-border-subtle hover:bg-white')}>
             <h3>
               <button
                 id={`${baseId}-b${i}`}

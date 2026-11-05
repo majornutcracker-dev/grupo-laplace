@@ -6,15 +6,36 @@
 @source '..';
 @source '../../../../packages/ui/src';
 
-/* Único momento animado del sitio: la entrada del hero de Inicio */
-@keyframes hero-rise {
-  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+/* ── Motion ───────────────────────────────────────────────────────────
+   1. Entrada orquestada del hero (pop-in escalonado con --d).
+   2. Flotación lenta de piezas decorativas.
+   3. Revelado al entrar en pantalla (.reveal): solo si JS activó html.motion,
+      así el contenido es visible aunque el script no corra.
+   Todo se anula con prefers-reduced-motion. */
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.94); }
   to { opacity: 1; transform: none; }
 }
-@keyframes hero-pop {
-  from { opacity: 0; transform: scale(0.4) rotate(-45deg); }
-  to { opacity: 1; transform: none; }
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
-.hero-photo { animation: hero-rise var(--duration-slow) var(--ease-emphasized) both; animation-duration: 600ms; }
-.hero-plus { animation: hero-pop 500ms var(--ease-emphasized) 350ms both; }
-.hero-block { animation: hero-rise 700ms var(--ease-emphasized) 120ms both; }
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+.pop-in { animation: pop-in 640ms var(--ease-emphasized) both; animation-delay: var(--d, 0ms); }
+.float-y { animation: float-y 6s ease-in-out infinite; animation-delay: var(--d, 0ms); }
+.draw-line path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 900ms var(--ease-emphasized) 700ms forwards; }
+
+.motion .reveal { opacity: 0; transform: translateY(28px); transition: opacity 700ms var(--ease-emphasized), transform 700ms var(--ease-emphasized); transition-delay: var(--d, 0ms); }
+.motion .reveal.in { opacity: 1; transform: none; }
+
+.lift { transition: transform 240ms var(--ease-standard), box-shadow 240ms var(--ease-standard); }
+.lift:hover { transform: translateY(-4px); box-shadow: var(--shadow-raised); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pop-in, .float-y { animation: none; }
+  .draw-line path { stroke-dasharray: none; animation: none; }
+  .motion .reveal { opacity: 1; transform: none; transition: none; }
+  .lift:hover { transform: none; }
+}

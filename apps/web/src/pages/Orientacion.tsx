@@ -1,7 +1,8 @@
 import { CheckCircle2 } from 'lucide-react'
 import { Steps } from '@grupo-laplace/ui'
-import { BenefitColumns, CtaBand, FaqBlock, PageHero, SectionHeading } from '../components/Blocks'
+import { BenefitCards, CtaBand, FaqBlock, PageHero, SectionHeading } from '../components/Blocks'
 import { orientacion as o } from '../data/content'
+import { GuidanceScene } from '../illustrations/Scenes'
 import { usePageMeta } from '../lib/usePageMeta'
 
 export default function Orientacion() {
@@ -12,7 +13,7 @@ export default function Orientacion() {
         crumbs={[{ label: 'Inicio', href: '/' }, { label: 'Servicios', href: '/servicios' }, { label: 'Orientación vocacional' }]}
         title={o.hero.title}
         description={o.hero.description}
-        photoNote={o.hero.photoNote}
+        art={<GuidanceScene />}
       />
 
       <section aria-labelledby="intro-title" className="container-wide section-y grid gap-12 lg:grid-cols-2 lg:gap-20">
@@ -36,7 +37,7 @@ export default function Orientacion() {
       <section aria-labelledby="offers-title" className="bg-surface-inverse">
         <div className="container-wide section-y">
           <SectionHeading id="offers-title" inverse title="¿Qué ofrece la orientación vocacional?" />
-          <div className="mt-12"><BenefitColumns inverse items={o.offers} /></div>
+          <div className="mt-12"><BenefitCards inverse items={o.offers} /></div>
         </div>
       </section>
 

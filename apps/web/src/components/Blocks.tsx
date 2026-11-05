@@ -2,18 +2,42 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import type { LucideIcon } from 'lucide-react'
 import { CalendarClock, ChevronRight, Laptop, Wallet } from 'lucide-react'
-import { Accordion, Breadcrumbs, IconBadge, PhotoFrame, PlusMark, Tag, buttonClasses, cn } from '@grupo-laplace/ui'
+import { Accordion, Breadcrumbs, PhotoFrame, PlusMark, Tag, cn } from '@grupo-laplace/ui'
 import type { Service, Teacher } from '../data/content'
+import { Sparkle } from '../illustrations/Doodles'
+import { TutoringScene } from '../illustrations/Scenes'
+import { delay } from '../lib/motion'
 import { WhatsAppButton } from './WhatsAppButton'
 
-/* ── Encabezado de sección ─────────────────────────────────────────── */
-export function SectionHeading({ title, description, inverse, id, className }: { title: string; description?: ReactNode; inverse?: boolean; id?: string; className?: string }) {
+/* Tonos de los cuadros de icono, en rotación (inspirado en las referencias, dentro de la paleta) */
+const iconTones = [
+  'bg-brand-primary text-white',
+  'bg-brand-secondary text-white',
+  'bg-surface-accent text-text-accent',
+  'bg-surface-muted text-text-heading',
+]
+
+export function IconTile({ icon: Icon, tone = 0, className }: { icon: LucideIcon; tone?: number; className?: string }) {
   return (
-    <div className={cn('max-w-[40rem]', className)}>
+    <span aria-hidden className={cn('grid size-14 shrink-0 place-items-center rounded-lg [&_svg]:size-6.5', iconTones[tone % iconTones.length], className)}>
+      <Icon />
+    </span>
+  )
+}
+
+/* ── Encabezado de sección ─────────────────────────────────────────── */
+export function SectionHeading({ title, description, inverse, id, align = 'left', className }: { title: string; description?: ReactNode; inverse?: boolean; id?: string; align?: 'left' | 'center'; className?: string }) {
+  return (
+    <div className={cn('max-w-[40rem]', align === 'center' && 'mx-auto text-center', className)}>
       <h2 id={id} className={cn('type-h2', inverse && 'text-white')}>{title}</h2>
       {description && <p className={cn('type-body-lg mt-4', inverse ? 'text-text-inverse-muted' : 'text-text-body')}>{description}</p>}
     </div>
   )
+}
+
+/* ── Marco de ilustración con forma de pestaña ─────────────────────── */
+export function ArtFrame({ children, className }: { children: ReactNode; className?: string }) {
+  return <div className={cn('frame-tab relative overflow-hidden [&>svg]:block [&>svg]:size-full', className)}>{children}</div>
 }
 
 /* ── Hero de páginas interiores ────────────────────────────────────── */
@@ -21,74 +45,65 @@ export function PageHero({
   crumbs,
   title,
   description,
-  photoNote,
-  photo,
+  art,
   aside,
   actions,
 }: {
   crumbs: Array<{ label: string; href?: string }>
   title: string
   description: string
-  photoNote: string
-  photo?: string
+  art: ReactNode
   aside?: ReactNode
   actions?: ReactNode
 }) {
   return (
-    <section aria-labelledby="page-title" className="bg-surface-subtle">
-      <div className="container-wide grid items-center gap-10 pt-8 pb-14 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:pt-12 lg:pb-20">
+    <section aria-labelledby="page-title" className="relative overflow-hidden bg-surface-subtle">
+      <div className="container-wide grid items-center gap-12 pt-8 pb-16 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:pt-12 lg:pb-24">
         <div>
           <Breadcrumbs items={crumbs} renderLink={(href, label) => <Link to={href}>{label}</Link>} />
           {aside && <div className="mt-8">{aside}</div>}
-          <h1 id="page-title" className="type-h1 mt-6 max-w-[18ch]">{title}</h1>
-          <p className="type-body-lg mt-5 max-w-[36rem] text-text-body">{description}</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">{actions ?? <WhatsAppButton />}</div>
+          <h1 id="page-title" className="type-h1 pop-in mt-6 max-w-[18ch]">{title}</h1>
+          <p className="type-body-lg pop-in mt-5 max-w-[36rem] text-text-body" style={delay(80)}>{description}</p>
+          <div className="pop-in mt-8 flex flex-col gap-3 sm:flex-row" style={delay(160)}>{actions ?? <WhatsAppButton />}</div>
         </div>
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-          <PhotoFrame src={photo} alt={photoNote} ratio="5/4" />
-          <PlusMark className="absolute -top-4 -right-2 size-12 lg:-right-5" />
+          <ArtFrame className="pop-in aspect-[6/5]" >{art}</ArtFrame>
+          <PlusMark className="float-y absolute -top-5 -right-2 size-12 lg:-right-5" />
+          <Sparkle className="float-y absolute -bottom-4 -left-3 size-8" />
         </div>
       </div>
     </section>
   )
 }
 
-/* ── Índice de servicios (Inicio): filas, no tarjetas idénticas ────── */
-export function ServiceIndex({ items }: { items: Service[] }) {
+/* ── Tiles de servicios (Inicio) ───────────────────────────────────── */
+export function ServiceTiles({ items }: { items: Service[] }) {
   return (
-    <ul className="divide-y divide-border-default border-y border-border-default">
-      {items.map((s) => {
-        const Icon = s.icon
-        const body = (
+    <ul className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+      {items.map((s, i) => {
+        const inner = (
           <>
-            <IconBadge tone={s.comingSoon ? 'secondary' : 'primary'}><Icon /></IconBadge>
-            <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                <h3 className="type-h4 text-[1.5rem] sm:text-h4">{s.name}</h3>
-                {s.comingSoon ? <Tag color="warning">Próximamente</Tag> : <Tag color="first">{s.audience}</Tag>}
-              </div>
-              <p className="type-body mt-1 max-w-[36rem] text-text-body">{s.summary}</p>
+            <div className="flex items-start justify-between gap-3">
+              <IconTile icon={s.icon} tone={i} />
+              {s.comingSoon && <Tag color="warning">Próximamente</Tag>}
             </div>
-            <span
-              className={cn(
-                'type-label hidden shrink-0 items-center gap-1 sm:inline-flex',
-                s.comingSoon ? 'text-text-muted' : 'text-text-heading group-hover:text-text-accent',
-              )}
-            >
+            <h3 className="type-h4 mt-6 text-[1.5rem]">{s.name}</h3>
+            <p className="type-body-sm mt-2 flex-1 text-text-body">{s.summary}</p>
+            <span className={cn('type-label mt-6 inline-flex items-center gap-1', s.comingSoon ? 'text-text-muted' : 'text-text-heading group-hover:text-text-accent')}>
               {s.comingSoon ? 'Próximamente' : 'Conocer más'}
-              {!s.comingSoon && <ChevronRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden />}
+              {!s.comingSoon && <ChevronRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden />}
             </span>
           </>
         )
         return (
-          <li key={s.id}>
+          <li key={s.id} className="reveal" style={delay(i * 90)}>
             {s.to ? (
-              <Link to={s.to} className="group flex items-center gap-5 rounded-lg py-6 transition-colors duration-200 hover:bg-surface-subtle sm:gap-6 sm:px-4">
-                {body}
-                <span className="sr-only">Conocer más sobre {s.name}</span>
+              <Link to={s.to} className="lift group flex h-full flex-col rounded-xl border border-border-subtle bg-white p-6 shadow-neutral">
+                {inner}
+                <span className="sr-only"> sobre {s.name}</span>
               </Link>
             ) : (
-              <div className="flex items-center gap-5 py-6 opacity-80 sm:gap-6 sm:px-4" aria-label={`${s.name}: próximamente`}>{body}</div>
+              <div className="flex h-full flex-col rounded-xl border border-dashed border-border-strong bg-surface-subtle p-6">{inner}</div>
             )}
           </li>
         )
@@ -97,14 +112,18 @@ export function ServiceIndex({ items }: { items: Service[] }) {
   )
 }
 
-/* ── Beneficios en columnas con filete, sin tarjetas ───────────────── */
-export function BenefitColumns({ items, inverse }: { items: Array<{ icon: LucideIcon; title: string; text: string }>; inverse?: boolean }) {
+/* ── Beneficios: tarjetas con icono de color ───────────────────────── */
+export function BenefitCards({ items, inverse }: { items: Array<{ icon: LucideIcon; title: string; text: string }>; inverse?: boolean }) {
   const cols = items.length % 3 === 0 ? 'md:grid-cols-3' : 'sm:grid-cols-2 lg:grid-cols-4'
   return (
-    <ul className={cn('grid gap-px overflow-hidden rounded-xl', cols, inverse ? 'bg-white/10' : 'bg-border-default')}>
-      {items.map(({ icon: Icon, title, text }) => (
-        <li key={title} className={cn('flex flex-col gap-4 p-6 sm:p-8', inverse ? 'bg-surface-inverse' : 'bg-white')}>
-          <IconBadge tone={inverse ? 'inverse' : 'secondary'}><Icon /></IconBadge>
+    <ul className={cn('grid gap-5', cols)}>
+      {items.map(({ icon, title, text }, i) => (
+        <li
+          key={title}
+          className={cn('reveal flex flex-col gap-4 rounded-xl p-6 sm:p-7', inverse ? 'bg-white/6 ring-1 ring-white/10' : 'bg-white shadow-neutral ring-1 ring-border-subtle')}
+          style={delay(i * 90)}
+        >
+          <IconTile icon={icon} tone={inverse ? (i % 2 ? 1 : 2) : i} />
           <h3 className={cn('type-h5', inverse && 'text-white')}>{title}</h3>
           <p className={cn('type-body-sm', inverse ? 'text-text-inverse-muted' : 'text-text-body')}>{text}</p>
         </li>
@@ -114,11 +133,23 @@ export function BenefitColumns({ items, inverse }: { items: Array<{ icon: Lucide
 }
 
 /* ── Tarjeta de docente: espacios editables, sin datos inventados ──── */
-export function TeacherCard({ teacher }: { teacher: Teacher }) {
+export function TeacherCard({ teacher, index = 0 }: { teacher: Teacher; index?: number }) {
   const pending = !teacher.name
   return (
-    <article className="flex flex-col">
-      <PhotoFrame src={teacher.photo} alt={teacher.name ? `Foto de ${teacher.name}` : 'Foto del docente pendiente'} pendingLabel="Foto pendiente" ratio="4/5" />
+    <article className="reveal flex flex-col" style={delay(index * 90)}>
+      {teacher.photo ? (
+        <PhotoFrame src={teacher.photo} alt={teacher.name ? `Foto de ${teacher.name}` : 'Foto del docente'} ratio="4/5" />
+      ) : (
+        <div role="img" aria-label="Foto del docente pendiente" className="frame-tab relative aspect-[4/5] overflow-hidden bg-surface-muted">
+          {/* Silueta genérica sin rostro: marca el espacio de la foto real */}
+          <svg viewBox="0 0 200 250" aria-hidden className="absolute inset-x-0 bottom-0 w-full">
+            <circle cx="100" cy="92" r="42" className="fill-primary-2" opacity="0.55" />
+            <path d="M24 250c0-60 34-96 76-96s76 36 76 96Z" className="fill-primary-2" opacity="0.55" />
+          </svg>
+          <PlusMark className="absolute top-5 right-5 size-7 opacity-80" />
+          <span className="type-caption absolute top-5 left-5 rounded-pill bg-white px-3 py-1 text-text-muted">Foto pendiente</span>
+        </div>
+      )}
       <div className="mt-5">
         {teacher.specialty ? <Tag color="first">{teacher.specialty}</Tag> : <Tag color="disabled">Especialidad pendiente</Tag>}
         <h3 className={cn('type-h5 mt-3', pending && 'text-text-muted')}>{teacher.name ?? 'Nombre del docente'}</h3>
@@ -128,25 +159,43 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
   )
 }
 
-/* ── CTA final ─────────────────────────────────────────────────────── */
-export function CtaBand({ title, description, whatsappUrl, extra, decoration }: { title: string; description: string; whatsappUrl?: string | null; extra?: ReactNode; decoration?: ReactNode }) {
+/* ── CTA final con ilustración ─────────────────────────────────────── */
+export function CtaBand({
+  title,
+  description,
+  whatsappUrl,
+  extra,
+  decoration,
+  art,
+  tone = 'inverse',
+}: {
+  title: string
+  description: string
+  whatsappUrl?: string | null
+  extra?: ReactNode
+  decoration?: ReactNode
+  art?: ReactNode
+  /** green: panel verde ALPAS (texto blanco 5.9:1); inverse: color estructural del tema */
+  tone?: 'inverse' | 'green'
+}) {
   return (
     <section aria-labelledby="cta-title" className="container-wide pb-[var(--space-section-y)]">
-      <div className="frame-tab relative overflow-hidden bg-surface-inverse px-6 py-14 sm:px-12 lg:px-16 lg:py-20">
+      <div className={cn('reveal frame-tab relative grid overflow-hidden lg:grid-cols-[1.2fr_1fr]', tone === 'green' ? 'bg-green-deep' : 'bg-surface-inverse')}>
         {decoration ?? (
           <>
-            <PlusMark className="absolute top-8 right-8 size-16 opacity-90 sm:size-20" />
-            <PlusMark tone="inverse" className="absolute right-28 bottom-10 hidden size-6 opacity-30 sm:block" />
+            <PlusMark tone="inverse" className="float-y absolute top-8 left-[45%] hidden size-8 opacity-40 lg:block" />
+            <PlusMark tone={tone === 'green' ? 'inverse' : 'secondary'} className="absolute top-8 right-8 size-12 opacity-90 lg:hidden" />
           </>
         )}
-        <div className="relative max-w-2xl">
-          <h2 id="cta-title" className="type-h2 text-white">{title}</h2>
-          <p className="type-body-lg mt-4 text-text-inverse-muted">{description}</p>
+        <div className="relative px-6 py-14 sm:px-12 lg:px-16 lg:py-20">
+          <h2 id="cta-title" className="type-h2 max-w-[18ch] text-white">{title}</h2>
+          <p className={cn('type-body-lg mt-4 max-w-[34rem]', tone === 'green' ? 'text-white/90' : 'text-text-inverse-muted')}>{description}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <WhatsAppButton url={whatsappUrl} />
+            <WhatsAppButton url={whatsappUrl} variant={tone === 'green' ? 'inverse' : 'secondary'} />
             {extra}
           </div>
         </div>
+        <div className="relative hidden self-end lg:block [&>svg]:block [&>svg]:h-auto [&>svg]:w-full">{art ?? <TutoringScene bg={false} />}</div>
       </div>
     </section>
   )
@@ -164,13 +213,13 @@ export function PracticalInfo({ title = 'Modalidad, horarios e inversión', what
       <div>
         <h2 className="type-h3">{title}</h2>
         <p className="type-body mt-3 text-text-body">Esta información cambia según el periodo, así que la damos actualizada por WhatsApp.</p>
-        <div className="mt-6"><WhatsAppButton label="Consultar por WhatsApp" url={whatsappUrl} variant="primary" /></div>
+        <div className="mt-6"><WhatsAppButton url={whatsappUrl} variant="primary" /></div>
       </div>
       <dl className="grid gap-4 sm:grid-cols-3">
-        {rows.map(({ icon: Icon, label, text }) => (
-          <div key={label} className="rounded-xl bg-surface-muted p-5">
-            <dt className="flex items-center gap-2 type-label text-text-heading"><Icon className="size-5 text-text-accent" aria-hidden />{label}</dt>
-            <dd className="type-body-sm mt-2 text-text-body">{text}</dd>
+        {rows.map(({ icon, label, text }, i) => (
+          <div key={label} className="reveal rounded-xl bg-white p-5 shadow-neutral ring-1 ring-border-subtle" style={delay(i * 90)}>
+            <dt className="flex items-center gap-3 type-label text-text-heading"><IconTile icon={icon} tone={i + 1} className="size-10 rounded-md [&_svg]:size-5" />{label}</dt>
+            <dd className="type-body-sm mt-3 text-text-body">{text}</dd>
           </div>
         ))}
       </dl>
@@ -188,7 +237,3 @@ export function FaqBlock({ items }: { items: Array<{ question: string; answer: s
   )
 }
 
-/* ── Enlace secundario con estilo de botón (router) ────────────────── */
-export function RouterButton({ to, children, variant = 'outlined' }: { to: string; children: ReactNode; variant?: 'outlined' | 'neutral' | 'primary' | 'text' }) {
-  return <Link to={to} className={buttonClasses({ variant })}>{children}</Link>
-}
