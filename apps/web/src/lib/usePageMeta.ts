@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-/** Título y meta descripción por página (SEO básico en SPA). */
+/** Título y meta descripción por página. */
 export function usePageMeta(title: string, description?: string) {
   useEffect(() => {
     document.title = title

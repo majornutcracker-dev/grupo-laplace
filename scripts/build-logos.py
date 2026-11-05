@@ -9,8 +9,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / 'brand/figma-source/logo-horizontal-color.svg'
 OUT = ROOT / 'brand/logos'
 OUT.mkdir(parents=True, exist_ok=True)
-# Copia que consume el componente <Logo /> del UI Kit
-UI_ASSETS = ROOT / 'packages/ui/src/assets/brand'
+
 
 NAVY, CELESTE, WHITE = '#102C53', '#33A5CC', '#FFFFFF'
 svg = SRC.read_text()
@@ -68,9 +67,5 @@ for name, (cl, cp, cd, cr, cw) in VARIANTS.items():
             f'<g transform="translate({-wx0:.2f} {iso_h + gap - 7.1:.2f})">{wordmark(cw)}</g>')
     H = iso_h + gap + 52.3
     (OUT / f'logo-vertical-{name}.svg').write_text(wrap(round(W), round(H), body, vb=f'0 0 {W:.1f} {H:.1f}'))
-
-UI_ASSETS.mkdir(parents=True, exist_ok=True)
-for f in OUT.glob('*.svg'):
-    (UI_ASSETS / f.name).write_text(f.read_text())
 
 print('OK', sorted(p.name for p in OUT.iterdir()))

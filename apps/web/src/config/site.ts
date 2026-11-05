@@ -1,27 +1,24 @@
 /**
- * Configuración editable de la academia.
- * Todo dato vacío ('') se considera PENDIENTE: la web oculta o desactiva el elemento
- * en lugar de inventar información. Completa estos campos con datos reales.
+ * Datos de contacto de Grupo ALPAS.
+ * Todo campo vacío ('') es información PENDIENTE de la organización: la web lo oculta
+ * o lo marca como pendiente en lugar de inventarlo.
  */
 export const siteConfig = {
-  name: 'Grupo Laplace',
-  tagline: 'Aprender juntos, llegar más lejos.',
+  name: 'Grupo ALPAS',
   description:
-    'Academia de reforzamiento en matemáticas y química para estudiantes de secundaria.',
+    'Servicios educativos para estudiantes escolares y universitarios, y orientación vocacional. Acompañamos tu aprendizaje en cada etapa.',
 
   contact: {
-    /** Número con código de país, solo dígitos. Ej.: '51987654321' (pendiente) */
+    /** Número de WhatsApp con código de país, solo dígitos. Ej.: '51987654321'. Pendiente. */
     whatsappNumber: '',
-    /** Mensaje inicial que se precarga en WhatsApp */
-    whatsappMessage: 'Hola, Grupo Laplace. Quisiera recibir información sobre sus cursos.',
-    email: '',
+    /** Mensaje con el que se abre la conversación */
+    whatsappMessage: 'Hola, Grupo ALPAS. Quisiera información sobre sus servicios.',
+    /** Número visible para llamadas (puede ser el mismo de WhatsApp). Pendiente. */
     phone: '',
-    /** Dirección o referencia de la sede (pendiente) */
+    email: '',
+    /** Dirección o referencia de la sede, si corresponde. Pendiente. */
     address: '',
-    /** URL de Google Maps u otro mapa (pendiente) */
     mapUrl: '',
-    /** Horario de atención (pendiente — no inventar) */
-    officeHours: '',
   },
 
   social: {
@@ -30,20 +27,14 @@ export const siteConfig = {
     tiktok: '',
     youtube: '',
   },
-
-  form: {
-    /**
-     * Endpoint que recibe el formulario de contacto (Formspree, API propia, etc.).
-     * Mientras esté vacío, el formulario NO simula un envío: ofrece WhatsApp si está
-     * configurado o informa que aún no hay un servicio conectado.
-     */
-    endpoint: '',
-  },
-
-  legal: {
-    privacyUrl: '',
-    termsUrl: '',
-  },
 }
 
-export type SiteConfig = typeof siteConfig
+/** Grupo Laplace: marca educativa independiente que colabora con ALPAS en el servicio Escolar. */
+export const laplaceConfig = {
+  name: 'Grupo Laplace',
+  tagline: '¡Todo empieza cuando lo entiendes!',
+  /** Logotipo oficial de Laplace (ruta o URL). Mientras falte, se muestra el nombre en texto. */
+  logoSrc: '',
+  /** WhatsApp propio de Laplace, si tiene uno. Vacío: se usa el de ALPAS. */
+  whatsappNumber: '',
+}

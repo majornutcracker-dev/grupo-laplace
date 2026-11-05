@@ -1,14 +1,18 @@
-import { siteConfig } from '../config/site'
+import { laplaceConfig, siteConfig } from '../config/site'
 
-export const hasWhatsapp = () => siteConfig.contact.whatsappNumber.trim().length > 0
+const digits = (n: string) => n.replace(/\D/g, '')
 
-/** Devuelve el enlace wa.me o null si el número aún no está configurado. */
-export function whatsappUrl(message: string = siteConfig.contact.whatsappMessage) {
-  if (!hasWhatsapp()) return null
-  const number = siteConfig.contact.whatsappNumber.replace(/\D/g, '')
-  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`
+/** Enlace wa.me con mensaje, o null si el número aún no está configurado. */
+export function whatsappUrl(message: string = siteConfig.contact.whatsappMessage, number = siteConfig.contact.whatsappNumber) {
+  if (!digits(number)) return null
+  return `https://wa.me/${digits(number)}?text=${encodeURIComponent(message)}`
 }
 
+/** WhatsApp para el servicio Escolar: el de Laplace si existe, si no el de ALPAS. */
+export const laplaceWhatsappUrl = (message: string) =>
+  whatsappUrl(message, laplaceConfig.whatsappNumber || siteConfig.contact.whatsappNumber)
+
+export const socialNames = { facebook: 'Facebook', instagram: 'Instagram', tiktok: 'TikTok', youtube: 'YouTube' } as const
+
 export const socialLinks = () =>
-  (Object.entries(siteConfig.social) as Array<[keyof typeof siteConfig.social, string]>)
-    .filter(([, url]) => url.trim().length > 0)
+  (Object.entries(siteConfig.social) as Array<[keyof typeof siteConfig.social, string]>).filter(([, url]) => url.trim())

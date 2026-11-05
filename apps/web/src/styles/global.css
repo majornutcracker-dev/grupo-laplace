@@ -2,6 +2,19 @@
 @import '@grupo-laplace/tokens/tokens.css';
 @import '@grupo-laplace/ui/styles.css';
 
-/* Escanea todo src/ aunque el build use otra raíz (p. ej. src/artifact) y el código del UI Kit */
+/* Código de la app y del UI kit */
 @source '..';
 @source '../../../../packages/ui/src';
+
+/* Único momento animado del sitio: la entrada del hero de Inicio */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes hero-pop {
+  from { opacity: 0; transform: scale(0.4) rotate(-45deg); }
+  to { opacity: 1; transform: none; }
+}
+.hero-photo { animation: hero-rise var(--duration-slow) var(--ease-emphasized) both; animation-duration: 600ms; }
+.hero-plus { animation: hero-pop 500ms var(--ease-emphasized) 350ms both; }
+.hero-block { animation: hero-rise 700ms var(--ease-emphasized) 120ms both; }

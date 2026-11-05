@@ -2,7 +2,7 @@
   "name": "@grupo-laplace/tokens",
   "version": "0.0.0",
   "private": true,
-  "description": "Design tokens de Grupo Laplace (fuente: tokens.json → dist/tokens.css para Tailwind 4).",
+  "description": "Design tokens de Grupo ALPAS (variables de Figma) y tema Grupo Laplace: tokens.json → dist/tokens.css para Tailwind 4.",
   "type": "module",
   "files": [
     "tokens.json",

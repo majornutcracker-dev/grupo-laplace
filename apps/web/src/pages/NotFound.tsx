@@ -1,14 +1,18 @@
-import { Button } from '@grupo-laplace/ui'
+import { Link } from 'react-router-dom'
+import { PlusMark, buttonClasses } from '@grupo-laplace/ui'
 import { usePageMeta } from '../lib/usePageMeta'
 
 export default function NotFound() {
-  usePageMeta('Página no encontrada · Grupo Laplace')
+  usePageMeta('Página no encontrada · Grupo ALPAS')
   return (
-    <section className="container-page section-y text-center">
-      <p className="type-accent-number text-[5rem] text-celeste-500">404</p>
-      <h1 className="type-h2 mt-4">No encontramos esta página</h1>
-      <p className="type-body-lg mt-3 text-text-secondary">Puede que el enlace haya cambiado.</p>
-      <Button href={import.meta.env.BASE_URL} className="mt-8">Volver al inicio</Button>
+    <section className="container-wide section-y flex flex-col items-start">
+      <PlusMark className="size-14" />
+      <h1 className="type-h1 mt-8">No encontramos esta página</h1>
+      <p className="type-body-lg mt-4 text-text-body">Puede que el enlace haya cambiado. Vuelve al inicio o revisa nuestros servicios.</p>
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+        <Link to="/" className={buttonClasses({ variant: 'primary' })}>Ir al inicio</Link>
+        <Link to="/servicios" className={buttonClasses({ variant: 'outlined' })}>Ver servicios</Link>
+      </div>
     </section>
   )
 }

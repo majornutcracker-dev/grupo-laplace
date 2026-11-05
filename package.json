@@ -12,7 +12,6 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "verify": "turbo run lint typecheck build",
-    "artifacts": "turbo run artifacts --filter=@grupo-laplace/web",
     "clean": "turbo run clean"
   },
   "devDependencies": {

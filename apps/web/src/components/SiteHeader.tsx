@@ -1,0 +1,116 @@
+import { useEffect, useRef, useState } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Menu, X } from 'lucide-react'
+import { cn } from '@grupo-laplace/ui'
+import { nav } from '../data/content'
+import { AlpasLogo } from './AlpasLogo'
+import { WhatsAppButton } from './WhatsAppButton'
+
+const linkClass = ({ isActive }: { isActive: boolean }) =>
+  cn(
+    'type-label relative rounded-pill px-4 py-2 transition-colors duration-150',
+    isActive ? 'bg-surface-muted text-primary-5' : 'text-neutral-base hover:bg-surface-muted hover:text-primary-5',
+  )
+
+export function SiteHeader() {
+  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const { pathname } = useLocation()
+
+  useEffect(() => setOpen(false), [pathname])
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Menú móvil: bloquea el scroll, cierra con Esc y devuelve el foco al botón
+  useEffect(() => {
+    if (!open) return
+    const toggle = toggleRef.current
+    document.body.style.overflow = 'hidden'
+    panelRef.current?.querySelector<HTMLElement>('a')?.focus()
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
+    const mq = window.matchMedia('(min-width: 64rem)')
+    const onMq = () => mq.matches && setOpen(false)
+    window.addEventListener('keydown', onKey)
+    mq.addEventListener('change', onMq)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+      mq.removeEventListener('change', onMq)
+      toggle?.focus()
+    }
+  }, [open])
+
+  return (
+    <header
+      className={cn(
+        'sticky top-0 z-[100] bg-white transition-shadow duration-200',
+        (scrolled || open) && 'shadow-[0_1px_0_var(--color-border-default)]',
+      )}
+    >
+      <a href="#contenido" className="type-label absolute top-2 left-2 z-10 -translate-y-24 rounded-pill bg-primary-5 px-4 py-2 text-white focus:translate-y-0">
+        Saltar al contenido
+      </a>
+      <div className="container-wide flex h-20 items-center justify-between gap-6">
+        <Link to="/" aria-label="Grupo ALPAS, ir al inicio" className="shrink-0 rounded-sm">
+          <AlpasLogo className="h-11" />
+        </Link>
+
+        <nav aria-label="Principal" className="hidden lg:block">
+          <ul className="flex items-center gap-1">
+            {nav.map((n) => (
+              <li key={n.to}>
+                <NavLink to={n.to} end={n.to === '/'} className={linkClass}>
+                  {n.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="hidden lg:block">
+          <WhatsAppButton size="sm" />
+        </div>
+
+        <button
+          ref={toggleRef}
+          type="button"
+          className="grid size-12 place-items-center rounded-pill text-primary-5 hover:bg-surface-muted lg:hidden"
+          aria-expanded={open}
+          aria-controls="menu-movil"
+          aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+          onClick={() => setOpen((o) => !o)}
+        >
+          {open ? <X className="size-6" aria-hidden /> : <Menu className="size-6" aria-hidden />}
+        </button>
+      </div>
+
+      <div id="menu-movil" ref={panelRef} hidden={!open} className="fixed inset-x-0 top-20 bottom-0 overflow-y-auto bg-white lg:hidden">
+        <nav aria-label="Principal móvil" className="container-wide flex min-h-full flex-col pt-4 pb-8">
+          <ul className="flex flex-col">
+            {nav.map((n) => (
+              <li key={n.to} className="border-b border-border-subtle">
+                <NavLink
+                  to={n.to}
+                  end={n.to === '/'}
+                  className={({ isActive }) => cn('type-h5 flex min-h-16 items-center', isActive ? 'text-text-accent' : 'text-text-heading')}
+                >
+                  {n.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-auto pt-8">
+            <WhatsAppButton fullWidth />
+          </div>
+        </nav>
+      </div>
+    </header>
+  )
+}

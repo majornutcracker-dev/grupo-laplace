@@ -54,6 +54,14 @@ for (const [name, t] of Object.entries(tokens.text)) {
   if (!name.startsWith('$')) rootVars.push(`  --text-${name}--font-family: var(--font-${t.family.$value});`)
 }
 
+// Temas de marca: cada tema redefine tokens semánticos dentro de [data-brand="<tema>"]
+const themeBlocks = Object.entries(tokens.themes ?? {})
+  .filter(([name]) => !name.startsWith('$'))
+  .map(([name, theme]) => {
+    const vars = leaves(theme.color).map(([p, v]) => `  --color-${p.join('-')}: ${v};`)
+    return `[data-brand="${name}"] {\n${vars.join('\n')}\n}`
+  })
+
 const css = `/* Archivo generado por @grupo-laplace/tokens (scripts/build.mjs) — no editar a mano.
    Edita packages/tokens/tokens.json y ejecuta: yarn build */
 
@@ -64,7 +72,9 @@ ${theme.join('\n')}
 :root {
 ${rootVars.join('\n')}
 }
+
+${themeBlocks.join('\n\n')}
 `
 mkdirSync(resolve(root, 'dist'), { recursive: true })
 writeFileSync(resolve(root, 'dist/tokens.css'), css)
-console.log(`dist/tokens.css generado (${theme.length + rootVars.length} variables)`)
+console.log(`dist/tokens.css generado (${theme.length + rootVars.length} variables, ${themeBlocks.length} tema(s))`)

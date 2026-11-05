@@ -3,24 +3,32 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "env": ["BASE_PATH"],
-      "outputs": ["dist/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "env": [
+        "BASE_PATH"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
     },
     "dev": {
-      "dependsOn": ["^build"],
+      "dependsOn": [
+        "^build"
+      ],
       "cache": false,
       "persistent": true
     },
     "lint": {
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^build"
+      ]
     },
     "typecheck": {
-      "dependsOn": ["^build"]
-    },
-    "artifacts": {
-      "dependsOn": ["^build"],
-      "cache": false
+      "dependsOn": [
+        "^build"
+      ]
     },
     "clean": {
       "cache": false

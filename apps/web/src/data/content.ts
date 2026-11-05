@@ -1,204 +1,254 @@
 /**
- * Contenido editable de la web.
- *
- * Estado de cada bloque:
- *  - CONFIRMADO: dato entregado por la academia (nombre, áreas, público, concepto, paleta).
- *  - PROPUESTA: texto de comunicación redactado por diseño; debe validarlo la academia.
- *  - DEMOSTRATIVO: contenido de ejemplo; reemplazar antes de publicar.
- *  - PENDIENTE: información que solo la academia puede dar (no se inventa).
+ * Contenido editable del sitio de Grupo ALPAS.
+ * Los textos marcados BRIEF vienen tal cual del cliente. El resto es redacción propuesta para validar.
+ * Lo que solo ALPAS puede dar (docentes, horarios, inversión, contacto) queda PENDIENTE y no se inventa.
  */
 import type { LucideIcon } from 'lucide-react'
-import type { Course, Teacher, Testimonial } from '@grupo-laplace/ui'
 import {
   Atom,
   BookOpenCheck,
+  Calculator,
   Compass,
   FlaskConical,
-  HeartHandshake,
+  GraduationCap,
+  HandHeart,
   Lightbulb,
   ListChecks,
   MessagesSquare,
-  PencilRuler,
+  PlayCircle,
+  School,
   Sigma,
   Target,
+  UserRoundSearch,
   UsersRound,
 } from 'lucide-react'
 
-export type { ContentStatus, Course, Teacher, Testimonial } from '@grupo-laplace/ui'
-
 export const nav = [
-  { label: 'Nosotros', href: '#nosotros' },
-  { label: 'Cursos', href: '#cursos' },
-  { label: 'Metodología', href: '#metodologia' },
-  { label: 'Docentes', href: '#docentes' },
-  { label: 'Preguntas', href: '#preguntas' },
-  { label: 'Contacto', href: '#contacto' },
+  { label: 'Inicio', to: '/' },
+  { label: 'Servicios', to: '/servicios' },
+  { label: 'Conócenos', to: '/conocenos' },
+  { label: 'Contacto', to: '/contacto' },
 ] as const
 
-// ── Hero ─────────────────────────────────────────── PROPUESTA
-export const hero = {
-  eyebrow: 'Reforzamiento en Matemáticas y Química · Secundaria',
-  title: 'Comprende las ciencias. Confía en tu capacidad.',
-  titleAccent: 'Llega más lejos.',
-  subtitle:
-    'En Grupo Laplace acompañamos a cada estudiante a entender el porqué de cada fórmula, practicar con guía y ganar seguridad para avanzar en el colegio.',
-  primaryCta: 'Solicitar información',
-  secondaryCta: 'Conocer nuestros cursos',
+/* ── Servicios ─────────────────────────────────────────── BRIEF */
+export type Service = {
+  id: 'escolar' | 'universitario' | 'orientacion' | 'grabados'
+  name: string
+  summary: string
+  to?: string
+  icon: LucideIcon
+  audience: string
+  comingSoon?: boolean
+  /** Foto del servicio (pendiente) */
+  photo?: string
+  photoNote: string
 }
 
-// ── Sobre nosotros ──────────────────────────────── PROPUESTA
-export const about = {
-  title: 'Una academia para entender, no solo para memorizar',
-  lead:
-    'Grupo Laplace es una academia de reforzamiento especializada en matemáticas y química para estudiantes de secundaria.',
-  body: [
-    'Creemos que las ciencias se aprenden mejor cuando alguien te acompaña a razonar paso a paso. Por eso trabajamos con explicaciones claras, ejercicios guiados y un trato cercano entre docente y estudiante.',
-    'Nuestro objetivo es que cada estudiante comprenda los conceptos, desarrolle habilidades para resolver problemas por sí mismo y recupere la confianza en su capacidad.',
+export const services: Service[] = [
+  {
+    id: 'escolar',
+    name: 'Escolar',
+    summary: 'Refuerzo académico y acompañamiento para estudiantes de nivel escolar.',
+    to: '/servicios/escolar',
+    icon: School,
+    audience: 'Con Grupo Laplace',
+    photoNote: 'Foto pendiente: estudiante escolar resolviendo un ejercicio con su docente',
+  },
+  {
+    id: 'universitario',
+    name: 'Universitario',
+    summary: 'Acompañamiento en cursos de matemática, cálculo, química y física.',
+    to: '/servicios/universitario',
+    icon: GraduationCap,
+    audience: 'Estudiantes universitarios',
+    photoNote: 'Foto pendiente: estudiantes universitarios en una sesión de cálculo',
+  },
+  {
+    id: 'orientacion',
+    name: 'Orientación vocacional',
+    summary: 'Asesoría para descubrir intereses y explorar opciones profesionales.',
+    to: '/servicios/orientacion-vocacional',
+    icon: Compass,
+    audience: 'Jóvenes que eligen carrera',
+    photoNote: 'Foto pendiente: joven conversando con su orientador',
+  },
+  {
+    id: 'grabados',
+    name: 'Cursos grabados',
+    summary: 'Una futura propuesta de aprendizaje mediante clases y materiales digitales.',
+    icon: PlayCircle,
+    audience: 'Próximo lanzamiento',
+    comingSoon: true,
+    photoNote: 'Imagen pendiente: vista de una clase grabada',
+  },
+]
+
+/* ── Inicio ─────────────────────────────────────────────── BRIEF */
+export const home = {
+  hero: {
+    tag: 'APRENDE · CRECE · AVANZA',
+    title: 'Aprender mejor hoy. Llegar más lejos mañana.',
+    description: 'Potenciamos tu aprendizaje con acompañamiento académico y orientación para cada etapa de tu formación.',
+    complement: ['Refuerzo académico', 'Formación universitaria', 'Orientación vocacional'],
+    photoNote: 'Foto pendiente: docente acompañando a un estudiante en una situación real de clase',
+  },
+  about: {
+    title: 'Aprender es el primer paso para alcanzar tus metas.',
+    // PROPUESTA
+    body: [
+      'Grupo ALPAS brinda servicios educativos para estudiantes de nivel escolar y universitario, y orientación vocacional para quienes están eligiendo su carrera.',
+      'Acompañamos a cada estudiante en su proceso de aprendizaje para fortalecer sus conocimientos y ayudarlo a alcanzar sus objetivos académicos.',
+    ],
+    photoNote: 'Foto pendiente: grupo de estudio de ALPAS',
+  },
+  services: {
+    title: 'Encuentra el acompañamiento que necesitas.',
+    description: 'Conoce nuestras propuestas educativas y descubre cómo podemos ayudarte a avanzar.',
+  },
+  why: {
+    title: 'Tu aprendizaje, acompañado en cada paso.',
+    items: [
+      { icon: HandHeart, title: 'Acompañamiento cercano', text: 'Docentes que conocen a cada estudiante y lo siguen de cerca.' },
+      { icon: Lightbulb, title: 'Enseñanza orientada a la comprensión', text: 'Primero entender el porqué; después practicar el cómo.' },
+      { icon: UserRoundSearch, title: 'Atención a tus necesidades', text: 'Partimos de lo que el estudiante necesita reforzar.' },
+      { icon: Target, title: 'Compromiso con el aprendizaje', text: 'Trabajamos con el objetivo académico de cada estudiante.' },
+    ] satisfies Array<{ icon: LucideIcon; title: string; text: string }>,
+  },
+  team: { title: 'Detrás de cada aprendizaje, hay un equipo que te acompaña.' },
+  cta: {
+    title: 'Estamos aquí para ayudarte a dar el siguiente paso.',
+    description: '¿Quieres conocer nuestros servicios o encontrar la opción adecuada para ti? Conversemos.',
+  },
+}
+
+/* ── Docentes ───────────────────────────────────────────── PENDIENTE (no inventar nombres ni credenciales) */
+export type Teacher = { name?: string; specialty?: string; bio?: string; photo?: string }
+export const teachers: Teacher[] = [{}, {}, {}]
+
+/* ── Servicios (página) ─────────────────────────────────── BRIEF */
+export const servicesPage = {
+  title: 'Encuentra el camino que te ayudará a avanzar.',
+  description: 'Explora nuestras propuestas educativas y encuentra el acompañamiento que necesitas para alcanzar tus objetivos.',
+}
+
+/* ── Escolar · Grupo Laplace ────────────────────────────── BRIEF + PROPUESTA */
+export const escolar = {
+  intro:
+    'Grupo Laplace es una marca educativa dedicada a estudiantes de nivel escolar, que trabaja junto a Grupo ALPAS para ofrecer el servicio Escolar.',
+  approach: {
+    title: 'Un acompañamiento que empieza por entender',
+    text: 'Reforzamos los cursos del colegio con explicaciones claras y práctica guiada, para que el estudiante comprenda lo que aprende y gane confianza.',
+  },
+  areas: [
+    { name: 'Álgebra', icon: Sigma },
+    { name: 'Aritmética', icon: Calculator },
+    { name: 'Geometría', icon: ListChecks },
+    { name: 'Trigonometría', icon: Compass },
+    { name: 'Estadística', icon: BookOpenCheck },
+    { name: 'Aptitud matemática', icon: Lightbulb },
+    { name: 'Física', icon: Atom },
+    { name: 'Química', icon: FlaskConical },
+  ] satisfies Array<{ name: string; icon: LucideIcon }>,
+  benefits: [
+    { title: 'Bases claras', text: 'Repasamos lo que sostiene cada tema nuevo.' },
+    { title: 'Práctica guiada', text: 'Ejercicios resueltos paso a paso, primero juntos.' },
+    { title: 'Seguimiento cercano', text: 'Docentes atentos a cómo avanza cada estudiante.' },
   ],
-  pillars: [
-    { icon: Lightbulb, title: 'Comprensión', text: 'Primero el concepto, luego la fórmula.' },
-    { icon: HeartHandshake, title: 'Cercanía', text: 'Docentes que escuchan y acompañan.' },
-    { icon: Target, title: 'Progreso', text: 'Metas claras para avanzar con seguridad.' },
-  ] satisfies Array<{ icon: LucideIcon; title: string; text: string }>,
+  photoNote: 'Foto pendiente: estudiante escolar con su docente de Grupo Laplace',
 }
 
-// ── Cursos ──────────────────────────────────────── CONFIRMADO (áreas) + PROPUESTA (textos)
-
-export const courses: Course[] = [
-  {
-    id: 'matematicas',
-    icon: Sigma,
-    name: 'Matemáticas',
-    tone: 'celeste',
-    description:
-      'Reforzamiento para comprender los temas del curso escolar, desarrollar razonamiento lógico y resolver problemas con método.',
-    benefits: [
-      'Explicación del concepto antes del procedimiento',
-      'Práctica guiada con ejercicios de dificultad progresiva',
-      'Refuerzo de las bases que el estudiante necesita',
-    ],
-    pending: ['Temas por grado', 'Horarios', 'Modalidad', 'Inversión'],
+/* ── Universitario ──────────────────────────────────────── BRIEF + PROPUESTA */
+export const universitario = {
+  hero: {
+    title: 'Comprende tus cursos. Avanza con confianza.',
+    description: 'Encuentra el acompañamiento académico que necesitas para afrontar los desafíos de tu formación universitaria.',
+    photoNote: 'Foto pendiente: estudiantes universitarios trabajando un problema de física',
   },
-  {
-    id: 'quimica',
-    icon: FlaskConical,
-    name: 'Química',
-    tone: 'navy',
-    description:
-      'Reforzamiento para entender la materia y sus transformaciones, conectar la teoría con ejemplos cotidianos y ganar soltura en los ejercicios.',
-    benefits: [
-      'Conceptos explicados con ejemplos cercanos',
-      'Resolución paso a paso de problemas y cálculos',
-      'Repaso enfocado en las dudas de cada estudiante',
-    ],
-    pending: ['Temas por grado', 'Horarios', 'Modalidad', 'Inversión'],
-  },
-]
-
-// ── Metodología ─────────────────────────────────── PROPUESTA (validar con la academia)
-export const methodology = {
-  title: 'Cómo aprendemos juntos',
-  // Propuesta de comunicación: la academia debe validarla con su forma real de enseñar.
-  lead: 'Una ruta de cuatro momentos que convierte las dudas en comprensión.',
-  steps: [
-    {
-      icon: Compass,
-      title: 'Diagnóstico de dudas',
-      text: 'Identificamos qué temas cuestan más y desde dónde conviene empezar.',
-    },
-    {
-      icon: Lightbulb,
-      title: 'Comprensión conceptual',
-      text: 'Explicamos la idea detrás de cada fórmula con ejemplos claros.',
-    },
-    {
-      icon: PencilRuler,
-      title: 'Resolución guiada',
-      text: 'Resolvemos ejercicios paso a paso, primero juntos y luego con autonomía.',
-    },
-    {
-      icon: MessagesSquare,
-      title: 'Acompañamiento continuo',
-      text: 'Seguimos el avance y resolvemos dudas para consolidar lo aprendido.',
-    },
+  intro:
+    'Acompañamos a estudiantes universitarios que necesitan reforzar o comprender mejor sus cursos de ciencias y matemáticas.',
+  areas: [
+    { name: 'Matemática', icon: Sigma, text: 'Bases y temas del curso que necesitas reforzar.' },
+    { name: 'Cálculo', icon: Calculator, text: 'Comprensión de los conceptos y resolución de problemas.' },
+    { name: 'Química', icon: FlaskConical, text: 'Teoría y ejercicios explicados con claridad.' },
+    { name: 'Física', icon: Atom, text: 'Conceptos, planteamiento y desarrollo de problemas.' },
+  ] satisfies Array<{ name: string; icon: LucideIcon; text: string }>,
+  // PROPUESTA de comunicación: validar con ALPAS
+  method: [
+    { title: 'Cuéntanos tu curso', text: 'Nos dices qué curso llevas y qué temas te están costando.' },
+    { title: 'Explicación clara', text: 'Trabajamos los conceptos hasta que tengan sentido.' },
+    { title: 'Práctica acompañada', text: 'Resolvemos problemas juntos y luego por tu cuenta.' },
+  ],
+  benefits: [
+    { icon: Lightbulb, title: 'Entender, no memorizar', text: 'El foco está en comprender cada tema del curso.' },
+    { icon: MessagesSquare, title: 'Resolver tus dudas', text: 'Espacio para preguntar lo que en clase no quedó claro.' },
+    { icon: UsersRound, title: 'Acompañamiento cercano', text: 'Docentes que siguen tu avance.' },
   ] satisfies Array<{ icon: LucideIcon; title: string; text: string }>,
+  faqs: [
+    { question: '¿Qué cursos puedo reforzar?', answer: 'Matemática, cálculo, química y física. Escríbenos con el nombre de tu curso y te orientamos.' },
+    { question: '¿Cuáles son los horarios y la modalidad?', answer: 'Te damos la información vigente de horarios y modalidad cuando nos escribes por WhatsApp.' },
+    { question: '¿Cuánto cuesta?', answer: 'La inversión depende del curso y del tipo de acompañamiento. Consúltanos por WhatsApp para recibir el detalle.' },
+    { question: '¿Cómo empiezo?', answer: 'Escríbenos por WhatsApp, cuéntanos qué curso llevas y te explicamos los siguientes pasos.' },
+  ],
 }
 
-// ── Beneficios ──────────────────────────────────── PROPUESTA
-export const benefits = {
-  title: 'Por qué estudiar en Grupo Laplace',
-  featured: {
-    icon: UsersRound,
-    title: 'Acompañamiento cercano',
-    text: 'El estudiante no aprende solo: cuenta con docentes que se toman el tiempo de explicar, preguntar y volver a explicar cuando hace falta.',
+/* ── Orientación vocacional ─────────────────────────────── BRIEF + PROPUESTA (sin pruebas ni metodologías no confirmadas) */
+export const orientacion = {
+  hero: {
+    title: 'Descubre tu camino. Construye tu futuro.',
+    description: 'Te acompañamos a explorar tus intereses y reconocer tus opciones para tomar decisiones sobre tu futuro profesional.',
+    photoNote: 'Foto pendiente: joven conversando con su orientador vocacional',
   },
-  items: [
-    { icon: BookOpenCheck, title: 'Bases sólidas', text: 'Reforzamos los temas previos que sostienen lo nuevo.' },
-    { icon: ListChecks, title: 'Práctica con método', text: 'Ejercicios ordenados por dificultad y con retroalimentación.' },
-    { icon: Atom, title: 'Ciencia con sentido', text: 'Conectamos fórmulas y conceptos con situaciones reales.' },
-    { icon: Target, title: 'Confianza para avanzar', text: 'Cada logro se nota en clase y en las evaluaciones.' },
+  intro:
+    'Elegir una carrera es una decisión importante. Te acompañamos para que la tomes con más información y más confianza.',
+  audience: [
+    { title: 'Estudiantes de los últimos años del colegio', text: 'Que empiezan a pensar en qué estudiar.' },
+    { title: 'Jóvenes que dudan entre varias carreras', text: 'Y quieren comparar sus opciones con calma.' },
+    { title: 'Familias que quieren acompañar la decisión', text: 'Y buscan una orientación cercana para sus hijos.' },
+  ],
+  offers: [
+    { icon: Compass, title: 'Explorar tus intereses', text: 'Conversaciones para reconocer qué te motiva.' },
+    { icon: BookOpenCheck, title: 'Conocer tus opciones', text: 'Información sobre carreras y caminos profesionales.' },
+    { icon: Target, title: 'Decidir con confianza', text: 'Acompañamiento para dar el siguiente paso.' },
   ] satisfies Array<{ icon: LucideIcon; title: string; text: string }>,
+  benefits: [
+    'Un espacio para pensar tu futuro sin presión.',
+    'Información clara para comparar opciones.',
+    'Acompañamiento cercano durante el proceso.',
+  ],
+  // PROPUESTA de comunicación del proceso: validar con ALPAS
+  process: [
+    { title: 'Nos escribes', text: 'Por WhatsApp nos cuentas en qué etapa estás.' },
+    { title: 'Conversamos', text: 'Conocemos tus intereses, dudas y expectativas.' },
+    { title: 'Exploramos opciones', text: 'Revisamos juntos las carreras que te interesan.' },
+    { title: 'Das el siguiente paso', text: 'Tomas tu decisión con más claridad.' },
+  ],
+  faqs: [
+    { question: '¿A partir de qué edad puedo recibir orientación?', answer: 'Está pensada para jóvenes que están por terminar el colegio o eligiendo qué estudiar. Escríbenos y vemos tu caso.' },
+    { question: '¿Mis padres pueden participar?', answer: 'Sí. La familia puede acompañar el proceso; cuéntanos cómo les gustaría participar.' },
+    { question: '¿Cuánto dura y cuánto cuesta?', answer: 'Te damos esa información por WhatsApp, según lo que necesites.' },
+  ],
 }
 
-// ── Docentes ────────────────────────────────────── PENDIENTE (no inventar nombres ni credenciales)
-export const teachers: Teacher[] = [
-  { name: 'Nombre del docente', area: 'Matemáticas', bio: 'Breve presentación: experiencia, enfoque de enseñanza y lo que más disfruta de enseñar.', status: 'pendiente' },
-  { name: 'Nombre del docente', area: 'Química', bio: 'Breve presentación: experiencia, enfoque de enseñanza y lo que más disfruta de enseñar.', status: 'pendiente' },
-  { name: 'Nombre del docente', area: 'Matemáticas y Química', bio: 'Breve presentación: experiencia, enfoque de enseñanza y lo que más disfruta de enseñar.', status: 'pendiente' },
-]
+/* ── Conócenos ──────────────────────────────────────────── PROPUESTA (validar) */
+export const conocenos = {
+  hero: {
+    title: 'Un equipo que acompaña cada etapa del aprendizaje',
+    description: 'Somos Grupo ALPAS. Creemos que aprender bien abre caminos, y que nadie debería recorrerlos solo.',
+    photoNote: 'Foto pendiente: equipo de Grupo ALPAS',
+  },
+  who: 'Grupo ALPAS es una organización que brinda servicios educativos para estudiantes de nivel escolar y universitario, además de orientación vocacional.',
+  proposal: 'Acompañamos a los estudiantes en su proceso de aprendizaje, fortalecemos sus conocimientos y los ayudamos a alcanzar sus objetivos académicos.',
+  purpose: 'Que cada estudiante aprenda mejor hoy para llegar más lejos mañana.',
+  values: [
+    { title: 'Confianza', text: 'Para estudiantes y familias.' },
+    { title: 'Cercanía', text: 'Un trato humano y atento.' },
+    { title: 'Compromiso', text: 'Con el aprendizaje de cada estudiante.' },
+    { title: 'Crecimiento', text: 'Aprender para seguir avanzando.' },
+  ],
+}
 
-// ── Testimonios ─────────────────────────────────── DEMOSTRATIVO
-export const testimonials: Testimonial[] = [
-  {
-    quote: 'Texto de ejemplo: aquí irá la experiencia real de un estudiante sobre cómo mejoró su comprensión del curso.',
-    author: 'Estudiante (ejemplo)',
-    role: 'Secundaria',
-    status: 'demostrativo',
-  },
-  {
-    quote: 'Texto de ejemplo: aquí irá la opinión real de un padre o madre de familia sobre el acompañamiento recibido.',
-    author: 'Madre de familia (ejemplo)',
-    role: 'Apoderada',
-    status: 'demostrativo',
-  },
-  {
-    quote: 'Texto de ejemplo: aquí irá un testimonio real sobre la metodología y el trato de los docentes.',
-    author: 'Estudiante (ejemplo)',
-    role: 'Secundaria',
-    status: 'demostrativo',
-  },
-]
-
-// ── Preguntas frecuentes ────────────────────────── PROPUESTA (respuestas sin afirmar políticas no confirmadas)
-export const faqs: Array<{ q: string; a: string }> = [
-  {
-    q: '¿A quién están dirigidos los cursos?',
-    a: 'A estudiantes de secundaria que quieren reforzar matemáticas o química, ya sea para ponerse al día, resolver dudas puntuales o afianzar sus bases.',
-  },
-  {
-    q: '¿Qué cursos ofrecen?',
-    a: 'Reforzamiento en Matemáticas y en Química. Escríbenos para conocer los temas que se trabajan según el grado del estudiante.',
-  },
-  {
-    q: '¿Cómo es la metodología de enseñanza?',
-    a: 'Priorizamos la comprensión de los conceptos, la resolución guiada de ejercicios y el acompañamiento cercano del docente. Te contamos el detalle al solicitar información.',
-  },
-  {
-    q: '¿Cuáles son los horarios y la modalidad?',
-    a: 'Los horarios y la modalidad se informan directamente al consultar, para darte la información vigente.',
-  },
-  {
-    q: '¿Cómo es el proceso de inscripción?',
-    a: 'Envíanos tu consulta por el formulario o por WhatsApp. Te responderemos con la información de los cursos y los pasos para inscribirte.',
-  },
-  {
-    q: '¿Los padres pueden hacer la consulta?',
-    a: 'Sí. Padres, madres o apoderados pueden escribirnos para resolver sus dudas sobre los cursos y el acompañamiento.',
-  },
-]
-
-// ── CTA final ───────────────────────────────────── PROPUESTA
-export const finalCta = {
-  title: 'Da el siguiente paso en matemáticas y química',
-  text: 'Cuéntanos qué necesita el estudiante y te orientamos sobre el curso más adecuado.',
+/* ── Contacto ───────────────────────────────────────────── BRIEF */
+export const contacto = {
+  title: 'Estamos listos para escucharte',
+  description: 'Cuéntanos qué necesitas y te ayudamos a encontrar el servicio adecuado. La forma más rápida es escribirnos por WhatsApp.',
 }
