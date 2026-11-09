@@ -1,54 +1,101 @@
-import { Steps } from '@grupo-laplace/ui'
-import { BenefitCards, CtaBand, FaqBlock, PageHero, PracticalInfo, SectionHeading } from '../components/Blocks'
-import { home, universitario as u } from '../data/content'
-import { UniversityScene } from '../illustrations/Scenes'
+import { buttonClasses } from '@grupo-laplace/ui'
+import { MessageCircleQuestion, Rocket, UsersRound } from 'lucide-react'
+import fotoUniversitario from '../assets/figma/servicio-universitario.webp'
+import { Accent, DarkBenefits, FinalCta, IconTile, InfoCard, InnerHero, PhotoComposition, PracticalSection, SectionIntro } from '../components/site/SiteBlocks'
+import { WhatsAppButton } from '../components/WhatsAppButton'
+import { practicalInfo, universitario as u, universitarioPage } from '../data/content'
+import { whatsappUrl } from '../lib/contact'
 import { usePageMeta } from '../lib/usePageMeta'
 
 export default function Universitario() {
   usePageMeta('Universitario · Grupo ALPAS', u.hero.description)
+  const wa = whatsappUrl('Hola, Grupo ALPAS. Quisiera información sobre el acompañamiento universitario.')
   return (
     <>
-      <PageHero
+      {/* 1. Hero */}
+      <InnerHero
         crumbs={[{ label: 'Inicio', href: '/' }, { label: 'Servicios', href: '/servicios' }, { label: 'Universitario' }]}
-        title={u.hero.title}
-        description={u.hero.description}
-        art={<UniversityScene />}
+        tag={universitarioPage.tag}
+        title={<>Comprende tus cursos. <Accent>Avanza</Accent> con confianza.</>}
+        description={
+          <>
+            <p>{u.hero.description}</p>
+            <p>{u.intro}</p>
+          </>
+        }
+        actions={
+          <>
+            <WhatsAppButton url={wa} label="Solicitar información" variant="primary" pill />
+            <a href="#areas" className={buttonClasses({ variant: 'neutral', pill: true })}>Ver cursos</a>
+          </>
+        }
+        media={
+          <PhotoComposition
+            src={fotoUniversitario}
+            alt="Estudiante universitaria en una asesoría virtual de cálculo con su docente"
+            chips={[
+              { icon: UsersRound, label: 'Asesoría por curso' },
+              { icon: Rocket, label: 'Crecimiento académico', tone: 'mist' },
+            ]}
+          />
+        }
       />
 
-      <section aria-labelledby="areas-title" className="container-wide section-y grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-20">
-        <div>
-          <SectionHeading id="areas-title" title="Cursos y áreas académicas" />
-          <p className="type-body-lg mt-5 max-w-[30rem] text-text-body">{u.intro}</p>
-        </div>
-        <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
-          {u.areas.map(({ name, icon: Icon, text }) => (
-            <li key={name} className="border-t-2 border-brand-secondary pt-5">
-              <Icon className="size-7 text-text-accent" aria-hidden />
-              <h3 className="type-h4 mt-3">{name}</h3>
-              <p className="type-body mt-1 text-text-body">{text}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section aria-labelledby="method-title" className="bg-surface-subtle">
+      {/* 2. ¿Qué hacemos? — el acompañamiento es una secuencia, por eso va numerado */}
+      <section aria-labelledby="what-title" className="bg-site-paper">
         <div className="container-wide section-y">
-          <SectionHeading id="method-title" title="Cómo te acompañamos" description="Un recorrido simple, pensado para que avances con tu curso." />
-          <Steps className="mt-12" steps={u.method} />
+          <div className="reveal grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-20">
+            <SectionIntro id="what-title" eyebrow="¿Qué hacemos?" title="Un acompañamiento según tu curso y tu ritmo" />
+            <p className="max-w-[34rem] text-base leading-normal text-site-ink lg:mt-0">
+              Partimos de lo que estás llevando en la universidad: revisamos los temas que te cuestan, los explicamos con claridad y los practicamos contigo.
+            </p>
+          </div>
+          <ol className="mt-10 grid gap-5 md:grid-cols-3">
+            {universitarioPage.what.map((w, i) => (
+              <li key={w.title}>
+                <InfoCard icon={w.icon} tone={i === 1 ? 'green' : 'navy'} title={w.title} index={i} aside={<span className="text-sm font-medium text-site-slate">Paso {i + 1}</span>}>
+                  {w.text}
+                </InfoCard>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      <section aria-labelledby="benefits-title" className="container-wide section-y">
-        <SectionHeading id="benefits-title" title="Lo que ganas con el acompañamiento" />
-        <div className="mt-12"><BenefitCards items={u.benefits} /></div>
+      {/* 3. Áreas académicas */}
+      <section id="areas" aria-labelledby="areas-title" className="scroll-mt-28 bg-site-paper">
+        <div className="container-wide pb-[var(--space-section-y)]">
+          <SectionIntro id="areas-title" eyebrow="Áreas académicas" title="Cursos y áreas que reforzamos" description="Matemática, química, física, cálculo y otros cursos que puedes consultarnos." />
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {u.areas.map((a, i) => (
+              <li key={a.name}><InfoCard icon={a.icon} tone={i % 2 ? 'green' : 'navy'} title={a.name} index={i}>{a.text}</InfoCard></li>
+            ))}
+          </ul>
+          <div className="reveal mt-5 flex flex-col gap-5 rounded-[1.5rem] border border-dashed border-site-steel/60 bg-site-mist/40 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-5">
+              <IconTile icon={MessageCircleQuestion} tone="mist" size="md" />
+              <div>
+                <h3 className="text-[1.1875rem] leading-[1.4] font-medium text-site-ink">¿Llevas otro curso?</h3>
+                <p className="mt-1 text-base leading-normal text-site-ink/85">Escríbenos con el nombre del curso y te confirmamos si podemos acompañarte.</p>
+              </div>
+            </div>
+            <WhatsAppButton url={whatsappUrl('Hola, Grupo ALPAS. Quisiera saber si pueden acompañarme en el curso de: ')} label="Consultar mi curso" variant="neutral" pill className="shrink-0" />
+          </div>
+        </div>
       </section>
 
-      <section aria-label="Modalidad, horarios e inversión" className="bg-surface-accent">
-        <div className="container-wide section-y"><PracticalInfo /></div>
-      </section>
+      {/* 4. ¿Por qué estudiar con ALPAS? */}
+      <DarkBenefits id="why-title" eyebrow="Beneficios" title="¿Por qué estudiar con ALPAS?" items={u.benefits} />
 
-      <FaqBlock items={u.faqs} />
-      <CtaBand title="¿Qué curso necesitas reforzar?" description={home.cta.description} />
+      {/* 5. Modalidad, horarios e inversión */}
+      <PracticalSection id="practical-title" items={practicalInfo} whatsappUrl={wa} note="Dependen del curso y del periodo académico. Escríbenos y te enviamos la información vigente." />
+
+      {/* 6. CTA final */}
+      <FinalCta
+        title={<>Tu próximo examen empieza <Accent>hoy</Accent></>}
+        description="Cuéntanos qué curso llevas y qué temas te cuestan. Te respondemos por WhatsApp con la información del acompañamiento."
+        whatsappUrl={wa}
+      />
     </>
   )
 }

@@ -4,23 +4,34 @@
  * Lo que solo ALPAS puede dar (docentes, horarios, inversión, contacto) queda PENDIENTE y no se inventa.
  */
 import type { LucideIcon } from 'lucide-react'
+import docenteRoberto from '../assets/figma/docente-roberto.webp'
 import {
   Atom,
+  BookMarked,
   BookOpenCheck,
+  CalendarClock,
   Calculator,
+  Clock,
   Compass,
   FlaskConical,
   GraduationCap,
   HandHeart,
+  HeartHandshake,
+  Laptop,
   Lightbulb,
   ListChecks,
   MessagesSquare,
   PlayCircle,
+  Route,
   School,
+  ShieldCheck,
   Sigma,
+  Sparkles,
   Target,
+  TrendingUp,
   UserRoundSearch,
   UsersRound,
+  Wallet,
 } from 'lucide-react'
 
 export const nav = [
@@ -35,6 +46,8 @@ export type Service = {
   id: 'escolar' | 'universitario' | 'orientacion' | 'grabados'
   name: string
   summary: string
+  /** Descripción breve del overlay de Servicios en el header (Figma: overlay-options) */
+  menuText: string
   to?: string
   icon: LucideIcon
   audience: string
@@ -48,6 +61,7 @@ export const services: Service[] = [
   {
     id: 'escolar',
     name: 'Escolar',
+    menuText: 'Acompañamiento escolar con Grupo Laplace',
     summary: 'Refuerzo académico y acompañamiento para estudiantes de nivel escolar.',
     to: '/servicios/escolar',
     icon: School,
@@ -57,6 +71,7 @@ export const services: Service[] = [
   {
     id: 'universitario',
     name: 'Universitario',
+    menuText: 'Matemática, química, física, cálculo, etc.',
     summary: 'Acompañamiento en cursos de matemática, cálculo, química y física.',
     to: '/servicios/universitario',
     icon: GraduationCap,
@@ -66,6 +81,7 @@ export const services: Service[] = [
   {
     id: 'orientacion',
     name: 'Orientación vocacional',
+    menuText: 'Explora tus opciones profesionales',
     summary: 'Asesoría para descubrir intereses y explorar opciones profesionales.',
     to: '/servicios/orientacion-vocacional',
     icon: Compass,
@@ -75,6 +91,7 @@ export const services: Service[] = [
   {
     id: 'grabados',
     name: 'Cursos grabados',
+    menuText: 'Próxima propuesta de aprendizaje digital',
     summary: 'Una futura propuesta de aprendizaje mediante clases y materiales digitales.',
     icon: PlayCircle,
     audience: 'Próximo lanzamiento',
@@ -121,9 +138,18 @@ export const home = {
   },
 }
 
-/* ── Docentes ───────────────────────────────────────────── PENDIENTE (no inventar nombres ni credenciales) */
+/* ── Docentes ───────────────────────────────────────────── FIGMA (dato confirmado) + PENDIENTE (no inventar) */
 export type Teacher = { name?: string; specialty?: string; bio?: string; photo?: string }
-export const teachers: Teacher[] = [{}, {}, {}]
+export const teachers: Teacher[] = [
+  {
+    name: 'Roberto Alpas Lobaton',
+    specialty: 'Especialista en Matemáticas y ciencias',
+    bio: 'Cuenta con experiencia en la enseñanza de matemática y ciencias, acompañando a estudiantes escolares.',
+    photo: docenteRoberto,
+  },
+  {},
+  {},
+]
 
 /* ── Servicios (página) ─────────────────────────────────── BRIEF */
 export const servicesPage = {
@@ -252,3 +278,58 @@ export const contacto = {
   title: 'Estamos listos para escucharte',
   description: 'Cuéntanos qué necesitas y te ayudamos a encontrar el servicio adecuado. La forma más rápida es escribirnos por WhatsApp.',
 }
+
+/* ── Páginas internas (Figma «PROTOTIPOS») ─────────────────────────── */
+
+/** Beneficios de la sección azul del Figma «inicio» («Descubre lo que hace diferente a ALPAS»). FIGMA */
+export const alpasBenefits = [
+  { icon: UsersRound, title: 'Atención personalizada', text: 'Nos adaptamos a tus necesidades y ritmo de aprendizaje.' },
+  { icon: Lightbulb, title: 'Aprendizaje claro y práctico', text: 'Aprende paso a paso con explicaciones claras que facilitan la comprensión de cada tema.' },
+  { icon: BookMarked, title: 'Materiales y recursos de apoyo', text: 'Complementa tus clases con recursos educativos que facilitan la práctica y refuerzan lo aprendido.' },
+  { icon: Clock, title: 'Horarios flexibles y precios accesibles', text: 'Encuentra opciones de aprendizaje que se adapten a tu disponibilidad y presupuesto.' },
+] satisfies Array<{ icon: LucideIcon; title: string; text: string }>
+
+/** Modalidad, horarios e inversión: PENDIENTE. Reemplazar `text` y poner `pending: false` cuando ALPAS lo confirme. */
+export const practicalInfo = [
+  { icon: Laptop, title: 'Modalidad', text: 'Te contamos las modalidades disponibles cuando nos escribes.' },
+  { icon: CalendarClock, title: 'Horarios', text: 'Coordinamos contigo los horarios vigentes del periodo.' },
+  { icon: Wallet, title: 'Inversión', text: 'Te enviamos el detalle según el servicio y los cursos que elijas.' },
+]
+
+/** Textos de las páginas de servicio. PROPUESTA a partir del BRIEF (validar con ALPAS). */
+export const escolarPage = {
+  hero: {
+    tag: 'ESCOLAR · CON GRUPO LAPLACE',
+    description: [
+      'Refuerzo académico y acompañamiento para estudiantes de nivel escolar.',
+      'Estudiantes y familias encuentran un espacio para resolver dudas, reforzar los cursos del colegio y ganar confianza en cada tema.',
+    ],
+  },
+  what: [
+    { icon: BookOpenCheck, title: 'Bases claras', text: 'Repasamos lo que sostiene cada tema nuevo.' },
+    { icon: ListChecks, title: 'Práctica guiada', text: 'Ejercicios resueltos paso a paso, primero juntos.' },
+    { icon: HandHeart, title: 'Seguimiento cercano', text: 'Docentes atentos a cómo avanza cada estudiante.' },
+  ] satisfies Array<{ icon: LucideIcon; title: string; text: string }>,
+}
+
+export const universitarioPage = {
+  tag: 'UNIVERSITARIO',
+  what: [
+    { icon: MessagesSquare, title: 'Cuéntanos tu curso', text: 'Nos dices qué curso llevas y qué temas te están costando.' },
+    { icon: Lightbulb, title: 'Explicación clara', text: 'Trabajamos los conceptos hasta que tengan sentido.' },
+    { icon: Target, title: 'Práctica acompañada', text: 'Resolvemos problemas juntos y luego por tu cuenta.' },
+  ] satisfies Array<{ icon: LucideIcon; title: string; text: string }>,
+}
+
+export const orientacionPage = {
+  tag: 'ORIENTACIÓN VOCACIONAL',
+  audienceIcons: [School, Compass, UsersRound] satisfies LucideIcon[],
+  benefits: [
+    { icon: Sparkles, title: 'Conócete mejor', text: 'Un espacio para pensar tu futuro sin presión.' },
+    { icon: Route, title: 'Opciones claras', text: 'Información clara para comparar carreras y caminos profesionales.' },
+    { icon: HandHeart, title: 'Acompañamiento cercano', text: 'Te acompañamos durante todo el proceso de decisión.' },
+  ] satisfies Array<{ icon: LucideIcon; title: string; text: string }>,
+}
+
+/** Valores de Conócenos con su ícono (textos en `conocenos.values`). */
+export const valueIcons = [ShieldCheck, HeartHandshake, Target, TrendingUp] satisfies LucideIcon[]

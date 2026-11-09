@@ -9,20 +9,21 @@ export const siteConfig = {
     'Servicios educativos para estudiantes escolares y universitarios, y orientación vocacional. Acompañamos tu aprendizaje en cada etapa.',
 
   contact: {
-    /** Número de WhatsApp con código de país, solo dígitos. Ej.: '51987654321'. Pendiente. */
-    whatsappNumber: '',
+    /** Número de WhatsApp con código de país, solo dígitos (dato del Figma «PROTOTIPOS», footer). */
+    whatsappNumber: '51990272466',
     /** Mensaje con el que se abre la conversación */
     whatsappMessage: 'Hola, Grupo ALPAS. Quisiera información sobre sus servicios.',
-    /** Número visible para llamadas (puede ser el mismo de WhatsApp). Pendiente. */
-    phone: '',
-    email: '',
+    /** Número visible para llamadas (el mismo de WhatsApp, según el Figma). */
+    phone: '+51 990 272 466',
+    email: 'alpasmate@gmail.com',
     /** Dirección o referencia de la sede, si corresponde. Pendiente. */
     address: '',
     mapUrl: '',
   },
 
   social: {
-    facebook: '',
+    /** En el Figma figura la cuenta «grupoalpas»: confirmar que esta sea la URL exacta de la página. */
+    facebook: 'https://www.facebook.com/grupoalpas',
     instagram: '',
     tiktok: '',
     youtube: '',

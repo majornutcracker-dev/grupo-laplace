@@ -13,6 +13,7 @@
     "clean": "rm -rf dist .turbo node_modules/.tmp"
   },
   "dependencies": {
+    "@fontsource/plus-jakarta-sans": "5.2.5",
     "@fontsource/poppins": "5.2.6",
     "@grupo-laplace/tokens": "0.0.0",
     "@grupo-laplace/ui": "0.0.0",

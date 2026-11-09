@@ -380,6 +380,11 @@
     "@eslint/core" "^0.17.0"
     levn "^0.4.1"
 
+"@fontsource/plus-jakarta-sans@5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@fontsource/plus-jakarta-sans/-/plus-jakarta-sans-5.2.5.tgz#f60ae8e3383cd0f6fdd07eb3f75c2fc0389773fe"
+  integrity sha512-2QBEymhsrpomwXrDygLwolOPOjRGDLDT+Pezo+SsnapcQ1z0n4qXzhC+EVmTZ0yxrQvqdc0kcb9EUd0eWmj9Jw==
+
 "@fontsource/poppins@5.2.6":
   version "5.2.6"
   resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-5.2.6.tgz#49a297bbec25419469dbb75f61788feac97cea63"

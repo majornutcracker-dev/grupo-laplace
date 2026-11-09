@@ -1,136 +1,93 @@
-import { Link } from 'react-router-dom'
-import { Breadcrumbs, buttonClasses, cn } from '@grupo-laplace/ui'
-import { ArtFrame, CtaBand, PracticalInfo, SectionHeading, TeacherCard } from '../components/Blocks'
-import { TutoringScene } from '../illustrations/Scenes'
-import { delay } from '../lib/motion'
+import { buttonClasses } from '@grupo-laplace/ui'
+import { HandHeart, Rocket } from 'lucide-react'
+import fotoEscolar from '../assets/figma/servicio-escolar.webp'
+import { Accent, DarkBenefits, InfoCard, InnerHero, PhotoComposition, PracticalSection, SectionIntro, FinalCta } from '../components/site/SiteBlocks'
 import { WhatsAppButton } from '../components/WhatsAppButton'
 import { laplaceConfig } from '../config/site'
-import { escolar, teachers } from '../data/content'
+import { alpasBenefits, escolar, escolarPage, practicalInfo } from '../data/content'
 import { laplaceWhatsappUrl } from '../lib/contact'
+import { delay } from '../lib/motion'
 import { usePageMeta } from '../lib/usePageMeta'
 
-/** Triángulo Δ: recurso geométrico propio de Grupo Laplace (sus "A" del logotipo). */
-function DeltaMark({ className, tone = 'accent' }: { className?: string; tone?: 'accent' | 'secondary' | 'primary' }) {
-  const fill = { accent: 'fill-brand-accent', secondary: 'fill-brand-secondary', primary: 'fill-brand-primary' }[tone]
-  return (
-    <svg aria-hidden viewBox="0 0 40 36" className={cn('size-10', className)}>
-      <path d="M20 2 38 34H2Z" className={cn(fill, 'stroke-none')} />
-      <path d="M20 14 29 30H11Z" className="fill-white" />
-    </svg>
-  )
-}
-
-/** Logotipo de Laplace: imagen oficial si está configurada; mientras tanto, el nombre en texto con sus Δ. */
-function LaplaceWordmark({ className }: { className?: string }) {
-  if (laplaceConfig.logoSrc) return <img src={laplaceConfig.logoSrc} alt="Grupo Laplace" className={cn('h-14 w-auto', className)} />
-  return (
-    <p className={cn('leading-none text-brand-primary', className)} aria-label="Grupo Laplace">
-      <span aria-hidden className="block text-[0.95rem] tracking-[0.22em]">GRUPO</span>
-      <span aria-hidden className="mt-1 block text-[2rem] font-semibold tracking-[0.04em]">
-        L<span className="text-brand-accent">Δ</span>PL<span className="text-brand-accent">Δ</span>CE
-      </span>
-    </p>
-  )
-}
-
 export default function Escolar() {
-  usePageMeta('Escolar con Grupo Laplace · Grupo ALPAS', `${laplaceConfig.tagline} Refuerzo escolar en matemática y ciencias con Grupo Laplace.`)
-  const wa = laplaceWhatsappUrl('Hola, Grupo Laplace. Quisiera información sobre el refuerzo escolar.')
+  usePageMeta('Escolar con Grupo Laplace · Grupo ALPAS', `${laplaceConfig.tagline} Refuerzo académico para estudiantes de nivel escolar con Grupo ALPAS y Grupo Laplace.`)
+  const wa = laplaceWhatsappUrl('Hola, Grupo ALPAS. Quisiera información sobre el servicio Escolar.')
   return (
-    <div data-brand="laplace">
-      {/* Hero con la identidad de Laplace */}
-      <section aria-labelledby="page-title" className="relative overflow-hidden bg-white">
-        <div className="container-wide grid items-center gap-12 pt-8 pb-16 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:pt-12 lg:pb-24">
-          <div>
-            <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Servicios', href: '/servicios' }, { label: 'Escolar' }]} renderLink={(href, label) => <Link to={href}>{label}</Link>} />
-            <LaplaceWordmark className="mt-10" />
-            <h1 id="page-title" className="type-display mt-8 max-w-[16ch]">{laplaceConfig.tagline}</h1>
-            <p className="type-body-lg mt-6 max-w-[34rem] text-text-body">{escolar.intro}</p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <WhatsAppButton url={wa} variant="primary" />
-              <a href="#areas" className={buttonClasses({ variant: 'outlined' })}>Ver áreas académicas</a>
-            </div>
-            <p className="type-caption mt-8 text-text-muted">Servicio Escolar presentado por Grupo ALPAS.</p>
-          </div>
-          <div className="relative mx-auto w-full max-w-[30rem] lg:max-w-none">
-            <div aria-hidden className="pop-in absolute -right-4 -bottom-4 size-2/3 rounded-xl bg-surface-accent" style={delay(150)} />
-            <ArtFrame className="pop-in relative aspect-[6/5]"><TutoringScene title="Ilustración: docente de Grupo Laplace explicando matemática a una estudiante" /></ArtFrame>
-            <DeltaMark className="pop-in float-y absolute -top-5 -left-4 size-14" />
-            <DeltaMark tone="secondary" className="float-y absolute right-6 -bottom-6 size-10" />
-          </div>
-        </div>
-      </section>
+    <>
+      {/* 1. Hero */}
+      <InnerHero
+        crumbs={[{ label: 'Inicio', href: '/' }, { label: 'Servicios', href: '/servicios' }, { label: 'Escolar' }]}
+        tag={escolarPage.hero.tag}
+        title={<>¡Todo empieza cuando <Accent>lo entiendes</Accent>!</>}
+        description={escolarPage.hero.description.map((p) => <p key={p}>{p}</p>)}
+        actions={
+          <>
+            <WhatsAppButton url={wa} label="Solicitar información" variant="primary" pill />
+            <a href="#areas" className={buttonClasses({ variant: 'neutral', pill: true })}>Ver áreas académicas</a>
+          </>
+        }
+        media={
+          <PhotoComposition
+            src={fotoEscolar}
+            alt="Estudiante escolar resolviendo ejercicios en su cuaderno durante una clase virtual con su docente"
+            chips={[
+              { icon: HandHeart, label: 'Acompañamiento constante' },
+              { icon: Rocket, label: 'Crecimiento académico', tone: 'mist' },
+            ]}
+          />
+        }
+      />
 
-      {/* Acompañamiento escolar */}
-      <section aria-labelledby="approach-title" className="bg-surface-muted">
-        <div className="container-wide section-y grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center lg:gap-20">
-          <h2 id="approach-title" className="type-h2 max-w-[16ch]">{escolar.approach.title}</h2>
-          <p className="type-body-lg max-w-[36rem] text-text-body">{escolar.approach.text}</p>
-        </div>
-      </section>
-
-      {/* Áreas académicas */}
-      <section id="areas" aria-labelledby="areas-title" className="container-wide section-y">
-        <SectionHeading id="areas-title" title="Áreas académicas" description="Matemática y ciencias para estudiantes de nivel escolar." />
-        <ul className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {escolar.areas.map(({ name, icon: Icon }, i) => (
-            <li
-              key={name}
-              style={delay(i * 60)}
-              className={cn(
-                'reveal lift flex min-h-28 flex-col justify-between gap-4 rounded-xl p-5',
-                i % 3 === 0 ? 'bg-brand-primary text-white' : i % 3 === 1 ? 'bg-surface-accent text-text-heading' : 'bg-surface-muted text-text-heading',
-              )}
-            >
-              <Icon className={cn('size-6', i % 3 === 0 ? 'text-brand-secondary' : 'text-brand-primary')} aria-hidden />
-              <span className="type-h5">{name}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Beneficios */}
-      <section aria-labelledby="benefits-title" className="bg-surface-inverse">
+      {/* 2. ¿Qué hacemos? */}
+      <section aria-labelledby="what-title" className="bg-site-paper">
         <div className="container-wide section-y">
-          <SectionHeading id="benefits-title" inverse title="Por qué estudiar con Grupo Laplace" />
-          <ul className="mt-12 grid gap-10 md:grid-cols-3">
-            {escolar.benefits.map((b, i) => (
-              <li key={b.title} className="reveal" style={delay(i * 100)}>
-                <DeltaMark className="size-9" />
-                <h3 className="type-h4 mt-5 text-white">{b.title}</h3>
-                <p className="type-body mt-2 text-white/85">{b.text}</p>
-              </li>
+          <div className="reveal grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-20">
+            <SectionIntro id="what-title" eyebrow="¿Qué hacemos?" title={escolar.approach.title} />
+            <div className="max-w-[34rem] space-y-4 text-base leading-normal text-site-ink">
+              <p>{escolar.approach.text}</p>
+              <p>{escolar.intro}</p>
+            </div>
+          </div>
+          <ul className="mt-10 grid gap-5 md:grid-cols-3">
+            {escolarPage.what.map((w, i) => (
+              <li key={w.title}><InfoCard icon={w.icon} tone={i === 1 ? 'green' : 'navy'} title={w.title} index={i}>{w.text}</InfoCard></li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* Modalidad, horarios e inversión: sin datos inventados */}
-      <section aria-label="Modalidad, horarios e inversión" className="container-wide section-y">
-        <PracticalInfo whatsappUrl={wa} />
-      </section>
-
-      {/* Docentes */}
-      <section aria-labelledby="team-title" className="bg-surface-subtle">
-        <div className="container-wide section-y">
-          <SectionHeading id="team-title" title="Docentes de Grupo Laplace" description="Presentaremos aquí al equipo que acompaña a cada estudiante." />
-          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-            {teachers.map((t, i) => <TeacherCard key={i} teacher={t} />)}
-          </div>
+      {/* 3. Áreas académicas */}
+      <section id="areas" aria-labelledby="areas-title" className="scroll-mt-28 bg-site-paper">
+        <div className="container-wide pb-[var(--space-section-y)]">
+          <SectionIntro id="areas-title" eyebrow="Áreas académicas" title="Cursos que reforzamos" description="Matemática y ciencias del colegio, explicadas con claridad y practicadas paso a paso." />
+          <ul className="mt-10 grid gap-4 min-[420px]:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+            {escolar.areas.map((a, i) => {
+              const Icon = a.icon
+              return (
+                <li key={a.name} className="reveal flex min-w-0 items-center gap-4 rounded-[1.5rem] border border-neutral-disabled/40 bg-site-paper p-4 shadow-overlay sm:p-5" style={delay((i % 4) * 70)}>
+                  <span aria-hidden className={i % 2 ? 'grid size-12 shrink-0 place-items-center rounded-2xl bg-site-green-soft text-site-green-text [&_svg]:size-6' : 'grid size-12 shrink-0 place-items-center rounded-2xl bg-site-mist text-site-navy [&_svg]:size-6'}>
+                    <Icon />
+                  </span>
+                  <span className="min-w-0 text-base leading-snug font-medium text-site-ink">{a.name}</span>
+                </li>
+              )
+            })}
+          </ul>
         </div>
       </section>
 
-      <div className="pt-[var(--space-section-y)]">
-        <CtaBand art={<TutoringScene bg={false} />} title="¿Listo para entender tus cursos?" description="Escríbenos y te contamos cómo acompañamos a tu hijo o hija en el colegio."
-          whatsappUrl={wa}
-          decoration={
-            <>
-              <DeltaMark className="absolute top-8 right-8 size-16 sm:size-20" />
-              <DeltaMark tone="secondary" className="absolute right-32 bottom-10 hidden size-8 sm:block" />
-            </>
-          }
-        />
-      </div>
-    </div>
+      {/* 4. ¿Por qué estudiar con ALPAS? */}
+      <DarkBenefits id="why-title" eyebrow="Beneficios" title="¿Por qué estudiar con ALPAS?" items={alpasBenefits} />
+
+      {/* 5. Modalidad, horarios e inversión */}
+      <PracticalSection id="practical-title" items={practicalInfo} whatsappUrl={wa} />
+
+      {/* 6. CTA final */}
+      <FinalCta
+        title={<>¿Quieres reforzar los cursos <Accent>del colegio</Accent>?</>}
+        description="Escríbenos por WhatsApp, cuéntanos el grado y los cursos, y te enviamos la información del servicio Escolar."
+        whatsappUrl={wa}
+      />
+    </>
   )
 }

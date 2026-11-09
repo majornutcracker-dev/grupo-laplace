@@ -4,13 +4,16 @@ import { Menu, X } from 'lucide-react'
 import { cn } from '@grupo-laplace/ui'
 import { nav } from '../data/content'
 import { AlpasLogo } from './AlpasLogo'
+import { MobileServicesOptions, ServicesOverlay } from './ServicesOverlay'
 import { WhatsAppButton } from './WhatsAppButton'
 
-const linkClass = ({ isActive }: { isActive: boolean }) =>
+/* Ítem del nav (Figma: nav-item, estados default y hovered) */
+const itemClass = (active: boolean) =>
   cn(
-    'type-label relative rounded-pill px-4 py-2 transition-colors duration-150',
-    isActive ? 'bg-surface-muted text-primary-5' : 'text-neutral-base hover:bg-surface-muted hover:text-primary-5',
+    'relative rounded-[1.5rem] px-5 py-2 text-base leading-normal font-medium transition-colors duration-150 xl:px-6',
+    active ? 'bg-site-mist text-site-navy' : 'text-site-ink hover:bg-site-mist/70 hover:text-site-navy',
   )
+const linkClass = ({ isActive }: { isActive: boolean }) => itemClass(isActive)
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
@@ -59,23 +62,27 @@ export function SiteHeader() {
       </a>
       <div className="container-wide flex h-20 items-center justify-between gap-6">
         <Link to="/" aria-label="Grupo ALPAS, ir al inicio" className="shrink-0 rounded-sm">
-          <AlpasLogo className="h-11" />
+          <AlpasLogo className="h-12" />
         </Link>
 
         <nav aria-label="Principal" className="hidden lg:block">
-          <ul className="flex items-center gap-1">
-            {nav.map((n) => (
-              <li key={n.to}>
-                <NavLink to={n.to} end={n.to === '/'} className={linkClass}>
-                  {n.label}
-                </NavLink>
-              </li>
-            ))}
+          <ul className="flex items-center gap-2 xl:gap-6">
+            {nav.map((n) =>
+              n.to === '/servicios' ? (
+                <ServicesOverlay key={n.to} itemClass={itemClass} />
+              ) : (
+                <li key={n.to}>
+                  <NavLink to={n.to} end={n.to === '/'} className={linkClass}>
+                    {n.label}
+                  </NavLink>
+                </li>
+              ),
+            )}
           </ul>
         </nav>
 
         <div className="hidden lg:block">
-          <WhatsAppButton size="sm" />
+          <WhatsAppButton label="Consulta por WhatsApp" pill />
         </div>
 
         <button
@@ -94,17 +101,21 @@ export function SiteHeader() {
       <div id="menu-movil" ref={panelRef} hidden={!open} className="fixed inset-x-0 top-20 bottom-0 overflow-y-auto bg-white lg:hidden">
         <nav aria-label="Principal móvil" className="container-wide flex min-h-full flex-col pt-4 pb-8">
           <ul className="flex flex-col">
-            {nav.map((n) => (
-              <li key={n.to} className="border-b border-border-subtle">
-                <NavLink
-                  to={n.to}
-                  end={n.to === '/'}
-                  className={({ isActive }) => cn('type-h5 flex min-h-16 items-center', isActive ? 'text-text-accent' : 'text-text-heading')}
-                >
-                  {n.label}
-                </NavLink>
-              </li>
-            ))}
+            {nav.map((n) =>
+              n.to === '/servicios' ? (
+                <MobileServicesOptions key={n.to} onSelect={() => setOpen(false)} />
+              ) : (
+                <li key={n.to} className="border-b border-border-subtle">
+                  <NavLink
+                    to={n.to}
+                    end={n.to === '/'}
+                    className={({ isActive }) => cn('type-h5 flex min-h-16 items-center', isActive ? 'text-text-accent' : 'text-text-heading')}
+                  >
+                    {n.label}
+                  </NavLink>
+                </li>
+              ),
+            )}
           </ul>
           <div className="mt-auto pt-8">
             <WhatsAppButton fullWidth />

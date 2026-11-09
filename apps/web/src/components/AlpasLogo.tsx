@@ -1,8 +1,8 @@
-import logo from '../assets/brand/alpas-logo.png'
+import logo from '../assets/figma/logo-header.svg'
+import logoOnDark from '../assets/figma/logo-footer.svg'
 import { cn } from '@grupo-laplace/ui'
 
-/** Logotipo de Grupo ALPAS (exportado del archivo de Figma). Sobre fondos oscuros va en una placa blanca. */
+/** Logotipo de Grupo ALPAS (vectorial, exportado del Figma «PROTOTIPOS»). Sobre fondos oscuros usa la versión clara. */
 export function AlpasLogo({ className, onDark }: { className?: string; onDark?: boolean }) {
-  const img = <img src={logo} alt="Grupo ALPAS, grupo de estudio" width={700} height={292} className={cn('h-10 w-auto', className)} />
-  return onDark ? <span className="inline-flex rounded-lg bg-white px-3 py-2">{img}</span> : img
+  return <img src={onDark ? logoOnDark : logo} alt="Grupo ALPAS, grupo de estudio" width={119} height={48} className={cn('h-10 w-auto', className)} />
 }

@@ -11,6 +11,7 @@ type Props = {
   variant?: ButtonVariant
   size?: ButtonSize
   fullWidth?: boolean
+  pill?: boolean
   className?: string
 }
 
@@ -18,18 +19,18 @@ type Props = {
  * CTA principal del sitio. Con número configurado abre WhatsApp con el mensaje precargado;
  * sin número lleva a Contacto, donde se indica que el número está pendiente.
  */
-export function WhatsAppButton({ label = 'Consultar por WhatsApp', message, url, variant = 'secondary', size, fullWidth, className }: Props) {
+export function WhatsAppButton({ label = 'Consultar por WhatsApp', message, url, variant = 'secondary', size, fullWidth, pill, className }: Props) {
   const href = url === undefined ? whatsappUrl(message) : url
   const icon = <MessageCircle className="size-5 shrink-0" aria-hidden />
   if (href) {
     return (
-      <ButtonLink href={href} variant={variant} size={size} fullWidth={fullWidth} iconLeft={icon} className={className}>
+      <ButtonLink href={href} variant={variant} size={size} fullWidth={fullWidth} pill={pill} iconLeft={icon} className={className}>
         {label}
       </ButtonLink>
     )
   }
   return (
-    <Link to="/contacto" className={buttonClasses({ variant, size, fullWidth }, className)}>
+    <Link to="/contacto" className={buttonClasses({ variant, size, fullWidth, pill }, className)}>
       {icon}
       {label}
     </Link>
