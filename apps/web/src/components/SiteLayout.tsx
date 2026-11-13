@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { useRevealOnScroll } from '../lib/useReveal'
-import { MobileWhatsAppBar } from './MobileWhatsAppBar'
 import { SiteFooter } from './SiteFooter'
 import { SiteHeader } from './SiteHeader'
+import { WhatsAppFab } from './WhatsAppFab'
 
 export function SiteLayout() {
   const { pathname, hash } = useLocation()
@@ -19,7 +19,7 @@ export function SiteLayout() {
         <Outlet />
       </main>
       <SiteFooter />
-      <MobileWhatsAppBar />
+      <WhatsAppFab />
     </>
   )
 }

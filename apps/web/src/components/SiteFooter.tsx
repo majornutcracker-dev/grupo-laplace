@@ -28,7 +28,7 @@ export function SiteFooter() {
   const socials = socialLinks()
   return (
     <footer className="bg-site-navy">
-      <div className="site-container pt-10 pb-28 lg:pb-10">
+      <div className="site-container pt-10 pb-24 lg:pb-10">
         <div className="grid gap-12 lg:grid-cols-[21rem_1fr] lg:gap-20">
           <div>
             <AlpasLogo onDark className="h-12" />
