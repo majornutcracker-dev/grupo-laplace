@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import '@fontsource/poppins/400.css'
 import '@fontsource/poppins/500.css'
 import '@fontsource/poppins/600.css'
@@ -8,7 +8,6 @@ import '@fontsource/plus-jakarta-sans/600.css'
 import './styles/global.css'
 import { SiteLayout } from './components/SiteLayout'
 import Home from './pages/Home'
-import Servicios from './pages/Servicios'
 import Escolar from './pages/Escolar'
 import Universitario from './pages/Universitario'
 import Orientacion from './pages/Orientacion'
@@ -22,7 +21,8 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route element={<SiteLayout />}>
           <Route index element={<Home />} />
-          <Route path="servicios" element={<Servicios />} />
+          {/* El catálogo vive en la sección Servicios de Inicio (Figma) */}
+          <Route path="servicios" element={<Navigate to="/#servicios" replace />} />
           <Route path="servicios/escolar" element={<Escolar />} />
           <Route path="servicios/universitario" element={<Universitario />} />
           <Route path="servicios/orientacion-vocacional" element={<Orientacion />} />

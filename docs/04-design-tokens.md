@@ -1,6 +1,6 @@
 # 04 · Design tokens — Grupo Laplace
 
-**Fuente única:** `packages/tokens/tokens.json` (paquete `@grupo-laplace/tokens`) (formato tipo W3C Design Tokens, con `$value` y referencias `{color.navy.900}`).
+**Fuente única:** `packages/tokens/tokens.json` (paquete `@grupo-alpas/tokens`) (formato tipo W3C Design Tokens, con `$value` y referencias `{color.navy.900}`).
 `yarn build` genera `packages/tokens/dist/tokens.css`: las variables quedan en `@theme` de Tailwind v4, así que cada token es también una utilidad (`bg-surface-default`, `text-text-primary`, `border-border-default`, `rounded-xl`, `shadow-md`, `md:`…). Turbo lo construye antes de `dev` y `build` de la web.
 
 > Tablas extraídas de `tokens.json` el 2026-10-19. La página `/ui-kit` lee el JSON directamente y siempre está al día; si cambias tokens, actualiza también estas tablas.
@@ -247,6 +247,6 @@ Además, toda la escala de Tailwind (`p-4` = 16 px…) sigue la base de 4 px.
 ## Regenerar
 
 ```bash
-yarn turbo run build --filter=@grupo-laplace/tokens   # JSON → dist/tokens.css
+yarn turbo run build --filter=@grupo-alpas/tokens   # JSON → dist/tokens.css
 python3 packages/tokens/scripts/color-scales.py      # recalcula escalas y contrastes
 ```

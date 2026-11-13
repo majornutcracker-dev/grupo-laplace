@@ -62,7 +62,7 @@ const themeBlocks = Object.entries(tokens.themes ?? {})
     return `[data-brand="${name}"] {\n${vars.join('\n')}\n}`
   })
 
-const css = `/* Archivo generado por @grupo-laplace/tokens (scripts/build.mjs) — no editar a mano.
+const css = `/* Archivo generado por @grupo-alpas/tokens (scripts/build.mjs) — no editar a mano.
    Edita packages/tokens/tokens.json y ejecuta: yarn build */
 
 @theme {

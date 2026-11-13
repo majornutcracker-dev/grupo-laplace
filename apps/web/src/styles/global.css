@@ -1,6 +1,6 @@
 @import 'tailwindcss';
-@import '@grupo-laplace/tokens/tokens.css';
-@import '@grupo-laplace/ui/styles.css';
+@import '@grupo-alpas/tokens/tokens.css';
+@import '@grupo-alpas/ui/styles.css';
 
 /* Código de la app y del UI kit */
 @source '..';
@@ -11,18 +11,23 @@
    rellenos, íconos y titulares grandes; para texto pequeño se usa su versión oscura (site-green-text)
    porque el verde original no llega al contraste AA sobre blanco ni sobre su fondo suave. */
 @theme {
-  --color-site-navy: #0a213a;
-  --color-site-night: #081c32;
-  --color-site-green: #46a258;
-  --color-site-green-text: #2b6e38;
-  --color-site-green-soft: #dceedd;
-  --color-site-mist: #e8edf2;
-  --color-site-steel: #9eadbf;
-  --color-site-slate: #536a83;
-  --color-site-ink: #203152;
-  --color-site-paper: #fafcfe;
+  --color-site-navy: #0a213a;        /* Color/Primary/5 - base */
+  --color-site-night: #081c32;       /* Color/Primary/6 */
+  --color-site-green: #46a258;       /* Color/Secondary/first-hard */
+  --color-site-green-medium: #9dcd9f;/* Color/Secondary/first-medium */
+  --color-site-green-soft: #dceedd;  /* Color/Secondary/first-soft */
+  --color-site-green-text: #2b6e38;  /* derivado: verde para texto pequeño (AA) */
+  --color-site-mist: #e8edf2;        /* Color/Primary/1 */
+  --color-site-fog: #c8d2de;         /* Color/Primary/2 */
+  --color-site-steel: #9eadbf;       /* Color/Primary/3 */
+  --color-site-slate: #536a83;       /* Color/Primary/4 */
+  --color-site-ink: #203152;         /* Color/Neutral/base */
+  --color-site-subordinary: #8f98a8; /* Color/Neutral/subordinary */
+  --color-site-paper: #ffffff;       /* Color/Neutral/inverse */
+  --color-site-wash: rgb(217 220 226 / 0.2); /* Color/Transparency/disabled-20 */
   --font-display: 'Plus Jakarta Sans', var(--font-sans);
-  --shadow-overlay: 0 0 40px rgb(6 15 18 / 0.08);
+  --shadow-overlay: 0 0 40px rgb(6 15 18 / 0.08);  /* shadow-overlay */
+  --shadow-soft: 0 1px 2px rgb(30 30 30 / 0.12);   /* shadow-neutral */
 }
 
 @layer components {
@@ -30,11 +35,11 @@
 .site-display {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(2rem, 1.55rem + 1.6vw, 2.5rem);
-  line-height: 1.3;
+  font-size: clamp(1.875rem, 1.45rem + 1.6vw, 2.5rem);
+  line-height: 1.4;
   letter-spacing: 0.01em;
   color: var(--color-site-ink);
-  text-wrap: balance;
+  text-wrap: wrap;
 }
 .site-eyebrow {
   font: 500 0.9375rem/1.5 var(--font-sans);

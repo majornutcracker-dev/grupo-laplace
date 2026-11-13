@@ -1,93 +1,80 @@
-import { buttonClasses } from '@grupo-laplace/ui'
-import { Compass, HandHeart } from 'lucide-react'
-import fotoOrientacion from '../assets/figma/servicio-orientacion.webp'
-import { Accent, DarkBenefits, FinalCta, InfoCard, InnerHero, PhotoComposition, SectionIntro } from '../components/site/SiteBlocks'
-import { WhatsAppButton } from '../components/WhatsAppButton'
-import { orientacion as o, orientacionPage } from '../data/content'
+import { cn } from '@grupo-alpas/ui'
+import fotoOrientacion from '../assets/figma/hero-orientacion.webp'
+import tileHeart from '../assets/figma/tile-heart.svg'
+import tileRoute from '../assets/figma/tile-route.svg'
+import { ServiceHero } from '../components/site/ServiceLayout'
+import { BenefitsBand, CtaCard, Eyebrow, FaqSection, Green, IconCircle, SectionHead } from '../components/site/Sections'
+import { orientacionFigma as o } from '../data/paginas'
 import { whatsappUrl } from '../lib/contact'
+import { delay } from '../lib/motion'
 import { usePageMeta } from '../lib/usePageMeta'
 
-/**
- * Orientación vocacional tiene su propia estructura: no hay áreas ni horarios, sino a quién va dirigido,
- * qué incluye y para qué sirve. No se muestran pruebas ni etapas que ALPAS no haya confirmado.
- */
+/** Orientación vocacional: a quién va dirigido, el proceso en tres pasos, beneficios y preguntas (Figma). */
 export default function Orientacion() {
   usePageMeta('Orientación vocacional · Grupo ALPAS', o.hero.description)
   const wa = whatsappUrl('Hola, Grupo ALPAS. Quisiera información sobre la orientación vocacional.')
   return (
     <>
-      {/* 1. Hero */}
-      <InnerHero
-        crumbs={[{ label: 'Inicio', href: '/' }, { label: 'Servicios', href: '/servicios' }, { label: 'Orientación vocacional' }]}
-        tag={orientacionPage.tag}
-        title={<>Descubre tu camino. <Accent>Construye</Accent> tu futuro.</>}
-        description={
-          <>
-            <p>{o.hero.description}</p>
-            <p>{o.intro}</p>
-          </>
-        }
-        actions={
-          <>
-            <WhatsAppButton url={wa} label="Quiero orientación" variant="primary" pill />
-            <a href="#dirigido" className={buttonClasses({ variant: 'neutral', pill: true })}>¿Es para mí?</a>
-          </>
-        }
-        media={
-          <PhotoComposition
-            src={fotoOrientacion}
-            alt="Joven conversando por videollamada con su orientadora vocacional"
-            chips={[
-              { icon: HandHeart, label: 'Acompañamiento cercano' },
-              { icon: Compass, label: 'Explora tus opciones', tone: 'mist' },
-            ]}
-          />
-        }
+      <ServiceHero
+        tag={o.hero.tag}
+        title={<>Descubre tu camino<br /><Green>Construye tu futuro</Green></>}
+        description={o.hero.description}
+        whatsappUrl={wa}
+        secondary={{ label: 'Ver servicio', href: '#proceso' }}
+        showcase={{
+          photo: fotoOrientacion,
+          photoAlt: 'Joven en una sesión virtual de orientación vocacional con su orientadora',
+          photoStyle: { left: '4.3%', top: '14.7%', width: '89%', height: '79.5%' },
+          tiles: [tileRoute, tileHeart],
+        }}
       />
 
-      {/* 2. ¿A quién está dirigido? */}
-      <section id="dirigido" aria-labelledby="audience-title" className="scroll-mt-28 bg-site-paper">
-        <div className="container-wide section-y">
-          <SectionIntro id="audience-title" eyebrow="¿A quién está dirigido?" title="Para quienes están eligiendo qué estudiar" />
-          <ul className="mt-10 grid gap-5 md:grid-cols-3">
-            {o.audience.map((a, i) => (
-              <li key={a.title}>
-                <InfoCard icon={orientacionPage.audienceIcons[i]} tone={i === 1 ? 'green' : 'navy'} title={a.title} index={i}>{a.text}</InfoCard>
+      {/* ¿A quién está dirigido? */}
+      <section aria-labelledby="audience-title" className="bg-white">
+        <div className="container-wide py-16 sm:py-20">
+          <SectionHead id="audience-title" eyebrow={o.audience.eyebrow} title={o.audience.title} />
+          <ul className="mt-10 grid gap-5 md:grid-cols-3 lg:gap-10">
+            {o.audience.items.map((a, i) => (
+              <li key={a.text} className="reveal lift rounded-[1.5rem] bg-white p-8 shadow-overlay sm:p-10" style={delay(i * 90)}>
+                <IconCircle icon={a.icon} tone={i === 1 ? 'green' : 'navy'} />
+                <p className="mt-8 text-lg leading-normal font-medium text-site-ink">{a.text}</p>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* 3. ¿Qué te ofrece este servicio? */}
-      <section aria-labelledby="offers-title" className="bg-site-paper">
-        <div className="container-wide pb-[var(--space-section-y)]">
-          <div className="rounded-[1.5rem] bg-site-mist/60 p-6 sm:p-10 lg:p-14">
-            <SectionIntro
-              id="offers-title"
-              eyebrow="¿Qué te ofrece este servicio?"
-              title="Un acompañamiento para decidir con información"
-              className="max-w-[44rem]"
-              description="Conversamos contigo sobre lo que te interesa y revisamos juntos tus opciones."
-            />
-            <ul className="mt-10 grid gap-5 md:grid-cols-3">
-              {o.offers.map((f, i) => (
-                <li key={f.title}><InfoCard icon={f.icon} tone={i === 1 ? 'green' : 'navy'} title={f.title} index={i}>{f.text}</InfoCard></li>
-              ))}
-            </ul>
-          </div>
+      {/* El proceso: tres pasos, el del medio desplazado hacia abajo como en el Figma */}
+      <section id="proceso" aria-labelledby="process-title" className="scroll-mt-24 bg-white">
+        <div className="container-wide pb-20">
+          <SectionHead id="process-title" eyebrow={o.process.eyebrow} title={o.process.title} />
+          <ol className="mt-10 grid gap-6 md:grid-cols-3 lg:gap-20">
+            {o.process.steps.map((s, i) => {
+              const n = String(i + 1).padStart(2, '0')
+              return (
+                <li key={s.title} className={cn('reveal', i === 1 && 'md:pt-20')} style={delay(i * 120)}>
+                  <article className="lift flex h-full flex-col gap-6 rounded-[1.5rem] bg-white p-8 shadow-overlay sm:p-10">
+                    <div className="flex items-center justify-between">
+                      <IconCircle icon={s.icon} tone={s.tone === 'green' ? 'soft' : 'mist'} square />
+                      <span aria-hidden className="text-[3.125rem] leading-normal font-semibold tracking-[6px] text-site-fog/45">{n}</span>
+                    </div>
+                    <div>
+                      <Eyebrow className="text-site-green-text">PASO {n}</Eyebrow>
+                      <h3 className="mt-4 text-lg leading-normal font-medium text-site-ink">{s.title}</h3>
+                      <p className="mt-2 text-base leading-normal text-site-ink">{s.text}</p>
+                    </div>
+                  </article>
+                </li>
+              )
+            })}
+          </ol>
         </div>
       </section>
 
-      {/* 4. Beneficios */}
-      <DarkBenefits id="benefits-title" eyebrow="Beneficios" title="Cómo te ayuda la orientación vocacional" items={orientacionPage.benefits} />
-
-      {/* 5. CTA final */}
-      <FinalCta
-        title={<>Conversemos sobre <Accent>tu futuro</Accent></>}
-        description="Cuéntanos en qué etapa estás y te contamos cómo funciona la orientación vocacional de ALPAS."
-        whatsappUrl={wa}
-      />
+      <BenefitsBand id="benefits-title" eyebrow={o.benefits.eyebrow} title={o.benefits.title} items={o.benefits.items} layout="stack" />
+      <FaqSection items={o.faqs} />
+      <CtaCard title={o.cta.title} description={o.cta.description} whatsappUrl={wa} />
+      <div className="h-10 bg-white" />
     </>
   )
 }

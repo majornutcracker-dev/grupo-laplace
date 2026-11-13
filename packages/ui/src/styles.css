@@ -1,8 +1,8 @@
 /* Estilos base y clases de componentes del UI kit de Grupo ALPAS.
    Se importa después de Tailwind y de los tokens:
      @import 'tailwindcss';
-     @import '@grupo-laplace/tokens/tokens.css';
-     @import '@grupo-laplace/ui/styles.css';
+     @import '@grupo-alpas/tokens/tokens.css';
+     @import '@grupo-alpas/ui/styles.css';
    El consumidor registra el código del paquete con @source para que Tailwind genere sus utilidades. */
 
 @layer base {

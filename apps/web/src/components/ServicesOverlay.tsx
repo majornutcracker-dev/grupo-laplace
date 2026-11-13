@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { ChevronDown } from 'lucide-react'
-import { cn } from '@grupo-laplace/ui'
+import { cn } from '@grupo-alpas/ui'
 import { services, type Service } from '../data/content'
 
 /** Servicios del overlay (Figma: overlay-options): solo los que tienen página propia. */
@@ -18,7 +18,7 @@ function OptionCard({ service, onSelect }: { service: Service & { to: string }; 
       onClick={onSelect}
       aria-current={current ? 'page' : undefined}
       className={cn(
-        'flex items-center gap-4 rounded-2xl px-4 py-2 transition-colors duration-150',
+        'flex items-center gap-3 rounded-[1rem] px-4 py-2 transition-colors duration-150',
         current ? 'bg-site-green-soft/60' : 'hover:bg-site-mist/70 focus-visible:bg-site-mist/70',
       )}
     >
@@ -93,7 +93,7 @@ export function ServicesOverlay({ itemClass }: { itemClass: (active: boolean) =>
           open ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-1 opacity-0',
         )}
       >
-        <ul className="grid grid-cols-2 gap-4 rounded-2xl bg-white p-6 shadow-overlay ring-1 ring-site-mist">
+        <ul className="grid grid-cols-2 gap-4 rounded-[1rem] bg-white p-6 shadow-overlay ring-1 ring-site-mist">
           {menuServices.map((s) => (
             <li key={s.id}>
               <OptionCard service={s} onSelect={() => setOpen(false)} />
@@ -122,7 +122,7 @@ export function MobileServicesOptions({ onSelect }: { onSelect: () => void }) {
         Servicios
         <ChevronDown className={cn('size-5 transition-transform duration-200 ease-standard', open && 'rotate-180')} aria-hidden />
       </button>
-      <ul id={panelId} hidden={!open} className="mb-4 flex flex-col gap-1 rounded-2xl bg-white p-2 shadow-overlay ring-1 ring-site-mist">
+      <ul id={panelId} hidden={!open} className="mb-4 flex flex-col gap-1 rounded-[1rem] bg-white p-2 shadow-overlay ring-1 ring-site-mist">
         {menuServices.map((s) => (
           <li key={s.id}>
             <OptionCard service={s} onSelect={onSelect} />

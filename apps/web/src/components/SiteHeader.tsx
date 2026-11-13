@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
-import { cn } from '@grupo-laplace/ui'
+import { cn } from '@grupo-alpas/ui'
 import { nav } from '../data/content'
 import { AlpasLogo } from './AlpasLogo'
 import { MobileServicesOptions, ServicesOverlay } from './ServicesOverlay'
@@ -82,7 +82,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden lg:block">
-          <WhatsAppButton label="Consulta por WhatsApp" pill />
+          <WhatsAppButton label="Consulta por WhatsApp" pill hideIcon />
         </div>
 
         <button

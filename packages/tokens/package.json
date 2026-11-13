@@ -1,5 +1,5 @@
 {
-  "name": "@grupo-laplace/tokens",
+  "name": "@grupo-alpas/tokens",
   "version": "0.0.0",
   "private": true,
   "description": "Design tokens de Grupo ALPAS (variables de Figma) y tema Grupo Laplace: tokens.json → dist/tokens.css para Tailwind 4.",

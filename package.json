@@ -1,5 +1,5 @@
 {
-  "name": "@grupo-laplace/monorepo",
+  "name": "@grupo-alpas/monorepo",
   "private": true,
   "packageManager": "yarn@1.22.22",
   "workspaces": [
@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo run dev --filter=@grupo-laplace/web",
+    "dev": "turbo run dev --filter=@grupo-alpas/web",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",

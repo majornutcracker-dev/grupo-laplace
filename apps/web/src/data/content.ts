@@ -7,6 +7,7 @@ import type { LucideIcon } from 'lucide-react'
 import docenteRoberto from '../assets/figma/docente-roberto.webp'
 import {
   Atom,
+  Backpack,
   BookMarked,
   BookOpenCheck,
   CalendarClock,
@@ -64,7 +65,7 @@ export const services: Service[] = [
     menuText: 'Acompañamiento escolar con Grupo Laplace',
     summary: 'Refuerzo académico y acompañamiento para estudiantes de nivel escolar.',
     to: '/servicios/escolar',
-    icon: School,
+    icon: Backpack,
     audience: 'Con Grupo Laplace',
     photoNote: 'Foto pendiente: estudiante escolar resolviendo un ejercicio con su docente',
   },
@@ -84,7 +85,7 @@ export const services: Service[] = [
     menuText: 'Explora tus opciones profesionales',
     summary: 'Asesoría para descubrir intereses y explorar opciones profesionales.',
     to: '/servicios/orientacion-vocacional',
-    icon: Compass,
+    icon: Route,
     audience: 'Jóvenes que eligen carrera',
     photoNote: 'Foto pendiente: joven conversando con su orientador',
   },

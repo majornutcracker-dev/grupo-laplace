@@ -1,6 +1,8 @@
-# Grupo ALPAS · Sitio web (y ecosistema de marca de Grupo Laplace)
+# Grupo ALPAS · Sitio web
 
-> **Sitio actual:** web institucional de Grupo ALPAS en `apps/web`, con Grupo Laplace como marca independiente en `/servicios/escolar`. Ver [`docs/07-sitio-grupo-alpas.md`](docs/07-sitio-grupo-alpas.md). Lo que sigue documenta el trabajo de marca previo de Grupo Laplace.
+> **Organizaciones:** Grupo ALPAS es la organización principal. Grupo Laplace es una organización de ALPAS que gestiona el servicio Escolar (`/servicios/escolar`).
+>
+> **Sitio actual:** web institucional de Grupo ALPAS en `apps/web`. Ver [`docs/07-sitio-grupo-alpas.md`](docs/07-sitio-grupo-alpas.md). Lo que sigue documenta el trabajo de marca previo de Grupo Laplace.
 
 **Branding → design system → UI Kit → web**, a partir del Figma *Branding - Grupo Laplace* (página 05 - Claude Context).
 
@@ -21,10 +23,10 @@
 
 ## Estructura (monorepo Turborepo + Yarn workspaces)
 ```
-grupo-laplace/
+grupo-alpas/
 ├─ apps/web/            sitio de Grupo ALPAS (Vite + React + Tailwind 4)
-├─ packages/tokens/     @grupo-laplace/tokens — tokens de Figma (ALPAS) + tema Laplace → dist/tokens.css
-├─ packages/ui/         @grupo-laplace/ui — UI kit de ALPAS (componentes az-* de Figma)
+├─ packages/tokens/     @grupo-alpas/tokens — tokens de Figma (ALPAS) + tema Laplace → dist/tokens.css
+├─ packages/ui/         @grupo-alpas/ui — UI kit de ALPAS (componentes az-* de Figma)
 ├─ brand/               export original de Figma y 15 SVG limpios del logotipo
 ├─ docs/                auditoría, estrategia, guía, tokens, UI Kit, mantenimiento, prototipo
 ├─ scripts/             build-logos.py

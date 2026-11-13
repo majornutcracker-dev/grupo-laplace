@@ -6,7 +6,7 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import type { LucideIcon } from 'lucide-react'
-import { Breadcrumbs, cn } from '@grupo-laplace/ui'
+import { Breadcrumbs, cn } from '@grupo-alpas/ui'
 import ctaFondo from '../../assets/figma/cta-fondo.svg'
 import ctaClap from '../../assets/figma/cta-clap.svg'
 import heroBlob from '../../assets/figma/hero-blob.svg'

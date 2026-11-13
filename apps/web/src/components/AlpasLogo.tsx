@@ -1,6 +1,6 @@
 import logo from '../assets/figma/logo-header.svg'
 import logoOnDark from '../assets/figma/logo-footer.svg'
-import { cn } from '@grupo-laplace/ui'
+import { cn } from '@grupo-alpas/ui'
 
 /** Logotipo de Grupo ALPAS (vectorial, exportado del Figma «PROTOTIPOS»). Sobre fondos oscuros usa la versión clara. */
 export function AlpasLogo({ className, onDark }: { className?: string; onDark?: boolean }) {

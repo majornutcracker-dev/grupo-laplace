@@ -1,4 +1,4 @@
-import { cn } from '@grupo-laplace/ui'
+import { cn } from '@grupo-alpas/ui'
 
 /** Trazos decorativos dibujados a mano (inspirados en las referencias). Todos son decorativos. */
 

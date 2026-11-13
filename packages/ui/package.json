@@ -1,5 +1,5 @@
 {
-  "name": "@grupo-laplace/ui",
+  "name": "@grupo-alpas/ui",
   "version": "0.0.0",
   "private": true,
   "description": "UI kit de Grupo ALPAS (componentes de Figma: botones, etiquetas, notas, acordeón, pasos) en React + Tailwind 4; soporta el tema Grupo Laplace.",
@@ -17,7 +17,7 @@
     "clean": "rm -rf .turbo"
   },
   "dependencies": {
-    "@grupo-laplace/tokens": "0.0.0",
+    "@grupo-alpas/tokens": "0.0.0",
     "lucide-react": "^0.525.0"
   },
   "peerDependencies": {

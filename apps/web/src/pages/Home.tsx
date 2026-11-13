@@ -1,168 +1,174 @@
 import { Link } from 'react-router-dom'
-import { CheckCircle2, Compass, GraduationCap, HandHeart, School } from 'lucide-react'
-import { PlusMark, buttonClasses } from '@grupo-laplace/ui'
-import { ArtFrame, BenefitCards, CtaBand, IconTile, SectionHeading, ServiceTiles, TeacherCard } from '../components/Blocks'
-import { home, services, teachers } from '../data/content'
-import { Burst, CurlyArrow, Dot, Sparkle, Squiggle } from '../illustrations/Doodles'
-import { Person } from '../illustrations/Person'
-import { HAIR, SKIN } from '../illustrations/palette'
-import { StudyGroupScene, TutoringScene } from '../illustrations/Scenes'
+import { ChevronRight, Rocket, UsersRound } from 'lucide-react'
+import { buttonClasses, cn } from '@grupo-alpas/ui'
+import checkIcon from '../assets/figma/check.svg'
+import docenteRoberto from '../assets/figma/docente-roberto.webp'
+import fotoEstudiantes from '../assets/figma/hero-estudiantes.webp'
+import fotoDocente from '../assets/figma/nosotros-docente.webp'
+import fotoEscolar from '../assets/figma/servicio-escolar.webp'
+import fotoOrientacion from '../assets/figma/servicio-orientacion.webp'
+import fotoUniversitario from '../assets/figma/servicio-universitario.webp'
+import flechaA from '../assets/figma/servicios-flecha-a.svg'
+import flechaB from '../assets/figma/servicios-flecha-b.svg'
+import tileFx from '../assets/figma/tile-fx.svg'
+import tileIntegral from '../assets/figma/tile-integral.svg'
+import { PhotoComposition } from '../components/site/SiteBlocks'
+import { BenefitsBand, CtaCard, FaqSection, Green, HeroShowcase, HeroSplit, IconCircle, SectionHead, TeamCard } from '../components/site/Sections'
+import { WhatsAppButton } from '../components/WhatsAppButton'
+import { inicio } from '../data/paginas'
+import { whatsappUrl } from '../lib/contact'
 import { delay } from '../lib/motion'
 import { usePageMeta } from '../lib/usePageMeta'
 
-const pillars = [
-  { icon: School, title: 'Refuerzo académico', text: 'Para estudiantes de nivel escolar.' },
-  { icon: GraduationCap, title: 'Formación universitaria', text: 'Matemática, cálculo, química y física.' },
-  { icon: Compass, title: 'Orientación vocacional', text: 'Para elegir tu carrera con confianza.' },
-]
-
-/** Collage del hero: cuatro retratos ilustrados en formas distintas, como en las referencias */
-function HeroCollage() {
-  return (
-    <div className="relative mx-auto w-full max-w-[34rem] lg:max-w-none" aria-hidden>
-      <div className="grid grid-cols-2 gap-3 sm:gap-4">
-        <div className="pop-in aspect-square overflow-hidden rounded-pill bg-brand-secondary" style={delay(120)}>
-          <Person className="mt-[8%] size-full" skin={SKIN.light} hair={HAIR.auburn} hairStyle="ponytail" shirt="fill-white" collar="fill-brand-secondary" holding="book" />
-        </div>
-        <div className="pop-in frame-tab aspect-square overflow-hidden bg-surface-muted" style={delay(220)}>
-          <Person className="mt-[8%] size-full" skin={SKIN.tan} hair={HAIR.black} hairStyle="short" glasses shirt="fill-brand-primary" wave />
-        </div>
-        <div className="pop-in aspect-square overflow-hidden rounded-xl bg-brand-primary" style={delay(320)}>
-          <Person className="mt-[8%] size-full" skin={SKIN.deep} hair={HAIR.black} hairStyle="curly" shirt="fill-brand-secondary" collar="fill-white" holding="notebook" />
-        </div>
-        <div className="pop-in aspect-square overflow-hidden rounded-tl-xl rounded-tr-xl rounded-br-[50%] rounded-bl-xl bg-surface-accent" style={delay(420)}>
-          <Person className="mt-[8%] size-full" skin={SKIN.medium} hair={HAIR.brown} hairStyle="bun" shirt="fill-brand-primary" holding="tablet" />
-        </div>
-      </div>
-
-      {/* Tarjetas flotantes con contenido real del servicio */}
-      <div className="pop-in float-y absolute -bottom-6 -left-3 flex items-center gap-3 rounded-lg bg-white py-3 pr-5 pl-3 shadow-raised sm:-left-8" style={delay(620)}>
-        <IconTile icon={HandHeart} tone={1} className="size-10 rounded-md [&_svg]:size-5" />
-        <span className="type-label text-text-heading">Acompañamiento<br />cercano</span>
-      </div>
-      <div className="pop-in float-y absolute top-[42%] -right-3 hidden items-center gap-2 rounded-pill bg-white px-4 py-2 shadow-raised sm:flex" style={{ ...delay(760), animationDuration: '7s' }}>
-        <CheckCircle2 className="size-4.5 text-text-accent" />
-        <span className="type-caption text-text-heading">Escolar y universitario</span>
-      </div>
-
-      <PlusMark className="pop-in float-y absolute -top-6 -right-4 size-14" />
-      <Sparkle className="float-y absolute -top-3 left-[46%] size-7" />
-      <Dot className="float-y bottom-[30%] -left-4 size-3 bg-brand-secondary" />
-      <Dot className="top-[8%] -left-2 size-2 bg-brand-primary" />
-      <Dot className="-right-2 bottom-[12%] size-2.5 bg-brand-secondary" />
-    </div>
-  )
-}
+const servicePhotos = { escolar: fotoEscolar, universitario: fotoUniversitario, orientacion: fotoOrientacion }
 
 export default function Home() {
   usePageMeta(
     'Grupo ALPAS · Refuerzo escolar, universitario y orientación vocacional',
-    'Grupo ALPAS acompaña tu aprendizaje: refuerzo académico escolar, cursos universitarios de matemática, cálculo, química y física, y orientación vocacional.',
+    'Grupo ALPAS acompaña tu aprendizaje: refuerzo escolar, asesorías universitarias y orientación vocacional. Clases virtuales con atención personalizada.',
   )
-  const { hero, about, why, team, cta } = home
+  const { hero, metrics, about, services, benefits, team, faqs, cta } = inicio
   return (
     <>
-      {/* 1. Hero */}
-      <section aria-labelledby="hero-title" className="relative overflow-hidden bg-surface-subtle">
-        <div aria-hidden className="absolute -top-32 -right-40 size-[34rem] rounded-pill bg-surface-accent" />
-        <div className="container-wide relative grid items-center gap-16 pt-10 pb-20 lg:grid-cols-[1.05fr_1fr] lg:gap-20 lg:pt-16 lg:pb-28">
-          <div>
-            <p className="pop-in inline-flex rounded-pill bg-white px-4 py-1.5 type-caption tracking-[0.08em] text-text-accent shadow-neutral">{hero.tag}</p>
-            <h1 id="hero-title" className="type-display pop-in mt-6 max-w-[15ch]" style={delay(80)}>
-              Aprender mejor hoy. Llegar{' '}
-              <span className="relative inline-block whitespace-nowrap">
-                más lejos
-                <Squiggle className="absolute -bottom-2 left-0 h-3 w-full" />
-              </span>{' '}
-              mañana.
-            </h1>
-            <p className="type-body-lg pop-in mt-7 max-w-[34rem] text-text-body" style={delay(160)}>{hero.description}</p>
-            <div className="pop-in mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style={delay(240)}>
-              <Link to="/servicios" className={buttonClasses({ variant: 'primary' })}>Explorar servicios</Link>
-              <Link to="/conocenos" className={buttonClasses({ variant: 'neutral' })}>Conócenos</Link>
-              <CurlyArrow className="ml-2 hidden h-12 w-24 xl:block" />
+      {/* Hero */}
+      <section aria-labelledby="page-title" className="overflow-hidden bg-white">
+        <div className="container-wide pt-10 pb-10 lg:pt-10">
+          <HeroSplit
+            tag={hero.tag}
+            title={<>Potenciamos tu <Green>aprendizaje,</Green> construimos tu futuro</>}
+            description={hero.description}
+            actions={
+              <>
+                <WhatsAppButton label="Consulta por WhatsApp" variant="primary" pill hideIcon className="sm:flex-1" />
+                <a href="#servicios" className={buttonClasses({ variant: 'neutral', pill: true }, 'sm:w-45')}>Ver servicios</a>
+              </>
+            }
+            extra={
+              <ul className="pop-in mt-6 flex flex-wrap gap-x-4 gap-y-2" style={delay(240)} aria-label="Por qué elegir ALPAS">
+                {hero.checks.map((c) => (
+                  <li key={c} className="flex items-center gap-2 text-sm leading-normal text-site-ink">
+                    <img src={checkIcon} alt="" className="size-6" />
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            }
+            media={
+              <HeroShowcase
+                variant="home"
+                photo={fotoEstudiantes}
+                photoAlt="Dos estudiantes de Grupo ALPAS con polos de la marca, mochilas y cuadernos"
+                photoStyle={{ left: '15.1%', top: '0%', width: '69.8%', height: '94%' }}
+                tiles={[{ src: tileIntegral, tone: 'green' }, { src: tileFx, tone: 'navy' }]}
+                chips={[
+                  { icon: UsersRound, label: ['Acompañamiento', 'constante'], tone: 'soft' },
+                  { icon: Rocket, label: ['Crecimiento', 'académico'], tone: 'mist' },
+                ]}
+              />
+            }
+          />
+        </div>
+      </section>
+
+      {/* Cifras */}
+      <section aria-label="ALPAS en cifras" className="bg-white">
+        <div className="container-wide py-10">
+          <ul className="reveal grid gap-8 rounded-[1.5rem] bg-site-navy p-8 shadow-overlay sm:p-10 md:grid-cols-3 md:gap-0">
+            {metrics.map((m, i) => (
+              <li key={m.label} className={cn('flex items-center gap-4 px-4 py-2 md:justify-center', i > 0 && 'md:border-l md:border-site-slate/70')}>
+                <IconCircle icon={m.icon} tone="green" />
+                <p className="text-white">
+                  <span className="block text-[1.6875rem] leading-[1.4] font-medium">{m.value}</span>
+                  <span className="mt-1 block text-base leading-normal">{m.label}</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Sobre nosotros */}
+      <section aria-labelledby="about-title" className="bg-white">
+        <div className="container-wide grid items-center gap-14 py-10 lg:grid-cols-[minmax(0,34rem)_1fr] lg:gap-20">
+          <div className="reveal">
+            <PhotoComposition ratio="1312/1199" src={fotoDocente} alt="Docente de Grupo ALPAS saludando con un libro de Matemáticas" />
+          </div>
+          <div className="reveal">
+            <SectionHead id="about-title" eyebrow={about.eyebrow} title={about.title} />
+            <div className="mt-6 space-y-6 text-base leading-normal text-site-ink">
+              {about.body.map((p) => <p key={p}>{p}</p>)}
             </div>
-            <ul className="pop-in mt-10 flex flex-wrap gap-x-6 gap-y-3" aria-label="Lo que ofrecemos" style={delay(320)}>
-              {hero.complement.map((c) => (
-                <li key={c} className="type-label inline-flex items-center gap-2 text-text-heading">
-                  <CheckCircle2 className="size-5 text-text-accent" aria-hidden />
-                  {c}
-                </li>
-              ))}
-            </ul>
+            <Link to="/conocenos" className={buttonClasses({ variant: 'primary', pill: true }, 'mt-6')}>
+              {about.cta}
+              <ChevronRight className="size-4" aria-hidden />
+            </Link>
           </div>
-          <HeroCollage />
         </div>
       </section>
 
-      {/* Franja de pilares (en lugar de cifras que no tenemos) */}
-      <section aria-label="Nuestros pilares" className="container-wide relative -mt-10 lg:-mt-14">
-        <ul className="reveal grid gap-px overflow-hidden rounded-xl bg-white/10 shadow-raised md:grid-cols-3">
-          {pillars.map(({ icon, title, text }, i) => (
-            <li key={title} className="flex items-center gap-4 bg-surface-inverse px-6 py-6 sm:px-8">
-              <IconTile icon={icon} tone={i === 1 ? 1 : 2} className="size-12" />
-              <div>
-                <p className="type-h5 text-white">{title}</p>
-                <p className="type-body-sm text-text-inverse-muted">{text}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* 2. Presentación */}
-      <section aria-labelledby="about-title" className="container-wide section-y grid items-center gap-14 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
-        <div className="relative order-last mx-auto w-full max-w-md lg:order-first lg:max-w-none">
-          <ArtFrame className="reveal aspect-square"><StudyGroupScene /></ArtFrame>
-          <div className="reveal float-y absolute -right-3 -bottom-6 rounded-lg bg-white px-5 py-4 shadow-raised sm:-right-8" style={delay(200)}>
-            <p className="type-caption text-text-muted">En cada etapa</p>
-            <p className="type-label text-text-heading">Del colegio a tu carrera</p>
+      {/* Servicios */}
+      <section id="servicios" aria-labelledby="services-title" className="scroll-mt-24 bg-white">
+        <div className="container-wide relative py-10">
+          <SectionHead id="services-title" eyebrow={services.eyebrow} title={services.title} />
+          <div aria-hidden className="absolute top-16 right-[13%] hidden w-[5.6rem] lg:block">
+            <img src={flechaA} alt="" className="w-full -scale-y-100 rotate-[-83deg]" />
+            <img src={flechaB} alt="" className="absolute bottom-[38%] -left-1 w-[18%] -scale-y-100 rotate-[-83deg]" />
           </div>
-          <Burst className="absolute -top-6 -left-6 size-10" />
-        </div>
-        <div className="reveal">
-          <h2 id="about-title" className="type-h2 max-w-[20ch]">{about.title}</h2>
-          {about.body.map((p) => (
-            <p key={p} className="type-body-lg mt-5 max-w-[36rem] text-text-body">{p}</p>
-          ))}
-          <Link to="/conocenos" className={buttonClasses({ variant: 'primary' }, 'mt-9')}>Conoce a Grupo ALPAS</Link>
+          <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+            {services.items.map((s, i) => (
+              <li key={s.id} className="reveal" style={delay(i * 90)}>
+                <article className="lift flex h-full flex-col gap-6 rounded-[1.5rem] border border-site-wash bg-white p-6 shadow-overlay">
+                  <div className="relative">
+                    <img src={servicePhotos[s.id]} alt="" loading="lazy" className="aspect-[326/218] w-full rounded-[1rem] object-cover" />
+                    {/* Muesca blanca con el ícono del servicio, como en el Figma */}
+                    <span className="absolute top-0 right-0 rounded-bl-[1.25rem] bg-white pb-2.5 pl-2.5">
+                      <span className={cn('grid h-[4.5rem] w-20 place-items-center rounded-[1rem] [&_svg]:size-8', s.tone === 'green' ? 'bg-site-green-soft text-site-green' : 'bg-site-fog text-site-navy')}>
+                        <s.icon strokeWidth={1.75} aria-hidden />
+                      </span>
+                    </span>
+                  </div>
+                  <div className="flex flex-1 flex-col gap-2">
+                    <h3 className="text-lg leading-normal font-medium text-site-ink">{s.name}</h3>
+                    <p className="text-base leading-normal text-site-ink">{s.text}</p>
+                  </div>
+                  <Link to={s.to} className={buttonClasses({ variant: 'neutral', pill: true }, 'self-start')}>
+                    Conocer más<span className="sr-only"> sobre {s.name}</span>
+                    <ChevronRight className="size-4" aria-hidden />
+                  </Link>
+                </article>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* 3. Servicios */}
-      <section aria-labelledby="services-title" className="bg-surface-subtle">
-        <div className="container-wide section-y">
+      <div className="h-10 bg-white" />
+
+      {/* Beneficios */}
+      <BenefitsBand id="benefits-title" eyebrow={benefits.eyebrow} title={benefits.title} items={benefits.items} layout="row" />
+
+      {/* Equipo */}
+      <section aria-labelledby="team-title" className="bg-white">
+        <div className="container-wide py-16 sm:py-20">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <SectionHeading id="services-title" title={home.services.title} description={home.services.description} />
-            <Link to="/servicios" className={buttonClasses({ variant: 'outlined', size: 'sm' }, 'self-start lg:self-auto')}>Ver todos los servicios</Link>
+            <SectionHead id="team-title" eyebrow={team.eyebrow} title={team.title} description={team.description} />
+            <Link to="/conocenos" className={buttonClasses({ variant: 'outlined', pill: true }, 'self-start lg:self-auto')}>
+              {team.cta}
+              <ChevronRight className="size-4" aria-hidden />
+            </Link>
           </div>
-          <div className="mt-12"><ServiceTiles items={services} /></div>
-        </div>
-      </section>
-
-      {/* 4. Por qué elegirnos */}
-      <section aria-labelledby="why-title" className="container-wide section-y">
-        <SectionHeading id="why-title" align="center" title={why.title} />
-        <div className="mt-12"><BenefitCards items={why.items} /></div>
-      </section>
-
-      {/* 5. Equipo */}
-      <section aria-labelledby="team-title" className="bg-surface-subtle">
-        <div className="container-wide section-y">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <SectionHeading id="team-title" title={team.title} />
-            <Link to="/conocenos" className={buttonClasses({ variant: 'outlined', size: 'sm' }, 'self-start lg:self-auto')}>Conoce al equipo</Link>
-          </div>
-          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-            {teachers.map((t, i) => <TeacherCard key={i} index={i} teacher={t} />)}
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+            {team.members.map((m, i) => <TeamCard key={i} index={i} name={m.name} role={m.role} photo={docenteRoberto} />)}
           </div>
         </div>
       </section>
 
-      {/* 6. CTA final */}
-      <div className="pt-[var(--space-section-y)]">
-        <CtaBand tone="green" title={cta.title} description={cta.description} art={<TutoringScene bg={false} />} />
-      </div>
+      {/* Preguntas frecuentes */}
+      <FaqSection items={faqs} />
+
+      {/* CTA final */}
+      <CtaCard title={cta.title} description={cta.description} whatsappUrl={whatsappUrl()} withIcon />
+      <div className="h-10 bg-white" />
     </>
   )
 }

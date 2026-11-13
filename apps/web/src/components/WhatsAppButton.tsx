@@ -1,6 +1,7 @@
+import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { MessageCircle } from 'lucide-react'
-import { ButtonLink, buttonClasses, type ButtonSize, type ButtonVariant } from '@grupo-laplace/ui'
+import { ButtonLink, buttonClasses, type ButtonSize, type ButtonVariant } from '@grupo-alpas/ui'
 import { whatsappUrl } from '../lib/contact'
 
 type Props = {
@@ -12,6 +13,10 @@ type Props = {
   size?: ButtonSize
   fullWidth?: boolean
   pill?: boolean
+  /** Sin el ícono de mensaje a la izquierda (botones del Figma) */
+  hideIcon?: boolean
+  /** Ícono a la derecha del texto */
+  iconRight?: ReactNode
   className?: string
 }
 
@@ -19,12 +24,12 @@ type Props = {
  * CTA principal del sitio. Con número configurado abre WhatsApp con el mensaje precargado;
  * sin número lleva a Contacto, donde se indica que el número está pendiente.
  */
-export function WhatsAppButton({ label = 'Consultar por WhatsApp', message, url, variant = 'secondary', size, fullWidth, pill, className }: Props) {
+export function WhatsAppButton({ label = 'Consulta por WhatsApp', message, url, variant = 'secondary', size, fullWidth, pill, hideIcon, iconRight, className }: Props) {
   const href = url === undefined ? whatsappUrl(message) : url
-  const icon = <MessageCircle className="size-5 shrink-0" aria-hidden />
+  const icon = hideIcon ? null : <MessageCircle className="size-5 shrink-0" aria-hidden />
   if (href) {
     return (
-      <ButtonLink href={href} variant={variant} size={size} fullWidth={fullWidth} pill={pill} iconLeft={icon} className={className}>
+      <ButtonLink href={href} variant={variant} size={size} fullWidth={fullWidth} pill={pill} iconLeft={icon} iconRight={iconRight} className={className}>
         {label}
       </ButtonLink>
     )
@@ -33,6 +38,7 @@ export function WhatsAppButton({ label = 'Consultar por WhatsApp', message, url,
     <Link to="/contacto" className={buttonClasses({ variant, size, fullWidth, pill }, className)}>
       {icon}
       {label}
+      {iconRight}
     </Link>
   )
 }

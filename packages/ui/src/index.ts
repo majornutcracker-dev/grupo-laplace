@@ -1,4 +1,4 @@
-// API pública de @grupo-laplace/ui (UI kit de Grupo ALPAS). Estilos: '@grupo-laplace/ui/styles.css'.
+// API pública de @grupo-alpas/ui (UI kit de Grupo ALPAS). Estilos: '@grupo-alpas/ui/styles.css'.
 export { cn } from './lib/cn'
 export { Button, ButtonLink, buttonClasses } from './components/Button'
 export type { ButtonSize, ButtonVariant } from './components/Button'

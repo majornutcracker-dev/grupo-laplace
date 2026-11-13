@@ -1,5 +1,5 @@
 {
-  "name": "@grupo-laplace/web",
+  "name": "@grupo-alpas/web",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -15,8 +15,8 @@
   "dependencies": {
     "@fontsource/plus-jakarta-sans": "5.2.5",
     "@fontsource/poppins": "5.2.6",
-    "@grupo-laplace/tokens": "0.0.0",
-    "@grupo-laplace/ui": "0.0.0",
+    "@grupo-alpas/tokens": "0.0.0",
+    "@grupo-alpas/ui": "0.0.0",
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

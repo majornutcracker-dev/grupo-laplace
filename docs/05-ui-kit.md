@@ -1,7 +1,7 @@
 # 05 · UI Kit — Grupo Laplace
 
 Catálogo vivo con todas las variantes: **`/ui-kit`** (`yarn dev` → `/ui-kit`).
-Código: paquete `@grupo-laplace/ui` (`packages/ui/src/`); los componentes de layout y las secciones viven en `apps/web/src/components/`. Todos los componentes consumen tokens semánticos; ninguno define colores propios.
+Código: paquete `@grupo-alpas/ui` (`packages/ui/src/`); los componentes de layout y las secciones viven en `apps/web/src/components/`. Todos los componentes consumen tokens semánticos; ninguno define colores propios.
 
 | Carpeta | Contenido |
 |---|---|

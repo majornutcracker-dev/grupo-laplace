@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { HandHeart, Rocket } from 'lucide-react'
-import { buttonClasses } from '@grupo-laplace/ui'
+import { buttonClasses } from '@grupo-alpas/ui'
 import fotoEstudiantes from '../assets/figma/hero-estudiantes.webp'
 import fotoDocente from '../assets/figma/nosotros-docente.webp'
 import { Accent, FinalCta, InfoCard, InnerHero, MediaText, PhotoComposition, SectionIntro, TeacherProfileCard } from '../components/site/SiteBlocks'
