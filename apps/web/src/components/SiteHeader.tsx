@@ -57,7 +57,12 @@ export function SiteHeader() {
         (scrolled || open) && 'shadow-[0_1px_0_var(--color-border-default)]',
       )}
     >
-      <a href="#contenido" className="type-label absolute top-2 left-2 z-10 -translate-y-24 rounded-pill bg-primary-5 px-4 py-2 text-white focus:translate-y-0">
+      {/* Enlace para saltar al contenido: invisible (sr-only) hasta que recibe foco con el teclado.
+          No usa display:none porque así dejaría de ser accesible por Tab y lector de pantalla. */}
+      <a
+        href="#contenido"
+        className="type-label sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[110] focus:rounded-pill focus:bg-primary-5 focus:px-4 focus:py-2 focus:text-white"
+      >
         Saltar al contenido
       </a>
       <div className="site-container flex h-[4.375rem] items-center justify-between gap-6 lg:gap-10">

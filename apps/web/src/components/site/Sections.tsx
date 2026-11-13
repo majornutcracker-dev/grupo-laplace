@@ -291,7 +291,7 @@ export function BenefitsBand({
 
 /* ── Preguntas frecuentes (Figma: componente-preguntas) ────────────── */
 function FaqItem({ item }: { item: Faq }) {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const id = useId()
   return (
     <li className="reveal rounded-[1rem] border border-site-wash bg-site-wash">
@@ -301,7 +301,7 @@ function FaqItem({ item }: { item: Faq }) {
           aria-expanded={open}
           aria-controls={`${id}-a`}
           onClick={() => setOpen((o) => !o)}
-          className="flex w-full items-center gap-4 rounded-[1rem] px-6 pt-6 pb-4 text-left text-lg leading-normal font-medium text-site-ink"
+          className="flex w-full items-center gap-4 rounded-[1rem] px-6 py-6 text-left text-lg leading-normal font-medium text-site-ink"
         >
           <span className="flex-1">{item.question}</span>
           <img src={faqChevron} alt="" aria-hidden className={cn('size-6 shrink-0 transition-transform duration-300 ease-standard', !open && 'rotate-180')} />
@@ -309,7 +309,7 @@ function FaqItem({ item }: { item: Faq }) {
       </h3>
       <div id={`${id}-a`} className={cn('grid transition-[grid-template-rows] duration-300 ease-standard', open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]')}>
         <div className="overflow-hidden" {...(open ? {} : { inert: true })}>
-          <div className="px-6 pb-6">
+          <div className="-mt-2 px-6 pb-6">
             <p className="flex min-h-15 items-center text-base leading-normal text-site-ink">{item.answer}</p>
           </div>
         </div>
