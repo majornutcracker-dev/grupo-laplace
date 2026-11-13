@@ -64,6 +64,7 @@ export function AcademicServicePage({
   benefits,
   benefitsTitle = '¿Por qué estudiar con ALPAS?',
   benefitsLayout,
+  areaSize,
   faqs,
   cta,
   whatsappUrl,
@@ -75,6 +76,8 @@ export function AcademicServicePage({
   /** Título de la sección de beneficios (por defecto «¿Por qué estudiar con ALPAS?») */
   benefitsTitle?: string
   benefitsLayout: 'row' | 'univ'
+  /** Escolar: círculo 56 y texto 16 · Universitario: círculo 53 y texto 18 (Figma) */
+  areaSize: 'escolar' | 'universitario'
   faqs: Faq[]
   cta: { title: string; description: string }
   whatsappUrl: string | null
@@ -93,7 +96,7 @@ export function AcademicServicePage({
       <section id="cursos" aria-labelledby="areas-title" className="scroll-mt-24 bg-white">
         <div className="container-wide pt-6 pb-20">
           <SectionHead id="areas-title" eyebrow="ÁREAS ACADÉMICAS" title="Cursos que reforzamos" />
-          <div className="mt-10"><AreaGrid areas={areas} /></div>
+          <div className="mt-10"><AreaGrid areas={areas} size={areaSize} /></div>
         </div>
       </section>
 

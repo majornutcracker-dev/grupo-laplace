@@ -4,16 +4,15 @@
  * Medidas y colores salen de las variables del archivo (ver `styles/global.css`, paleta site-*).
  */
 import { useId, useState, type CSSProperties, type ReactNode } from 'react'
-import { ChevronDown } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
 import { cn } from '@grupo-alpas/ui'
 import ctaBlob from '../../assets/figma/cta-blob.svg'
 import ctaSquiggle from '../../assets/figma/cta-squiggle.svg'
 import brandWhatsapp from '../../assets/figma/brand-whatsapp.svg'
 import heroBlob from '../../assets/figma/hero-blob.svg'
 import heroDots from '../../assets/figma/hero-dots.svg'
-import arrowCurl from '../../assets/figma/hero-flecha-a.svg'
-import arrowHead from '../../assets/figma/hero-flecha-b.svg'
+import flechaHero from '../../assets/figma/flecha-hero.svg'
+import flechaServicio from '../../assets/figma/flecha-servicio.svg'
+import faqChevron from '../../assets/figma/icons/faq-chevron.svg'
 import type { Area, Faq, IconItem, Practical } from '../../data/paginas'
 import { delay } from '../../lib/motion'
 import { WhatsAppButton } from '../WhatsAppButton'
@@ -65,29 +64,35 @@ export function Tag({ children, className }: { children: ReactNode; className?: 
 }
 
 /* ── Círculos y cuadros de ícono ───────────────────────────────────── */
+/** Los íconos son los SVG exportados del Figma (assets/figma/icons), con su color original. */
 const circleTones = {
-  navy: 'bg-site-navy text-white',
-  green: 'bg-site-green text-white',
-  soft: 'bg-site-green-soft text-site-green',
-  mist: 'bg-site-mist text-site-navy',
-  fog: 'bg-site-fog text-site-navy',
+  navy: 'bg-site-navy',
+  green: 'bg-site-green',
+  soft: 'bg-site-green-soft',
+  mist: 'bg-site-mist',
+  fog: 'bg-site-fog',
 }
 export type CircleTone = keyof typeof circleTones
+/** Tamaño del contenedor → tamaño del ícono (Figma) */
+const circleSizes = {
+  72: ['size-18', 'size-8'],
+  60: ['size-15', 'size-6'],
+  56: ['size-14', 'size-[1.458rem]'],
+  53: ['size-[3.3186rem]', 'size-[1.3828rem]'],
+} as const
 
-export function IconCircle({ icon: Icon, tone = 'navy', size = 60, square, className }: { icon: LucideIcon; tone?: CircleTone; size?: 56 | 60; square?: boolean; className?: string }) {
+export function IconCircle({ icon, tone = 'navy', size = 60, square, className }: { icon: string; tone?: CircleTone; size?: keyof typeof circleSizes; square?: boolean; className?: string }) {
+  const [box, glyph] = circleSizes[size]
   return (
-    <span
-      aria-hidden
-      className={cn('grid shrink-0 place-items-center [&_svg]:size-6', size === 60 ? 'size-15' : 'size-14', square ? 'rounded-[1rem]' : 'rounded-pill', circleTones[tone], className)}
-    >
-      <Icon strokeWidth={1.75} />
+    <span aria-hidden className={cn('grid shrink-0 place-items-center', box, square ? 'rounded-[1rem]' : 'rounded-pill', circleTones[tone], className)}>
+      <img src={icon} alt="" className={glyph} />
     </span>
   )
 }
 
 /* ── Composición del hero (foto recortada + recursos gráficos) ─────── */
 type Tile = { src: string; tone: 'green' | 'navy' }
-export type HeroChip = { icon: LucideIcon; label: [string, string]; tone: 'soft' | 'mist' }
+export type HeroChip = { icon: string; label: [string, string]; tone: 'soft' | 'mist' }
 
 /**
  * Reproduce la composición del Figma con posiciones en porcentaje, así escala igual en todas las pantallas:
@@ -116,12 +121,7 @@ export function HeroShowcase({
   return (
     <div className="relative mx-auto w-full max-w-[36.5rem]" style={{ aspectRatio: home ? '585 / 490' : '585 / 440' }}>
       <img aria-hidden src={heroDots} alt="" className="pop-in absolute w-[11.5%]" style={{ ...pos.dots, ...delay(300) }} />
-      <div aria-hidden className="pop-in absolute w-[15.4%]" style={{ ...pos.arrow, ...delay(380) }}>
-        <div className="relative aspect-[98/107]">
-          <img src={arrowCurl} alt="" className="absolute inset-[4%_4%_4%_4%] size-[92%] -rotate-[96deg]" />
-          <img src={arrowHead} alt="" className="absolute right-0 bottom-[2%] w-[18%] -rotate-[96deg]" />
-        </div>
-      </div>
+      <img aria-hidden src={home ? flechaHero : flechaServicio} alt="" className="pop-in absolute w-[15.4%]" style={{ ...pos.arrow, ...delay(380) }} />
       <img aria-hidden src={heroBlob} alt="" className="pop-in absolute w-[52.9%]" style={{ ...pos.blob, ...delay(120) }} />
       <img src={photo} alt={photoAlt} className="pop-in absolute object-contain object-bottom" style={{ ...photoStyle, ...delay(200) }} />
       {tiles.map((t, i) => {
@@ -130,15 +130,14 @@ export function HeroShowcase({
           <span
             key={t.src}
             aria-hidden
-            className={cn('float-y absolute grid aspect-square w-[10.6%] place-items-center rounded-[18px] shadow-[0_8px_24px_-12px_rgb(10_33_58/0.45)]', t.tone === 'green' ? 'bg-site-green' : 'bg-site-navy')}
-            style={{ left: p.left, top: p.top, rotate: `${p.r}deg`, ...delay(i ? 1200 : 0), animationDuration: i ? '7s' : '6s' }}
+            className={cn('pop-in absolute grid aspect-square w-[10.6%] place-items-center rounded-[18px] shadow-[0_8px_24px_-12px_rgb(10_33_58/0.45)]', t.tone === 'green' ? 'bg-site-green' : 'bg-site-navy')}
+            style={{ left: p.left, top: p.top, rotate: `${p.r}deg`, ...delay(i ? 460 : 400) }}
           >
             <img src={t.src} alt="" className="w-[57%]" />
           </span>
         )
       })}
       {chips?.map((c, i) => {
-        const Icon = c.icon
         return (
           <div
             key={c.label[0]}
@@ -148,8 +147,8 @@ export function HeroShowcase({
             )}
             style={delay(520 + i * 140)}
           >
-            <span aria-hidden className={cn('grid aspect-square w-[24%] max-w-[53px] shrink-0 place-items-center rounded-pill [&_svg]:size-[45%]', c.tone === 'soft' ? 'bg-site-green-soft text-site-green' : 'bg-site-mist text-site-navy')}>
-              <Icon strokeWidth={1.75} />
+            <span aria-hidden className={cn('grid aspect-square w-[24%] max-w-[53px] shrink-0 place-items-center rounded-pill', c.tone === 'soft' ? 'bg-site-green-soft' : 'bg-site-mist')}>
+              <img src={c.icon} alt="" className="w-[44%]" />
             </span>
             <span className="text-[clamp(0.6875rem,0.4rem+1.1vw,0.97rem)] leading-normal font-medium text-site-ink">
               {c.label[0]}
@@ -212,16 +211,21 @@ export function WorkCards({ items }: { items: IconItem[] }) {
 }
 
 /* ── Áreas académicas ──────────────────────────────────────────────── */
-export function AreaGrid({ areas }: { areas: Area[] }) {
+export function AreaGrid({ areas, size }: { areas: Area[]; size: 'escolar' | 'universitario' }) {
+  const escolar = size === 'escolar'
   return (
     <ul className="grid gap-4 min-[420px]:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-10">
       {areas.map((a, i) => {
         // Alternancia en damero, como en el Figma (verde suave / gris)
         const green = (Math.floor(i / 4) + (i % 4)) % 2 === 0
         return (
-          <li key={a.name} className="reveal lift flex min-w-0 items-center gap-4 rounded-[1.5rem] border border-site-fog/50 bg-white p-6" style={delay((i % 4) * 70)}>
-            <IconCircle icon={a.icon} tone={green ? 'soft' : 'mist'} size={56} />
-            <span className="min-w-0 text-base leading-normal font-medium text-site-ink">{a.name}</span>
+          <li
+            key={a.name}
+            className="reveal lift flex min-w-0 items-center gap-4 rounded-[1.5rem] border border-site-mist bg-white p-6 transition-colors hover:border-site-green-soft"
+            style={delay((i % 4) * 70)}
+          >
+            <IconCircle icon={a.icon} tone={green ? 'soft' : 'mist'} size={escolar ? 56 : 53} />
+            <span className={cn('min-w-0 leading-normal font-medium text-site-ink', escolar ? 'text-base' : 'text-lg')}>{a.name}</span>
           </li>
         )
       })}
@@ -236,6 +240,7 @@ export function BenefitsBand({
   title,
   items,
   layout,
+  tileSize = 60,
 }: {
   id: string
   eyebrow: string
@@ -243,6 +248,8 @@ export function BenefitsBand({
   items: IconItem[]
   /** row: 2×2 con ícono a la izquierda · stack: 3 columnas con ícono arriba · univ: 2 + 3 (Universitario) */
   layout: 'row' | 'stack' | 'univ'
+  /** Cuadro del ícono: 60 px (24) o 72 px (32), según la página del Figma */
+  tileSize?: 60 | 72
 }) {
   const grid = {
     row: 'md:grid-cols-2',
@@ -260,7 +267,7 @@ export function BenefitsBand({
               className={cn('reveal flex gap-6 rounded-[1.5rem] bg-site-night p-8 shadow-overlay sm:p-10', layout === 'row' ? 'flex-col sm:flex-row' : 'flex-col')}
               style={delay(i * 90)}
             >
-              <IconCircle icon={icon} tone="green" square />
+              <IconCircle icon={icon} tone="green" size={tileSize} square />
               <div>
                 <h3 className="text-lg leading-normal font-medium text-white">{t}</h3>
                 <p className="mt-2 text-base leading-normal text-white">{text}</p>
@@ -288,7 +295,7 @@ function FaqItem({ item }: { item: Faq }) {
           className="flex w-full items-center gap-4 rounded-[1rem] px-6 py-6 text-left text-lg leading-normal font-medium text-site-ink"
         >
           <span className="flex-1">{item.question}</span>
-          <ChevronDown aria-hidden className={cn('size-6 shrink-0 transition-transform duration-300 ease-standard', open && 'rotate-180')} />
+          <img src={faqChevron} alt="" aria-hidden className={cn('size-6 shrink-0 transition-transform duration-300 ease-standard', !open && 'rotate-180')} />
         </button>
       </h3>
       <div id={`${id}-a`} className={cn('grid transition-[grid-template-rows] duration-300 ease-standard', open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]')}>
@@ -319,8 +326,8 @@ export function CtaCard({ title, description, whatsappUrl, withIcon }: { title: 
     <section aria-labelledby="cta-title" className="bg-white">
       <div className="container-wide py-10">
         <div className="reveal relative mx-auto flex max-w-[75rem] flex-col items-center gap-10 overflow-hidden rounded-[1.5rem] bg-site-navy px-6 py-16 text-center sm:px-20 sm:py-24">
-          <img aria-hidden src={ctaBlob} alt="" className="float-y absolute bottom-[10%] left-[8.75%] hidden w-[8.4%] md:block" />
-          <img aria-hidden src={ctaSquiggle} alt="" className="float-y absolute top-[20%] right-[9%] hidden w-[9.4%] rotate-[14.7deg] md:block" style={{ animationDuration: '7s' }} />
+          <img aria-hidden src={ctaBlob} alt="" className="absolute bottom-[10%] left-[8.75%] hidden w-[8.4%] md:block" />
+          <img aria-hidden src={ctaSquiggle} alt="" className="absolute top-[20%] right-[9%] hidden w-[9.4%] rotate-[14.7deg] md:block" />
           <div className="relative max-w-[35.125rem]">
             <h2 id="cta-title" className="site-display text-white">{title}</h2>
             <p className="mt-6 text-lg leading-normal text-white">{description}</p>

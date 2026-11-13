@@ -71,7 +71,7 @@ export default function Orientacion() {
         </div>
       </section>
 
-      <BenefitsBand id="benefits-title" eyebrow={o.benefits.eyebrow} title={o.benefits.title} items={o.benefits.items} layout="stack" />
+      <BenefitsBand id="benefits-title" eyebrow={o.benefits.eyebrow} title={o.benefits.title} items={o.benefits.items} layout="stack" tileSize={72} />
       <FaqSection items={o.faqs} />
       <CtaCard title={o.cta.title} description={o.cta.description} whatsappUrl={wa} />
       <div className="h-10 bg-white" />

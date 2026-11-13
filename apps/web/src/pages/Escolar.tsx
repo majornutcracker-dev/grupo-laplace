@@ -29,6 +29,7 @@ export default function Escolar() {
       benefits={e.benefits}
       benefitsTitle="¿Por qué estudiar con Grupo Laplace?"
       benefitsLayout="row"
+      areaSize="escolar"
       faqs={e.faqs}
       cta={e.cta}
     />

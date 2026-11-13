@@ -68,8 +68,8 @@ export function PageHero({
         </div>
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
           <ArtFrame className="pop-in aspect-[6/5]" >{art}</ArtFrame>
-          <PlusMark className="float-y absolute -top-5 -right-2 size-12 lg:-right-5" />
-          <Sparkle className="float-y absolute -bottom-4 -left-3 size-8" />
+          <PlusMark className="absolute -top-5 -right-2 size-12 lg:-right-5" />
+          <Sparkle className="absolute -bottom-4 -left-3 size-8" />
         </div>
       </div>
     </section>
@@ -183,7 +183,7 @@ export function CtaBand({
       <div className={cn('reveal frame-tab relative grid overflow-hidden lg:grid-cols-[1.2fr_1fr]', tone === 'green' ? 'bg-green-deep' : 'bg-surface-inverse')}>
         {decoration ?? (
           <>
-            <PlusMark tone="inverse" className="float-y absolute top-8 left-[45%] hidden size-8 opacity-40 lg:block" />
+            <PlusMark tone="inverse" className="absolute top-8 left-[45%] hidden size-8 opacity-40 lg:block" />
             <PlusMark tone={tone === 'green' ? 'inverse' : 'secondary'} className="absolute top-8 right-8 size-12 opacity-90 lg:hidden" />
           </>
         )}

@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom'
-import { ChevronRight, Rocket, UsersRound } from 'lucide-react'
 import { buttonClasses, cn } from '@grupo-alpas/ui'
 import checkIcon from '../assets/figma/check.svg'
+import chevronRight from '../assets/figma/icons/chevron-right.svg'
+import chipCohete from '../assets/figma/icons/chip-cohete.svg'
+import chipUsuarios from '../assets/figma/icons/chip-usuarios.svg'
+import flechaServicios from '../assets/figma/flecha-servicios.svg'
 import docenteRoberto from '../assets/figma/docente-roberto.webp'
 import fotoEstudiantes from '../assets/figma/hero-estudiantes.webp'
 import fotoDocente from '../assets/figma/nosotros-docente.webp'
 import fotoEscolar from '../assets/figma/servicio-escolar.webp'
 import fotoOrientacion from '../assets/figma/servicio-orientacion.webp'
 import fotoUniversitario from '../assets/figma/servicio-universitario.webp'
-import flechaA from '../assets/figma/servicios-flecha-a.svg'
-import flechaB from '../assets/figma/servicios-flecha-b.svg'
 import tileFx from '../assets/figma/tile-fx.svg'
 import tileIntegral from '../assets/figma/tile-integral.svg'
 import { PhotoComposition } from '../components/site/SiteBlocks'
@@ -61,8 +62,8 @@ export default function Home() {
                 photoStyle={{ left: '15.1%', top: '0%', width: '69.8%', height: '94%' }}
                 tiles={[{ src: tileIntegral, tone: 'green' }, { src: tileFx, tone: 'navy' }]}
                 chips={[
-                  { icon: UsersRound, label: ['Acompañamiento', 'constante'], tone: 'soft' },
-                  { icon: Rocket, label: ['Crecimiento', 'académico'], tone: 'mist' },
+                  { icon: chipUsuarios, label: ['Acompañamiento', 'constante'], tone: 'soft' },
+                  { icon: chipCohete, label: ['Crecimiento', 'académico'], tone: 'mist' },
                 ]}
               />
             }
@@ -100,7 +101,7 @@ export default function Home() {
             </div>
             <Link to="/conocenos" className={buttonClasses({ variant: 'primary', pill: true }, 'mt-6')}>
               {about.cta}
-              <ChevronRight className="size-4" aria-hidden />
+              <img src={chevronRight} alt="" aria-hidden className="size-4 brightness-0 invert" />
             </Link>
           </div>
         </div>
@@ -110,10 +111,7 @@ export default function Home() {
       <section id="servicios" aria-labelledby="services-title" className="scroll-mt-24 bg-white">
         <div className="container-wide relative py-10">
           <SectionHead id="services-title" eyebrow={services.eyebrow} title={services.title} />
-          <div aria-hidden className="absolute top-16 right-[13%] hidden w-[5.6rem] lg:block">
-            <img src={flechaA} alt="" className="w-full -scale-y-100 rotate-[-83deg]" />
-            <img src={flechaB} alt="" className="absolute bottom-[38%] -left-1 w-[18%] -scale-y-100 rotate-[-83deg]" />
-          </div>
+          <img aria-hidden src={flechaServicios} alt="" className="absolute top-[4.5rem] right-[15%] hidden w-[5.625rem] lg:block" />
           <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
             {services.items.map((s, i) => (
               <li key={s.id} className="reveal" style={delay(i * 90)}>
@@ -122,8 +120,8 @@ export default function Home() {
                     <img src={servicePhotos[s.id]} alt="" loading="lazy" className="aspect-[326/218] w-full rounded-[1rem] object-cover" />
                     {/* Muesca blanca con el ícono del servicio, como en el Figma */}
                     <span className="absolute top-0 right-0 rounded-bl-[1.25rem] bg-white pb-2.5 pl-2.5">
-                      <span className={cn('grid h-[4.5rem] w-20 place-items-center rounded-[1rem] [&_svg]:size-8', s.tone === 'green' ? 'bg-site-green-soft text-site-green' : 'bg-site-fog text-site-navy')}>
-                        <s.icon strokeWidth={1.75} aria-hidden />
+                      <span className={cn('grid h-[4.5rem] w-20 place-items-center rounded-[1rem]', s.tone === 'green' ? 'bg-site-green-soft' : 'bg-site-fog')}>
+                        <img src={s.icon} alt="" aria-hidden className="size-8" />
                       </span>
                     </span>
                   </div>
@@ -133,7 +131,7 @@ export default function Home() {
                   </div>
                   <Link to={s.to} className={buttonClasses({ variant: 'neutral', pill: true }, 'self-start')}>
                     Conocer más<span className="sr-only"> sobre {s.name}</span>
-                    <ChevronRight className="size-4" aria-hidden />
+                    <img src={chevronRight} alt="" aria-hidden className="size-4" />
                   </Link>
                 </article>
               </li>
@@ -154,7 +152,7 @@ export default function Home() {
             <SectionHead id="team-title" eyebrow={team.eyebrow} title={team.title} description={team.description} />
             <Link to="/conocenos" className={buttonClasses({ variant: 'outlined', pill: true }, 'self-start lg:self-auto')}>
               {team.cta}
-              <ChevronRight className="size-4" aria-hidden />
+              <img src={chevronRight} alt="" aria-hidden className="size-4" />
             </Link>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">

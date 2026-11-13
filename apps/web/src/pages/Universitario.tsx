@@ -28,6 +28,7 @@ export default function Universitario() {
       areas={u.areas}
       benefits={u.benefits}
       benefitsLayout="univ"
+      areaSize="universitario"
       faqs={u.faqs}
       cta={u.cta}
     />

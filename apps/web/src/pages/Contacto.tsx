@@ -1,6 +1,6 @@
-import type { LucideIcon } from 'lucide-react'
-import { Facebook, Mail } from 'lucide-react'
-import whatsappIcon from '../assets/figma/brand-whatsapp.svg'
+import icCorreo from '../assets/figma/icons/contacto-correo.svg'
+import icFacebook from '../assets/figma/icons/contacto-facebook.svg'
+import icWhatsapp from '../assets/figma/icons/contacto-whatsapp.svg'
 import { Eyebrow, Green, IconCircle } from '../components/site/Sections'
 import { siteConfig } from '../config/site'
 import { contactoFigma as c } from '../data/paginas'
@@ -8,7 +8,7 @@ import { whatsappUrl } from '../lib/contact'
 import { delay } from '../lib/motion'
 import { usePageMeta } from '../lib/usePageMeta'
 
-type Channel = { title: string; value: string; href: string; tone: 'navy' | 'green'; icon?: LucideIcon; external?: boolean }
+type Channel = { title: string; value: string; href: string; tone: 'navy' | 'green'; icon: string; external?: boolean }
 
 /** Contacto (Figma: «contactanos»): encabezado centrado y tres medios de contacto. */
 export default function Contacto() {
@@ -16,9 +16,9 @@ export default function Contacto() {
   const { contact, social } = siteConfig
   const facebookUser = social.facebook.replace(/^https?:\/\/(www\.)?facebook\.com\//, '')
   const channels: Channel[] = [
-    { title: 'WhatsApp', value: contact.phone, href: whatsappUrl() ?? '#', tone: 'navy', external: true },
-    { title: 'Correo electrónico', value: contact.email, href: `mailto:${contact.email}`, tone: 'green', icon: Mail },
-    { title: 'Redes sociales', value: `Facebook: ${facebookUser}`, href: social.facebook, tone: 'navy', icon: Facebook, external: true },
+    { title: 'WhatsApp', value: contact.phone, href: whatsappUrl() ?? '#', tone: 'navy', icon: icWhatsapp, external: true },
+    { title: 'Correo electrónico', value: contact.email, href: `mailto:${contact.email}`, tone: 'green', icon: icCorreo },
+    { title: 'Redes sociales', value: `Facebook: ${facebookUser}`, href: social.facebook, tone: 'navy', icon: icFacebook, external: true },
   ]
   return (
     <>
@@ -41,13 +41,7 @@ export default function Contacto() {
                 {...(ch.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 className="lift flex h-full flex-col gap-8 rounded-[1.5rem] bg-white p-8 shadow-overlay sm:p-10"
               >
-                {ch.icon ? (
-                  <IconCircle icon={ch.icon} tone={ch.tone} />
-                ) : (
-                  <span aria-hidden className="grid size-15 place-items-center rounded-pill bg-site-navy">
-                    <img src={whatsappIcon} alt="" className="size-6" />
-                  </span>
-                )}
+                <IconCircle icon={ch.icon} tone={ch.tone} />
                 <span>
                   <span className="block text-lg leading-normal font-medium text-site-ink">{ch.title}</span>
                   <span className="mt-2 block text-lg leading-normal break-words text-site-ink">{ch.value}</span>

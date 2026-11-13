@@ -4,58 +4,77 @@
  * Contacto y Error 404. Los textos se copian tal cual del diseño.
  * Conócenos sigue pendiente de diseño y usa `content.ts`.
  */
-import type { LucideIcon } from 'lucide-react'
-import {
-  Atom,
-  Banknote,
-  BookDown,
-  BookOpen,
-  Brain,
-  Calculator,
-  CalendarClock,
-  ChartPie,
-  Clock,
-  FlaskConical,
-  GraduationCap,
-  HandHeart,
-  HeartHandshake,
-  Laptop,
-  Lightbulb,
-  ListChecks,
-  MessagesSquare,
-  Monitor,
-  Navigation,
-  Rocket,
-  Route,
-  Sigma,
-  Sparkle,
-  SquareFunction,
-  Tangent,
-  ThumbsUp,
-  TriangleRight,
-  UsersRound,
-  Video,
-} from 'lucide-react'
+/* Íconos exportados del Figma (cada uno con el color que tiene en el diseño) */
+import icCifra1 from '../assets/figma/icons/cifra-1.svg'
+import icCifra2 from '../assets/figma/icons/cifra-2.svg'
+import icCifra3 from '../assets/figma/icons/cifra-3.svg'
+import icServEscolar from '../assets/figma/icons/inicio-servicio-escolar.svg'
+import icServUniversitario from '../assets/figma/icons/inicio-servicio-universitario.svg'
+import icServOrientacion from '../assets/figma/icons/inicio-servicio-orientacion.svg'
+import icInicioBen1 from '../assets/figma/icons/inicio-beneficio-1.svg'
+import icInicioBen2 from '../assets/figma/icons/inicio-beneficio-2.svg'
+import icInicioBen3 from '../assets/figma/icons/inicio-beneficio-3.svg'
+import icInicioBen4 from '../assets/figma/icons/inicio-beneficio-4.svg'
+import icPracModalidad from '../assets/figma/icons/practica-modalidad.svg'
+import icPracHorarios from '../assets/figma/icons/practica-horarios.svg'
+import icPracInversion from '../assets/figma/icons/practica-inversion.svg'
+import icTrabajo1 from '../assets/figma/icons/trabajo-1.svg'
+import icTrabajo2 from '../assets/figma/icons/trabajo-2.svg'
+import icTrabajo3 from '../assets/figma/icons/trabajo-3.svg'
+import icEscAlgebra from '../assets/figma/icons/esc-area-algebra.svg'
+import icEscAritmetica from '../assets/figma/icons/esc-area-aritmetica.svg'
+import icEscGeometria from '../assets/figma/icons/esc-area-geometria.svg'
+import icEscTrigonometria from '../assets/figma/icons/esc-area-trigonometria.svg'
+import icEscEstadistica from '../assets/figma/icons/esc-area-estadistica.svg'
+import icEscAptitud from '../assets/figma/icons/esc-area-aptitud.svg'
+import icEscFisica from '../assets/figma/icons/esc-area-fisica.svg'
+import icEscQuimica from '../assets/figma/icons/esc-area-quimica.svg'
+import icEscBen1 from '../assets/figma/icons/esc-beneficio-1.svg'
+import icEscBen2 from '../assets/figma/icons/esc-beneficio-2.svg'
+import icEscBen3 from '../assets/figma/icons/esc-beneficio-3.svg'
+import icEscBen4 from '../assets/figma/icons/esc-beneficio-4.svg'
+import icUniMatematica from '../assets/figma/icons/uni-area-matematica.svg'
+import icUniMatematica1 from '../assets/figma/icons/uni-area-matematica-1.svg'
+import icUniMatematica2 from '../assets/figma/icons/uni-area-matematica-2.svg'
+import icUniFisicaBasica from '../assets/figma/icons/uni-area-fisica-basica.svg'
+import icUniFisica1 from '../assets/figma/icons/uni-area-fisica-1.svg'
+import icUniFisica2 from '../assets/figma/icons/uni-area-fisica-2.svg'
+import icUniQuimicaBasica from '../assets/figma/icons/uni-area-quimica-basica.svg'
+import icUniQuimicaOrganica from '../assets/figma/icons/uni-area-quimica-organica.svg'
+import icUniBen1 from '../assets/figma/icons/uni-beneficio-1.svg'
+import icUniBen2 from '../assets/figma/icons/uni-beneficio-2.svg'
+import icUniBen3 from '../assets/figma/icons/uni-beneficio-3.svg'
+import icUniBen4 from '../assets/figma/icons/uni-beneficio-4.svg'
+import icUniBen5 from '../assets/figma/icons/uni-beneficio-5.svg'
+import icOriDirigido1 from '../assets/figma/icons/ori-dirigido-1.svg'
+import icOriDirigido2 from '../assets/figma/icons/ori-dirigido-2.svg'
+import icOriDirigido3 from '../assets/figma/icons/ori-dirigido-3.svg'
+import icProceso1 from '../assets/figma/icons/proceso-1.svg'
+import icProceso2 from '../assets/figma/icons/proceso-2.svg'
+import icProceso3 from '../assets/figma/icons/proceso-3.svg'
+import icOriBen1 from '../assets/figma/icons/ori-beneficio-1.svg'
+import icOriBen2 from '../assets/figma/icons/ori-beneficio-2.svg'
+import icOriBen3 from '../assets/figma/icons/ori-beneficio-3.svg'
 
-export type IconItem = { icon: LucideIcon; title: string; text: string }
+export type IconItem = { icon: string; title: string; text: string }
 export type Faq = { question: string; answer: string }
-export type Area = { name: string; icon: LucideIcon }
-export type Practical = { icon: LucideIcon; title: string; value: string }
+export type Area = { name: string; icon: string }
+export type Practical = { icon: string; title: string; value: string }
 
 /* ── Datos comunes ─────────────────────────────────────────────────── */
 
 /** Modalidad, horarios e inversión (igual en los tres servicios del Figma). */
 export const practical: Practical[] = [
-  { icon: Laptop, title: 'Modalidad', value: 'Virtual' },
-  { icon: CalendarClock, title: 'Horarios', value: 'Turno noche' },
-  { icon: Banknote, title: 'Inversión', value: 'S/ 100.00 mensual' },
+  { icon: icPracModalidad, title: 'Modalidad', value: 'Virtual' },
+  { icon: icPracHorarios, title: 'Horarios', value: 'Turno noche' },
+  { icon: icPracInversion, title: 'Inversión', value: 'S/ 100.00 mensual' },
 ]
 
 /** «¿Qué hacemos?» de Escolar y Universitario. */
 export const howWeWork: IconItem[] = [
-  { icon: BookOpen, title: 'Bases claras', text: 'Repasamos lo que sostiene cada tema nuevo.' },
-  { icon: ListChecks, title: 'Práctica guiada', text: 'Ejercicios resueltos paso a paso, primero juntos.' },
-  { icon: HeartHandshake, title: 'Seguimiento cercano', text: 'Docentes atentos a cómo avanza cada estudiante.' },
+  { icon: icTrabajo1, title: 'Bases claras', text: 'Repasamos lo que sostiene cada tema nuevo.' },
+  { icon: icTrabajo2, title: 'Práctica guiada', text: 'Ejercicios resueltos paso a paso, primero juntos.' },
+  { icon: icTrabajo3, title: 'Seguimiento cercano', text: 'Docentes atentos a cómo avanza cada estudiante.' },
 ]
 
 /* ── Inicio ────────────────────────────────────────────────────────── */
@@ -66,9 +85,9 @@ export const inicio = {
     checks: ['Atención personalizada', 'Horarios flexibles', 'Precios accesibles'],
   },
   metrics: [
-    { icon: GraduationCap, value: '+ 10', label: 'años de experiencia' },
-    { icon: ThumbsUp, value: '90%', label: 'satisfacción estudiantil' },
-    { icon: HeartHandshake, value: '+200', label: 'estudiantes acompañados' },
+    { icon: icCifra1, value: '+ 10', label: 'años de experiencia' },
+    { icon: icCifra2, value: '90%', label: 'satisfacción estudiantil' },
+    { icon: icCifra3, value: '+200', label: 'estudiantes acompañados' },
   ],
   about: {
     eyebrow: 'SOBRE NOSOTROS',
@@ -83,19 +102,19 @@ export const inicio = {
     eyebrow: 'NUESTROS SERVICIOS',
     title: 'Un camino de aprendizaje para cada etapa',
     items: [
-      { id: 'escolar', name: 'Escolar', text: 'Refuerzo académico y acompañamiento para estudiantes de nivel escolar.', to: '/servicios/escolar', icon: GraduationCap, tone: 'green' },
-      { id: 'universitario', name: 'Universitario', text: 'Asesorías académicas en diferentes cursos universitarios para fortalecer tus conocimientos.', to: '/servicios/universitario', icon: Monitor, tone: 'fog' },
-      { id: 'orientacion', name: 'Orientación vocacional', text: 'Asesoría para descubrir intereses y explorar opciones profesionales.', to: '/servicios/orientacion-vocacional', icon: Navigation, tone: 'green' },
+      { id: 'escolar', name: 'Escolar', text: 'Refuerzo académico y acompañamiento para estudiantes de nivel escolar.', to: '/servicios/escolar', icon: icServEscolar, tone: 'green' },
+      { id: 'universitario', name: 'Universitario', text: 'Asesorías académicas en diferentes cursos universitarios para fortalecer tus conocimientos.', to: '/servicios/universitario', icon: icServUniversitario, tone: 'fog' },
+      { id: 'orientacion', name: 'Orientación vocacional', text: 'Asesoría para descubrir intereses y explorar opciones profesionales.', to: '/servicios/orientacion-vocacional', icon: icServOrientacion, tone: 'green' },
     ] as const,
   },
   benefits: {
     eyebrow: 'BENEFICIOS',
     title: 'Descubre lo que hace diferente a ALPAS',
     items: [
-      { icon: UsersRound, title: 'Atención personalizada', text: 'Nos adaptamos a tus necesidades y ritmo de aprendizaje.' },
-      { icon: Lightbulb, title: 'Aprendizaje claro y práctico', text: 'Aprende paso a paso con explicaciones claras que facilitan la comprensión de cada tema.' },
-      { icon: BookDown, title: 'Materiales y recursos de apoyo', text: 'Complementa tus clases con recursos educativos que facilitan la práctica y refuerzan lo aprendido.' },
-      { icon: Clock, title: 'Horarios flexibles y precios accesibles', text: 'Encuentra opciones de aprendizaje que se adapten a tu disponibilidad y presupuesto.' },
+      { icon: icInicioBen1, title: 'Atención personalizada', text: 'Nos adaptamos a tus necesidades y ritmo de aprendizaje.' },
+      { icon: icInicioBen2, title: 'Aprendizaje claro y práctico', text: 'Aprende paso a paso con explicaciones claras que facilitan la comprensión de cada tema.' },
+      { icon: icInicioBen3, title: 'Materiales y recursos de apoyo', text: 'Complementa tus clases con recursos educativos que facilitan la práctica y refuerzan lo aprendido.' },
+      { icon: icInicioBen4, title: 'Horarios flexibles y precios accesibles', text: 'Encuentra opciones de aprendizaje que se adapten a tu disponibilidad y presupuesto.' },
     ] satisfies IconItem[],
   },
   team: {
@@ -123,20 +142,20 @@ export const escolarFigma = {
   },
   whatTitle: 'Reforzamos tu aprendizaje, paso a paso',
   areas: [
-    { name: 'Álgebra', icon: SquareFunction },
-    { name: 'Aritmética', icon: Calculator },
-    { name: 'Geometría', icon: TriangleRight },
-    { name: 'Trigonometría', icon: Tangent },
-    { name: 'Estadística', icon: ChartPie },
-    { name: 'Aptitud matemática', icon: Brain },
-    { name: 'Física', icon: Atom },
-    { name: 'Química', icon: FlaskConical },
+    { name: 'Álgebra', icon: icEscAlgebra },
+    { name: 'Aritmética', icon: icEscAritmetica },
+    { name: 'Geometría', icon: icEscGeometria },
+    { name: 'Trigonometría', icon: icEscTrigonometria },
+    { name: 'Estadística', icon: icEscEstadistica },
+    { name: 'Aptitud matemática', icon: icEscAptitud },
+    { name: 'Física', icon: icEscFisica },
+    { name: 'Química', icon: icEscQuimica },
   ] satisfies Area[],
   benefits: [
-    { icon: Video, title: 'Clases virtuales', text: 'Refuerza tus conocimientos desde casa mediante sesiones virtuales.' },
-    { icon: BookDown, title: 'Clases grabadas y recursos educativos', text: 'Accede a las grabaciones y materiales de apoyo organizados en Google Classroom.' },
-    { icon: Clock, title: 'Horarios y precios accesibles', text: 'Encuentra opciones que se adapten a tu disponibilidad y presupuesto.' },
-    { icon: UsersRound, title: 'Clases individuales o grupales', text: 'Elige la modalidad que mejor se adapte a tus necesidades de aprendizaje.' },
+    { icon: icEscBen1, title: 'Clases virtuales', text: 'Refuerza tus conocimientos desde casa mediante sesiones virtuales.' },
+    { icon: icEscBen2, title: 'Clases grabadas y recursos educativos', text: 'Accede a las grabaciones y materiales de apoyo organizados en Google Classroom.' },
+    { icon: icEscBen3, title: 'Horarios y precios accesibles', text: 'Encuentra opciones que se adapten a tu disponibilidad y presupuesto.' },
+    { icon: icEscBen4, title: 'Clases individuales o grupales', text: 'Elige la modalidad que mejor se adapte a tus necesidades de aprendizaje.' },
   ] satisfies IconItem[],
   faqs: [
     { question: '¿A qué estudiantes están dirigidas las clases?', answer: 'A estudiantes de nivel secundario que desean reforzar sus conocimientos y mejorar su comprensión de los cursos.' },
@@ -159,22 +178,22 @@ export const universitarioFigma = {
   },
   whatTitle: 'Te acompañamos en cada desafío universitario',
   areas: [
-    { name: 'Matemática', icon: SquareFunction },
-    { name: 'Matemática 1', icon: Tangent },
-    { name: 'Matemática 2', icon: Sigma },
-    { name: 'Física básica', icon: FlaskConical },
-    { name: 'Física 1', icon: TriangleRight },
-    { name: 'Física 2', icon: FlaskConical },
-    { name: 'Química básica', icon: Atom },
-    { name: 'Química orgánica', icon: Atom },
-    { name: 'Termodinámica aplicada', icon: FlaskConical },
+    { name: 'Matemática', icon: icUniMatematica },
+    { name: 'Matemática 1', icon: icUniMatematica1 },
+    { name: 'Matemática 2', icon: icUniMatematica2 },
+    { name: 'Física básica', icon: icUniFisicaBasica },
+    { name: 'Física 1', icon: icUniFisica1 },
+    { name: 'Física 2', icon: icUniFisica2 },
+    { name: 'Química básica', icon: icUniQuimicaBasica },
+    { name: 'Química orgánica', icon: icUniQuimicaOrganica },
+    { name: 'Termodinámica aplicada', icon: icUniFisica2 },
   ] satisfies Area[],
   benefits: [
-    { icon: BookOpen, title: 'Asesorías académicas', text: 'Refuerza los contenidos de tus cursos universitarios, resuelve dudas y profundiza en los temas que necesitas comprender.' },
-    { icon: GraduationCap, title: 'Docentes especializados', text: 'Recibe orientación académica de docentes con experiencia en las distintas áreas de enseñanza.' },
-    { icon: Laptop, title: 'Clases virtuales', text: 'Accede a sesiones de aprendizaje desde casa y organiza mejor tu tiempo de estudio.' },
-    { icon: Video, title: 'Clases grabadas', text: 'Repasa las sesiones desarrolladas y vuelve a consultar los contenidos cuando lo necesites.' },
-    { icon: Banknote, title: 'Precios accesibles', text: 'Encuentra alternativas de acompañamiento académico que se ajusten a tu presupuesto.' },
+    { icon: icUniBen1, title: 'Asesorías académicas', text: 'Refuerza los contenidos de tus cursos universitarios, resuelve dudas y profundiza en los temas que necesitas comprender.' },
+    { icon: icUniBen2, title: 'Docentes especializados', text: 'Recibe orientación académica de docentes con experiencia en las distintas áreas de enseñanza.' },
+    { icon: icUniBen3, title: 'Clases virtuales', text: 'Accede a sesiones de aprendizaje desde casa y organiza mejor tu tiempo de estudio.' },
+    { icon: icUniBen4, title: 'Clases grabadas', text: 'Repasa las sesiones desarrolladas y vuelve a consultar los contenidos cuando lo necesites.' },
+    { icon: icUniBen5, title: 'Precios accesibles', text: 'Encuentra alternativas de acompañamiento académico que se ajusten a tu presupuesto.' },
   ] satisfies IconItem[],
   faqs: [
     { question: '¿A quiénes están dirigidas las asesorías universitarias?', answer: 'A estudiantes universitarios que necesitan reforzar los contenidos de sus cursos, resolver dudas o prepararse para sus evaluaciones.' },
@@ -198,27 +217,27 @@ export const orientacionFigma = {
     eyebrow: '¿A QUIÉN ESTÁ DIRIGIDO?',
     title: 'Para quienes están eligiendo qué estudiar',
     items: [
-      { icon: BookOpen, text: 'Estudiantes de los últimos años de secundaria' },
-      { icon: ListChecks, text: 'Jóvenes que tienen dudas entre varias carreras' },
-      { icon: HeartHandshake, text: 'Familias que acompañan a sus hijos en su elección' },
+      { icon: icOriDirigido1, text: 'Estudiantes de los últimos años de secundaria' },
+      { icon: icOriDirigido2, text: 'Jóvenes que tienen dudas entre varias carreras' },
+      { icon: icOriDirigido3, text: 'Familias que acompañan a sus hijos en su elección' },
     ],
   },
   process: {
     eyebrow: 'EL PROCESO',
     title: '¿Qué te ofrece este servicio?',
     steps: [
-      { icon: MessagesSquare, title: 'Explorar tus intereses', text: 'Conversaciones para reconocer qué te motiva.', tone: 'green' },
-      { icon: Navigation, title: 'Conocer tus opciones', text: 'Información sobre carreras y caminos profesionales.', tone: 'mist' },
-      { icon: Rocket, title: 'Decidir con confianza', text: 'Acompañamiento para dar el siguiente paso.', tone: 'green' },
+      { icon: icProceso1, title: 'Explorar tus intereses', text: 'Conversaciones para reconocer qué te motiva.', tone: 'green' },
+      { icon: icProceso2, title: 'Conocer tus opciones', text: 'Información sobre carreras y caminos profesionales.', tone: 'mist' },
+      { icon: icProceso3, title: 'Decidir con confianza', text: 'Acompañamiento para dar el siguiente paso.', tone: 'green' },
     ] as const,
   },
   benefits: {
     eyebrow: 'BENEFICIOS',
     title: 'Cómo te ayuda la orientación vocacional',
     items: [
-      { icon: Sparkle, title: 'Conócete mejor', text: 'Identifica tus intereses, habilidades y aptitudes.' },
-      { icon: Route, title: 'Opciones claras', text: 'Conoce carreras y caminos profesionales según tu perfil e intereses.' },
-      { icon: HandHeart, title: 'Acompañamiento cercano', text: 'Te guiamos durante tu proceso de decisión, sin presiones.' },
+      { icon: icOriBen1, title: 'Conócete mejor', text: 'Identifica tus intereses, habilidades y aptitudes.' },
+      { icon: icOriBen2, title: 'Opciones claras', text: 'Conoce carreras y caminos profesionales según tu perfil e intereses.' },
+      { icon: icOriBen3, title: 'Acompañamiento cercano', text: 'Te guiamos durante tu proceso de decisión, sin presiones.' },
     ] satisfies IconItem[],
   },
   faqs: [

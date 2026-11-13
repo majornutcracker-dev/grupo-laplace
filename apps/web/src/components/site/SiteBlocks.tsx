@@ -119,7 +119,7 @@ export type HeroChip = { icon: LucideIcon; label: string; tone?: 'soft' | 'mist'
 function HeroChipCard({ chip, className, d }: { chip: HeroChip; className?: string; d: number }) {
   const Icon = chip.icon
   return (
-    <div className={cn('pop-in float-y absolute flex items-center gap-3 rounded-2xl bg-site-paper py-3 pr-5 pl-3 shadow-[0_0_44px_rgb(6_15_18/0.1)]', className)} style={delay(d)}>
+    <div className={cn('pop-in absolute flex items-center gap-3 rounded-2xl bg-site-paper py-3 pr-5 pl-3 shadow-[0_0_44px_rgb(6_15_18/0.1)]', className)} style={delay(d)}>
       <span aria-hidden className={cn('grid size-11 place-items-center rounded-pill [&_svg]:size-5', chip.tone === 'mist' ? 'bg-site-mist text-site-navy' : 'bg-site-green-soft text-site-green-text')}>
         <Icon />
       </span>

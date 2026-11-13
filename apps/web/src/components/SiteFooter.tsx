@@ -1,20 +1,20 @@
 import { Link } from 'react-router-dom'
-import type { LucideIcon } from 'lucide-react'
-import { Facebook, Instagram, Mail, MessageCircle, Music2, Youtube } from 'lucide-react'
+import icCorreo from '../assets/figma/icons/footer-correo.svg'
+import icFacebook from '../assets/figma/icons/footer-facebook.svg'
+import icWhatsapp from '../assets/figma/icons/footer-whatsapp.svg'
 import { siteConfig } from '../config/site'
 import { nav, services } from '../data/content'
-import { socialLinks, socialNames, whatsappUrl } from '../lib/contact'
+import { socialLinks, whatsappUrl } from '../lib/contact'
 import { AlpasLogo } from './AlpasLogo'
 
-const socialIcons = { facebook: Facebook, instagram: Instagram, tiktok: Music2, youtube: Youtube }
 const linkClass = 'text-base leading-normal font-medium text-neutral-subordinary transition-colors hover:text-white'
 
 /** Fila de contacto: ícono + dato. Solo se muestra si el dato existe. */
-function ContactRow({ icon: Icon, label, href, external }: { icon: LucideIcon; label: string; href: string; external?: boolean }) {
+function ContactRow({ icon, label, href, external }: { icon: string; label: string; href: string; external?: boolean }) {
   return (
     <li>
       <a href={href} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} className="inline-flex items-center gap-2 text-base leading-normal text-neutral-subordinary transition-colors hover:text-white">
-        <Icon className="size-5 shrink-0" aria-hidden />
+        <img src={icon} alt="" aria-hidden className="size-5 shrink-0" />
         <span className="break-all">{label}</span>
       </a>
     </li>
@@ -57,11 +57,12 @@ export function SiteFooter() {
             <div>
               <h2 className="text-base leading-normal font-medium text-white">Contacto</h2>
               <ul className="mt-4 space-y-4">
-                {wa && <ContactRow icon={MessageCircle} label={contact.phone || `+${contact.whatsappNumber}`} href={wa} external />}
-                {socials.map(([key, url]) => (
-                  <ContactRow key={key} icon={socialIcons[key]} label={key === 'facebook' ? url.replace(/^https?:\/\/(www\.)?facebook\.com\//, '') : socialNames[key]} href={url} external />
+                {wa && <ContactRow icon={icWhatsapp} label={contact.phone || `+${contact.whatsappNumber}`} href={wa} external />}
+                {/* El Figma solo muestra Facebook; otras redes se agregan aquí con su ícono cuando existan */}
+                {socials.filter(([key]) => key === 'facebook').map(([key, url]) => (
+                  <ContactRow key={key} icon={icFacebook} label={url.replace(/^https?:\/\/(www\.)?facebook\.com\//, '')} href={url} external />
                 ))}
-                {contact.email && <ContactRow icon={Mail} label={contact.email} href={`mailto:${contact.email}`} />}
+                {contact.email && <ContactRow icon={icCorreo} label={contact.email} href={`mailto:${contact.email}`} />}
               </ul>
             </div>
           </div>

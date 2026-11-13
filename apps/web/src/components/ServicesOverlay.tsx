@@ -1,8 +1,14 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { ChevronDown } from 'lucide-react'
 import { cn } from '@grupo-alpas/ui'
 import { services, type Service } from '../data/content'
+import chevronDown from '../assets/figma/icons/header-chevron.svg'
+import icEscolar from '../assets/figma/icons/overlay-escolar.svg'
+import icOrientacion from '../assets/figma/icons/overlay-orientacion.svg'
+import icUniversitario from '../assets/figma/icons/overlay-universitario.svg'
+
+/** Íconos del overlay-options (Figma) */
+const overlayIcons: Record<string, string> = { escolar: icEscolar, universitario: icUniversitario, orientacion: icOrientacion }
 
 /** Servicios del overlay (Figma: overlay-options): solo los que tienen página propia. */
 const menuServices = services.filter((s): s is Service & { to: string } => Boolean(s.to))
@@ -11,22 +17,21 @@ const menuServices = services.filter((s): s is Service & { to: string } => Boole
 function OptionCard({ service, onSelect }: { service: Service & { to: string }; onSelect: () => void }) {
   const { pathname } = useLocation()
   const current = pathname === service.to
-  const Icon = service.icon
   return (
     <Link
       to={service.to}
       onClick={onSelect}
       aria-current={current ? 'page' : undefined}
       className={cn(
-        'flex items-center gap-3 rounded-[1rem] px-4 py-2 transition-colors duration-150',
+        'flex items-center gap-4 rounded-[1rem] px-4 py-2 transition-colors duration-150',
         current ? 'bg-site-green-soft/60' : 'hover:bg-site-mist/70 focus-visible:bg-site-mist/70',
       )}
     >
-      <span aria-hidden className="grid size-9 shrink-0 place-items-center rounded-pill border border-site-mist bg-white text-site-navy [&_svg]:size-4">
-        <Icon />
+      <span aria-hidden className="grid size-13 shrink-0 place-items-center rounded-pill border border-site-mist bg-white">
+        <img src={overlayIcons[service.id]} alt="" className="size-5" />
       </span>
       <span className="min-w-0 flex-1 py-1">
-        <span className="block text-sm leading-normal font-medium text-site-ink">{service.name}</span>
+        <span className="block text-sm leading-normal font-medium whitespace-nowrap text-site-ink">{service.name}</span>
         <span className="mt-1 block text-xs leading-normal text-text-muted">{service.menuText}</span>
       </span>
     </Link>
@@ -82,7 +87,7 @@ export function ServicesOverlay({ itemClass }: { itemClass: (active: boolean) =>
         className={cn(itemClass(active || open), 'inline-flex items-center gap-2')}
       >
         Servicios
-        <ChevronDown className={cn('size-3.5 transition-transform duration-200 ease-standard', open && 'rotate-180')} aria-hidden />
+        <img src={chevronDown} alt="" aria-hidden className={cn('size-3.5 transition-transform duration-200 ease-standard', open && 'rotate-180')} />
       </button>
 
       <div
@@ -120,7 +125,7 @@ export function MobileServicesOptions({ onSelect }: { onSelect: () => void }) {
         className={cn('type-h5 flex min-h-16 w-full items-center justify-between', pathname.startsWith('/servicios') ? 'text-text-accent' : 'text-text-heading')}
       >
         Servicios
-        <ChevronDown className={cn('size-5 transition-transform duration-200 ease-standard', open && 'rotate-180')} aria-hidden />
+        <img src={chevronDown} alt="" aria-hidden className={cn('size-5 transition-transform duration-200 ease-standard', open && 'rotate-180')} />
       </button>
       <ul id={panelId} hidden={!open} className="mb-4 flex flex-col gap-1 rounded-[1rem] bg-white p-2 shadow-overlay ring-1 ring-site-mist">
         {menuServices.map((s) => (
