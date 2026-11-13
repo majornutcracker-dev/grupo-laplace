@@ -32,7 +32,7 @@ function OptionCard({ service, onSelect }: { service: Service & { to: string }; 
       </span>
       <span className="min-w-0 flex-1 py-1">
         <span className="block text-sm leading-normal font-medium whitespace-nowrap text-site-ink">{service.name}</span>
-        <span className="mt-1 block text-xs leading-normal text-text-muted">{service.menuText}</span>
+        <span className="mt-1 block max-w-[10.5rem] text-xs leading-normal text-text-muted">{service.menuText}</span>
       </span>
     </Link>
   )
@@ -93,12 +93,12 @@ export function ServicesOverlay({ itemClass }: { itemClass: (active: boolean) =>
       <div
         id={panelId}
         className={cn(
-          'absolute top-full left-1/2 z-10 mt-3 w-[min(34.875rem,calc(100vw-2rem))] -translate-x-1/2',
+          'absolute top-full left-1/2 z-10 mt-3 w-max max-w-[calc(100vw-2rem)] -translate-x-1/2',
           'transition-[opacity,translate,visibility] duration-200 ease-standard',
           open ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-1 opacity-0',
         )}
       >
-        <ul className="grid grid-cols-2 gap-4 rounded-[1rem] bg-white p-6 shadow-overlay ring-1 ring-site-mist">
+        <ul className="grid min-w-[34.875rem] grid-cols-[repeat(2,minmax(max-content,1fr))] gap-4 rounded-[1rem] bg-white p-6 shadow-overlay ring-1 ring-site-mist">
           {menuServices.map((s) => (
             <li key={s.id}>
               <OptionCard service={s} onSelect={() => setOpen(false)} />

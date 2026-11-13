@@ -3,7 +3,7 @@ import fotoOrientacion from '../assets/figma/hero-orientacion.webp'
 import tileHeart from '../assets/figma/tile-heart.svg'
 import tileRoute from '../assets/figma/tile-route.svg'
 import { ServiceHero } from '../components/site/ServiceLayout'
-import { BenefitsBand, CtaCard, Eyebrow, FaqSection, Green, IconCircle, SectionHead } from '../components/site/Sections'
+import { BenefitsBand, CtaCard, Eyebrow, FaqSection, FigmaPage, Green, IconCircle, SectionHead } from '../components/site/Sections'
 import { orientacionFigma as o } from '../data/paginas'
 import { whatsappUrl } from '../lib/contact'
 import { delay } from '../lib/motion'
@@ -14,7 +14,7 @@ export default function Orientacion() {
   usePageMeta('Orientación vocacional · Grupo ALPAS', o.hero.description)
   const wa = whatsappUrl('Hola, Grupo ALPAS. Quisiera información sobre la orientación vocacional.')
   return (
-    <>
+    <FigmaPage>
       <ServiceHero
         tag={o.hero.tag}
         title={<>Descubre tu camino<br /><Green>Construye tu futuro</Green></>}
@@ -31,7 +31,7 @@ export default function Orientacion() {
 
       {/* ¿A quién está dirigido? */}
       <section aria-labelledby="audience-title" className="bg-white">
-        <div className="container-wide py-16 sm:py-20">
+        <div className="site-container py-10">
           <SectionHead id="audience-title" eyebrow={o.audience.eyebrow} title={o.audience.title} />
           <ul className="mt-10 grid gap-5 md:grid-cols-3 lg:gap-10">
             {o.audience.items.map((a, i) => (
@@ -46,7 +46,7 @@ export default function Orientacion() {
 
       {/* El proceso: tres pasos, el del medio desplazado hacia abajo como en el Figma */}
       <section id="proceso" aria-labelledby="process-title" className="scroll-mt-24 bg-white">
-        <div className="container-wide pb-20">
+        <div className="site-container py-10">
           <SectionHead id="process-title" eyebrow={o.process.eyebrow} title={o.process.title} />
           <ol className="mt-10 grid gap-6 md:grid-cols-3 lg:gap-20">
             {o.process.steps.map((s, i) => {
@@ -74,7 +74,6 @@ export default function Orientacion() {
       <BenefitsBand id="benefits-title" eyebrow={o.benefits.eyebrow} title={o.benefits.title} items={o.benefits.items} layout="stack" tileSize={72} />
       <FaqSection items={o.faqs} />
       <CtaCard title={o.cta.title} description={o.cta.description} whatsappUrl={wa} />
-      <div className="h-10 bg-white" />
-    </>
+    </FigmaPage>
   )
 }

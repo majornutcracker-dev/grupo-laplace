@@ -53,14 +53,14 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-[100] bg-white transition-shadow duration-200',
+        'sticky top-0 z-[100] bg-white pt-6 transition-shadow duration-200',
         (scrolled || open) && 'shadow-[0_1px_0_var(--color-border-default)]',
       )}
     >
       <a href="#contenido" className="type-label absolute top-2 left-2 z-10 -translate-y-24 rounded-pill bg-primary-5 px-4 py-2 text-white focus:translate-y-0">
         Saltar al contenido
       </a>
-      <div className="container-wide flex h-20 items-center justify-between gap-6">
+      <div className="site-container flex h-[4.375rem] items-center justify-between gap-6 lg:gap-10">
         <Link to="/" aria-label="Grupo ALPAS, ir al inicio" className="shrink-0 rounded-sm">
           <AlpasLogo className="h-12" />
         </Link>
@@ -98,8 +98,8 @@ export function SiteHeader() {
         </button>
       </div>
 
-      <div id="menu-movil" ref={panelRef} hidden={!open} className="fixed inset-x-0 top-20 bottom-0 overflow-y-auto bg-white lg:hidden">
-        <nav aria-label="Principal móvil" className="container-wide flex min-h-full flex-col pt-4 pb-8">
+      <div id="menu-movil" ref={panelRef} hidden={!open} className="fixed inset-x-0 top-[5.875rem] bottom-0 overflow-y-auto bg-white lg:hidden">
+        <nav aria-label="Principal móvil" className="site-container flex min-h-full flex-col pt-4 pb-8">
           <ul className="flex flex-col">
             {nav.map((n) =>
               n.to === '/servicios' ? (

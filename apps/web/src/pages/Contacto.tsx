@@ -1,7 +1,7 @@
 import icCorreo from '../assets/figma/icons/contacto-correo.svg'
 import icFacebook from '../assets/figma/icons/contacto-facebook.svg'
 import icWhatsapp from '../assets/figma/icons/contacto-whatsapp.svg'
-import { Eyebrow, Green, IconCircle } from '../components/site/Sections'
+import { Eyebrow, FigmaPage, Green, IconCircle } from '../components/site/Sections'
 import { siteConfig } from '../config/site'
 import { contactoFigma as c } from '../data/paginas'
 import { whatsappUrl } from '../lib/contact'
@@ -21,9 +21,9 @@ export default function Contacto() {
     { title: 'Redes sociales', value: `Facebook: ${facebookUser}`, href: social.facebook, tone: 'navy', icon: icFacebook, external: true },
   ]
   return (
-    <>
+    <FigmaPage>
       <section aria-labelledby="page-title" className="bg-white">
-        <div className="container-wide flex flex-col items-center py-10 text-center sm:py-12">
+        <div className="site-container flex flex-col items-center py-10 text-center">
           <Eyebrow className="pop-in text-site-green-text">{c.eyebrow}</Eyebrow>
           <h1 id="page-title" className="site-display pop-in mt-6" style={delay(60)}>
             Estamos aquí para <Green>ayudarte</Green>
@@ -33,7 +33,7 @@ export default function Contacto() {
       </section>
 
       <section aria-label="Medios de contacto" className="bg-white">
-        <ul className="container-wide grid gap-5 pt-10 pb-20 md:grid-cols-3 lg:gap-10">
+        <ul className="site-container grid gap-5 py-10 md:grid-cols-3 lg:gap-10">
           {channels.map((ch, i) => (
             <li key={ch.title} className="reveal" style={delay(i * 90)}>
               <a
@@ -51,6 +51,6 @@ export default function Contacto() {
           ))}
         </ul>
       </section>
-    </>
+    </FigmaPage>
   )
 }

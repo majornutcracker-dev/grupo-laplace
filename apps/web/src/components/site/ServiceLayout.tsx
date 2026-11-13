@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from 'react'
 import { buttonClasses } from '@grupo-alpas/ui'
 import { howWeWork, practical, type Area, type Faq, type IconItem } from '../../data/paginas'
 import { WhatsAppButton } from '../WhatsAppButton'
-import { AreaGrid, BenefitsBand, CtaCard, FaqSection, HeroShowcase, HeroSplit, PracticalStrip, SectionHead, WorkCards } from './Sections'
+import { AreaGrid, BenefitsBand, CtaCard, FaqSection, FigmaPage, HeroShowcase, HeroSplit, PracticalStrip, SectionHead, WorkCards } from './Sections'
 
 type Showcase = { photo: string; photoAlt: string; photoStyle: CSSProperties; tiles: [string, string] }
 
@@ -24,7 +24,7 @@ export function ServiceHero({
 }) {
   return (
     <section aria-labelledby="page-title" className="overflow-hidden bg-white">
-      <div className="container-wide pt-10 pb-10">
+      <div className="site-container py-10">
         <HeroSplit
           tag={tag}
           title={title}
@@ -83,18 +83,18 @@ export function AcademicServicePage({
   whatsappUrl: string | null
 }) {
   return (
-    <>
+    <FigmaPage>
       <ServiceHero {...hero} whatsappUrl={whatsappUrl} />
 
       <section aria-labelledby="what-title" className="bg-white">
-        <div className="container-wide py-16 sm:py-20">
+        <div className="site-container py-10">
           <SectionHead id="what-title" eyebrow="¿QUÉ HACEMOS?" title={whatTitle} />
           <div className="mt-10"><WorkCards items={howWeWork} /></div>
         </div>
       </section>
 
       <section id="cursos" aria-labelledby="areas-title" className="scroll-mt-24 bg-white">
-        <div className="container-wide pt-6 pb-20">
+        <div className="site-container py-10">
           <SectionHead id="areas-title" eyebrow="ÁREAS ACADÉMICAS" title="Cursos que reforzamos" />
           <div className="mt-10"><AreaGrid areas={areas} size={areaSize} /></div>
         </div>
@@ -103,7 +103,6 @@ export function AcademicServicePage({
       <BenefitsBand id="benefits-title" eyebrow="BENEFICIOS" title={benefitsTitle} items={benefits} layout={benefitsLayout} />
       <FaqSection items={faqs} />
       <CtaCard title={cta.title} description={cta.description} whatsappUrl={whatsappUrl} />
-      <div className="h-10 bg-white" />
-    </>
+    </FigmaPage>
   )
 }

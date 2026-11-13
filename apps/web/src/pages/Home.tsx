@@ -14,7 +14,7 @@ import fotoUniversitario from '../assets/figma/servicio-universitario.webp'
 import tileFx from '../assets/figma/tile-fx.svg'
 import tileIntegral from '../assets/figma/tile-integral.svg'
 import { PhotoComposition } from '../components/site/SiteBlocks'
-import { BenefitsBand, CtaCard, FaqSection, Green, HeroShowcase, HeroSplit, IconCircle, SectionHead, TeamCard } from '../components/site/Sections'
+import { BenefitsBand, CtaCard, FaqSection, FigmaPage, Green, HeroShowcase, HeroSplit, IconCircle, SectionHead, TeamCard } from '../components/site/Sections'
 import { WhatsAppButton } from '../components/WhatsAppButton'
 import { inicio } from '../data/paginas'
 import { whatsappUrl } from '../lib/contact'
@@ -30,10 +30,10 @@ export default function Home() {
   )
   const { hero, metrics, about, services, benefits, team, faqs, cta } = inicio
   return (
-    <>
+    <FigmaPage>
       {/* Hero */}
       <section aria-labelledby="page-title" className="overflow-hidden bg-white">
-        <div className="container-wide pt-10 pb-10 lg:pt-10">
+        <div className="site-container py-10">
           <HeroSplit
             tag={hero.tag}
             title={<>Potenciamos tu <Green>aprendizaje,</Green> construimos tu futuro</>}
@@ -73,7 +73,7 @@ export default function Home() {
 
       {/* Cifras */}
       <section aria-label="ALPAS en cifras" className="bg-white">
-        <div className="container-wide py-10">
+        <div className="site-container py-10">
           <ul className="reveal grid gap-8 rounded-[1.5rem] bg-site-navy p-8 shadow-overlay sm:p-10 md:grid-cols-3 md:gap-0">
             {metrics.map((m, i) => (
               <li key={m.label} className={cn('flex items-center gap-4 px-4 py-2 md:justify-center', i > 0 && 'md:border-l md:border-site-slate/70')}>
@@ -90,8 +90,8 @@ export default function Home() {
 
       {/* Sobre nosotros */}
       <section aria-labelledby="about-title" className="bg-white">
-        <div className="container-wide grid items-center gap-14 py-10 lg:grid-cols-[minmax(0,34rem)_1fr] lg:gap-20">
-          <div className="reveal">
+        <div className="site-container grid items-center gap-14 py-10 lg:grid-cols-[minmax(0,34rem)_1fr] lg:gap-20">
+          <div className="reveal lg:pt-12">
             <PhotoComposition ratio="1312/1199" src={fotoDocente} alt="Docente de Grupo ALPAS saludando con un libro de Matemáticas" />
           </div>
           <div className="reveal">
@@ -109,7 +109,7 @@ export default function Home() {
 
       {/* Servicios */}
       <section id="servicios" aria-labelledby="services-title" className="scroll-mt-24 bg-white">
-        <div className="container-wide relative py-10">
+        <div className="site-container relative py-10">
           <SectionHead id="services-title" eyebrow={services.eyebrow} title={services.title} />
           <img aria-hidden src={flechaServicios} alt="" className="absolute top-[4.5rem] right-[15%] hidden w-[5.625rem] lg:block" />
           <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
@@ -140,14 +140,13 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="h-10 bg-white" />
 
       {/* Beneficios */}
       <BenefitsBand id="benefits-title" eyebrow={benefits.eyebrow} title={benefits.title} items={benefits.items} layout="row" />
 
       {/* Equipo */}
       <section aria-labelledby="team-title" className="bg-white">
-        <div className="container-wide py-16 sm:py-20">
+        <div className="site-container py-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <SectionHead id="team-title" eyebrow={team.eyebrow} title={team.title} description={team.description} />
             <Link to="/conocenos" className={buttonClasses({ variant: 'outlined', pill: true }, 'self-start lg:self-auto')}>
@@ -155,7 +154,7 @@ export default function Home() {
               <img src={chevronRight} alt="" aria-hidden className="size-4" />
             </Link>
           </div>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-10">
             {team.members.map((m, i) => <TeamCard key={i} index={i} name={m.name} role={m.role} photo={docenteRoberto} />)}
           </div>
         </div>
@@ -166,7 +165,6 @@ export default function Home() {
 
       {/* CTA final */}
       <CtaCard title={cta.title} description={cta.description} whatsappUrl={whatsappUrl()} withIcon />
-      <div className="h-10 bg-white" />
-    </>
+    </FigmaPage>
   )
 }

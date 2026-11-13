@@ -17,6 +17,15 @@ import type { Area, Faq, IconItem, Practical } from '../../data/paginas'
 import { delay } from '../../lib/motion'
 import { WhatsAppButton } from '../WhatsAppButton'
 
+/* ── Página ────────────────────────────────────────────────────────── */
+/**
+ * Contenedor de página del Figma: cada sección (frame) va separada por space-lg (40 px)
+ * y hay 40 px entre el header y la primera sección y entre la última y el footer.
+ */
+export function FigmaPage({ children }: { children: ReactNode }) {
+  return <div className="flex flex-col gap-10 py-10">{children}</div>
+}
+
 /* ── Tipografía de sección ─────────────────────────────────────────── */
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return <p className={cn('site-eyebrow', className)}>{children}</p>
@@ -258,7 +267,7 @@ export function BenefitsBand({
   }[layout]
   return (
     <section aria-labelledby={id} className="bg-site-navy">
-      <div className="container-wide py-16 sm:py-20">
+      <div className="site-container py-14 lg:py-20">
         <SectionHead id={id} eyebrow={eyebrow} title={title} align="center" inverse className="max-w-none" />
         <ul className={cn('mt-10 grid gap-5 lg:gap-10', grid)}>
           {items.map(({ icon, title: t, text }, i) => (
@@ -270,7 +279,7 @@ export function BenefitsBand({
               <IconCircle icon={icon} tone="green" size={tileSize} square />
               <div>
                 <h3 className="text-lg leading-normal font-medium text-white">{t}</h3>
-                <p className="mt-2 text-base leading-normal text-white">{text}</p>
+                <p className="mt-2 text-base leading-normal text-white lg:min-h-18">{text}</p>
               </div>
             </li>
           ))}
@@ -292,7 +301,7 @@ function FaqItem({ item }: { item: Faq }) {
           aria-expanded={open}
           aria-controls={`${id}-a`}
           onClick={() => setOpen((o) => !o)}
-          className="flex w-full items-center gap-4 rounded-[1rem] px-6 py-6 text-left text-lg leading-normal font-medium text-site-ink"
+          className="flex w-full items-center gap-4 rounded-[1rem] px-6 pt-6 pb-4 text-left text-lg leading-normal font-medium text-site-ink"
         >
           <span className="flex-1">{item.question}</span>
           <img src={faqChevron} alt="" aria-hidden className={cn('size-6 shrink-0 transition-transform duration-300 ease-standard', !open && 'rotate-180')} />
@@ -300,7 +309,9 @@ function FaqItem({ item }: { item: Faq }) {
       </h3>
       <div id={`${id}-a`} className={cn('grid transition-[grid-template-rows] duration-300 ease-standard', open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]')}>
         <div className="overflow-hidden" {...(open ? {} : { inert: true })}>
-          <p className="px-6 pb-6 text-base leading-normal text-site-ink">{item.answer}</p>
+          <div className="px-6 pb-6">
+            <p className="flex min-h-15 items-center text-base leading-normal text-site-ink">{item.answer}</p>
+          </div>
         </div>
       </div>
     </li>
@@ -310,7 +321,7 @@ function FaqItem({ item }: { item: Faq }) {
 export function FaqSection({ items }: { items: Faq[] }) {
   return (
     <section aria-labelledby="faq-title" className="bg-white">
-      <div className="container-wide py-16 sm:py-20">
+      <div className="site-container py-10">
         <SectionHead id="faq-title" eyebrow="PREGUNTAS FRECUENTES" title="Resolvemos tus dudas antes de empezar" align="center" />
         <ul className="mx-auto mt-10 flex max-w-[56.25rem] flex-col gap-6">
           {items.map((it) => <FaqItem key={it.question} item={it} />)}
@@ -324,8 +335,8 @@ export function FaqSection({ items }: { items: Faq[] }) {
 export function CtaCard({ title, description, whatsappUrl, withIcon }: { title: string; description: string; whatsappUrl?: string | null; withIcon?: boolean }) {
   return (
     <section aria-labelledby="cta-title" className="bg-white">
-      <div className="container-wide py-10">
-        <div className="reveal relative mx-auto flex max-w-[75rem] flex-col items-center gap-10 overflow-hidden rounded-[1.5rem] bg-site-navy px-6 py-16 text-center sm:px-20 sm:py-24">
+      <div className="site-container py-10">
+        <div className="reveal relative mx-auto flex max-w-[75rem] flex-col items-center justify-center gap-10 overflow-hidden rounded-[1.5rem] bg-site-navy px-6 py-16 text-center sm:px-20 lg:h-[27.5rem] lg:py-10">
           <img aria-hidden src={ctaBlob} alt="" className="absolute bottom-[10%] left-[8.75%] hidden w-[8.4%] md:block" />
           <img aria-hidden src={ctaSquiggle} alt="" className="absolute top-[20%] right-[9%] hidden w-[9.4%] rotate-[14.7deg] md:block" />
           <div className="relative max-w-[35.125rem]">
